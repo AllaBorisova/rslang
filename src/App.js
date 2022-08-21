@@ -1,21 +1,21 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import React from "react"
+import { Routes, Route, Link } from "react-router-dom"
 
-import "bootstrap/scss/bootstrap.scss";
-import "./styles/App.scss";
+import "bootstrap/scss/bootstrap.scss"
+import "./styles/App.scss"
 
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container"
+import Nav from "react-bootstrap/Nav"
+import Navbar from "react-bootstrap/Navbar"
 
-import Header from "./components/header";
-import Footer from "./components/footer";
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
-import Home from "./pages/Home";
-import Textbook from "./pages/Textbook";
-import Audiocall from "./pages/Audiocall";
-import Sprint from "./pages/Sprint";
-import Statistics from "./pages/Statistics";
+import Home from "./pages/Home"
+import Textbook from "./pages/Textbook"
+import Audiocall from "./pages/Audiocall"
+import Sprint from "./pages/Sprint"
+import Statistics from "./pages/Statistics"
 
 function Navigation() {
   return (
@@ -29,30 +29,29 @@ function Navigation() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link as={Link} to={"/"}>
+            <Nav.Link as={Link} to="/">
               Главная
             </Nav.Link>
 
-            <Nav.Link as={Link} to={"/textbook"}>
+            <Nav.Link as={Link} to="/textbook">
               Учебник
             </Nav.Link>
 
-            <Nav.Link as={Link} to={"/audiocall"}>
+            <Nav.Link as={Link} to="/audiocall">
               Аудиовызов
             </Nav.Link>
 
-            <Nav.Link as={Link} to={"/sprint"}>
+            <Nav.Link as={Link} to="/sprint">
               Спринт
             </Nav.Link>
-
-            <Nav.Link as={Link} to={"/statistics"}>
+            <Nav.Link as={Link} to="/statistics">
               Статистика
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
+  )
 }
 
 function App() {
@@ -70,7 +69,7 @@ function App() {
       </Routes>
       <Footer />
     </main>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react"
 
 function Audiocall() {
-  return <h1>Audiocall</h1>;
+  return <h1>Audiocall</h1>
 }
 
-export default Audiocall;
+export default Audiocall

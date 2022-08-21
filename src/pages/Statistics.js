@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react"
 
-export default class Statistics extends Component {
-    render () {
-        return ( <h1>Statistics</h1> );
-    }
+function Statistics() {
+  return <h1>Statistics</h1>
 }
+
+export default Statistics

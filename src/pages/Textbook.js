@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react"
 
-export default class Textbook extends Component {
-    render () {
-        return ( <h1>Textbook</h1> );
-    }
+function Textbook() {
+  return <h1>Textbook</h1>
 }
+
+export default Textbook

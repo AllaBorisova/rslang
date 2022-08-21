@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react"
 
-export default class Sprint extends Component {
-    render () {
-        return ( <h1>Sprint</h1> );
-    }
+function Sprint() {
+  return <h1>Sprint</h1>
 }
+export default Sprint

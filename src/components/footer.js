@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Nav from "react-bootstrap/Nav";
+import React from "react"
+import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Nav from "react-bootstrap/Nav"
 
 function Footer() {
   return (
@@ -10,8 +10,12 @@ function Footer() {
       <Container>
         <Row>
           <Col>
-            <a href="https://rs.school/js/" target="_blank">
-              <img src="../assets/rs_school.svg" className="img-fluid footer-img" alt="" />
+            <a href="https://rs.school/js/" target="_blank" rel="noreferrer">
+              <img
+                src="../assets/rs_school.svg"
+                className="img-fluid footer-img"
+                alt=""
+              />
             </a>
           </Col>
           <Col md={6}>
@@ -37,7 +41,6 @@ function Footer() {
         </Row>
       </Container>
     </footer>
-  );
+  )
 }
-
-export default Footer;
+export default Footer
