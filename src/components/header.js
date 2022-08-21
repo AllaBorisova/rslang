@@ -97,38 +97,12 @@ function Header () {
     return (
       <header className="my-2">
         <Container>
-          <Row>
-            <Col>
+          <Row className="align-items-center">
+            <Col xs={4}>
               <h1>RSLANG</h1>
             </Col>
-            <Col md={6}>
-              <Nav defaultActiveKey="/">
-                <Nav.Item>
-                  <Nav.Link href="/">Главная</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="#" eventKey="textbook">
-                    Учебник
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="#" eventKey="audiocall">
-                    Аудиовызов
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="#" eventKey="sprint">
-                    Спринт
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="#" eventKey="statistics">
-                    Статистика
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-            <Col>
+            
+            <Col xs={8} className="text-end">
               <Login />
               <SignUp />
             </Col>
