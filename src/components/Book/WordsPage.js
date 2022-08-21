@@ -22,6 +22,7 @@ function WordsPage({ words, loading }) {
                             audio1={item.audio1}
                             audio2={item.audioExample}
                             audio3={item.audioMeaning}
+                            id={item.id}
                         />
                     </li>
                 ))}
