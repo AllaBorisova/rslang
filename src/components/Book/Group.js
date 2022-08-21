@@ -17,19 +17,19 @@ function Group() {
             setLoading(false)
         }
         getList()
-    }, [value, page])
+    }, [value, page, BASE_URL])
 
-    const handleChange = (event) => setValue(event.target.value)
+    const handleChange = (event) => setValue(event.target.dataset.transfer)
     return (
         <>
             <div>
-                <Button as="input" type="submit" value="0" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="1" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="2" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="3" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="4" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="5" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="6" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 1" data-transfer="0" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 2" data-transfer="1" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 3" data-transfer="2" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 4" data-transfer="3" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 5" data-transfer="4" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 6" data-transfer="5" onClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 7" data-transfer="6" disabledonClick={handleChange} />{' '}
             </div>
             <div>
                 <div>

@@ -1,5 +1,7 @@
 import React from 'react'
 import WordCard from './WordCard'
+import Paginate from './Pagination'
+
 
 function WordsPage({ words, loading }) {
     if (loading) {
@@ -7,6 +9,7 @@ function WordsPage({ words, loading }) {
     }
     return (
         <div>
+            <Paginate />
             <ul>
                 {words.map((item) => (
                     <li className="group-words" key={item.id}>
