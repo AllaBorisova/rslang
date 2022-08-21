@@ -1,6 +1,13 @@
-import React from "react"
+import React from 'react'
+import Capabilities from '../components/Capabilities'
+import Team from '../components/Team'
 
 function Home() {
-  return <h1>Home</h1>
+    return (
+        <div>
+            <Capabilities />
+            <Team />
+        </div>
+    )
 }
 export default Home
