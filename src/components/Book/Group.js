@@ -17,7 +17,7 @@ function Group() {
             setLoading(false)
         }
         getList()
-    }, [value, page, BASE_URL])
+    }, [value, BASE_URL])
 
     const handleChange = (event) => setValue(event.target.dataset.transfer)
     return (
@@ -29,7 +29,7 @@ function Group() {
                 <Button as="input" type="submit" value="Level 4" data-transfer="3" onClick={handleChange} />{' '}
                 <Button as="input" type="submit" value="Level 5" data-transfer="4" onClick={handleChange} />{' '}
                 <Button as="input" type="submit" value="Level 6" data-transfer="5" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 7" data-transfer="6" disabledonClick={handleChange} />{' '}
+                <Button as="input" type="submit" value="Level 7" data-transfer="6" disabled />{' '}
             </div>
             <div>
                 <div>
