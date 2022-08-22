@@ -15,6 +15,7 @@ function Group() {
     useEffect(() => {
         const getList = async () => {
             setLoading(true)
+
             const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`)
             setWords(res.data)
             setLoading(false)
