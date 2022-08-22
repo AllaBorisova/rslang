@@ -21,7 +21,7 @@ function WordCard({ props }) {
         <div className="wordCard">
             <img src={img} alt={word} />
             <div className="wordCard__word">
-                <div>
+                <div className='wordCard__wordTranscrTransl'>
                     <p>{word}</p>
                     <p>{transcription}</p>
                     <p>{wordTranslate}</p>
