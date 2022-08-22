@@ -37,7 +37,7 @@ function WordsPage({ words, loading, props }) {
             return '#FFFFFF'
     }
     if (loading) {
-        return <p>{Loading()}</p>
+        return Loading()
     }
     return (
         <div className="word-wrapper" style={currentstyle}>
