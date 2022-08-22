@@ -65,8 +65,8 @@ function Group() {
             </div>
             <div className="group-btn">
                 <ReactPaginate
-                    previousLabel="Previous"
-                    nextLabel="Next"
+                    previousLabel="<"
+                    nextLabel=">"
                     pageCount={pageCount}
                     siblingCount="1"
                     onPageChange={changePage}
@@ -83,8 +83,8 @@ function Group() {
             </div>
             <div className="group-btn">
                 <ReactPaginate
-                    previousLabel="Previous"
-                    nextLabel="Next"
+                    previousLabel="<"
+                    nextLabel=">"
                     pageCount={pageCount}
                     siblingCount="1"
                     onPageChange={changePage}

@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card'
 function TeamMember(props) {
     return (
         <Card>
-            <Card.Img variant="top" src={`../assets/${props.avatar}`} />
+            <Card.Img variant="top" src={`../public/${props.avatar}`} />
             <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
                 <Card.Text>{props.text}</Card.Text>

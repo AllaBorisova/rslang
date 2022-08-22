@@ -41,44 +41,30 @@ h1 {
 	justify-content: center;
 }
 
-.pagination a {
+.pagination a{
 	transition: 1s ease-in;
 	text-decoration: none;
-	padding: 5px;
-	margin: 5px 2px;
-	width: 20px;
-	color:#27aedb;
-	border-radius: 2px;
-	background-color : white;
-	border: solid 1px #27aedb;
+	padding: 2px 5px;
+	margin: 5px 5px;
 	cursor: pointer;
 
 }
 .pagination a:hover{
-	transition: 1s ease-in;
+	transition: 0.5s ease-in;
 	background-color:#27aedb;
 }
-.previous-btn, .next-btn {
-	
-}
-.next-btn{
-}
-.disabled-btn a{
-	transition: 1s ease-in;
+.disabled-btn a {
+	transition: 0.5s ease-in;
 	text-decoration: none;
 	cursor:auto;
-	background-color: lightgrey;
-	border-color: lightgrey;
 	color: #000000;
 	&:hover{
-		background-color: lightgrey;
-		border-color: lightgrey;
 		cursor:auto;
-		transition: 1s ease-in;
+		transition: 0.5s ease-in;
 	}
 }
 .active-btn a:not([href]):not([class]){
-	 transition: 1s ease-in;
+	 transition: 0.5s ease-in;
    background-color:#27aedb ;
 	 color: white
 }
