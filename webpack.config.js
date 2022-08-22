@@ -7,6 +7,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.join(__dirname, '/dist'),
+        publicPath: '/',
         filename: 'index-bundle.js',
     },
     module: {
@@ -27,7 +28,7 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'assets/',
+                            outputPath: 'public/',
                         },
                     },
                 ],
@@ -44,10 +45,13 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'src/assets'),
-                    to: path.resolve(__dirname, 'dist/assets'),
+                    from: path.resolve(__dirname, 'src/public'),
+                    to: path.resolve(__dirname, 'dist/public'),
                 },
             ],
         }),
     ],
+    devServer: {
+        historyApiFallback: true,
+    }
 }

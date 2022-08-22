@@ -25,7 +25,7 @@ function Capabilities() {
                         </ul>
                     </Col>
                     <Col md={6}>
-                        <img src="../assets/6308.jpg" className="img-fluid" alt="..." />
+                        <img src="../public/6308.jpg" className="img-fluid" alt="..." />
                     </Col>
                 </Row>
             </Container>
