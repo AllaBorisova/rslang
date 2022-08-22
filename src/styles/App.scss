@@ -1,13 +1,70 @@
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
 h1 {
-	color: #27aedb;
-	
+    color: #27aedb;
 }
-.footer-img{
-	max-width:100px;
+.footer-img {
+    max-width: 100px;
 }
-.btn-level-group{
+// Управление разделами учебника
+.group-btn{
 	display: flex;
 	justify-content: center;
+	input{
+		margin-left: 10px;
+	}
+	.btn {
+      width: 100px;
+			height: 50px;
+			border-radius: 0px;
+	}
+}
+
+
+
+// Поле отображения слов
+
+.word-wrapper{
+	min-height: 100vh;
+	text-align: center;
+}
+.word-wrapper ul{
+	list-style: none;
+}
+
+// Пагинация по страничкам 
+.pagination {
+	display: flex;
+	width: 80%;
+	height: 20px;
+	margin: 30px 0;
+	justify-content: center;
+}
+
+.pagination a{
+	transition: 1s ease-in;
+	text-decoration: none;
+	padding: 2px 5px;
+	margin: 5px 5px;
+	cursor: pointer;
+
+}
+.pagination a:hover{
+	transition: 0.5s ease-in;
+	background-color:#27aedb;
+}
+.disabled-btn a {
+	transition: 0.5s ease-in;
+	text-decoration: none;
+	cursor:auto;
+	color: #000000;
+	&:hover{
+		cursor:auto;
+		transition: 0.5s ease-in;
+	}
+}
+.active-btn a:not([href]):not([class]){
+	 transition: 0.5s ease-in;
+   background-color:#27aedb ;
+	 color: white
 }
