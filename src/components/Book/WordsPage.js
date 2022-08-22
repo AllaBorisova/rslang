@@ -31,7 +31,7 @@ function WordsPage({ words, loading, props }) {
             currentstyle.backgroundColor = '#D3D3D3'
             break
         case '5':
-            currentstyle.backgroundColor = '#DCDCDC'
+            currentstyle.backgroundColor = '#FFA07A'
             break
         default:
             return '#FFFFFF'

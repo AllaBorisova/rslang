@@ -3,10 +3,10 @@ import Group from '../components/Book/Group'
 
 function Textbook() {
     return (
-        <main className="textbook-main">
+        <section className="textbook-main">
             <h1>Textbook</h1>
             <Group />
-        </main>
+        </section>
     )
 }
 
