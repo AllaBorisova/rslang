@@ -13,10 +13,12 @@ function Group() {
         const getList = async () => {
             setLoading(true)
             const res = await axios.get(`${BASE_URL}group=${value}&pages=${page}`)
+            // console.log(res)
             setWords(res.data)
             setLoading(false)
         }
         getList()
+        // console.log(value)
     }, [value, BASE_URL])
 
     const handleChange = (event) => setValue(event.target.dataset.transfer)
