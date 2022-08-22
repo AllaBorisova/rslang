@@ -21,51 +21,80 @@ function Group() {
         }
         getList()
     }, [value, pageNumber, BASE_URL])
-    const handleChange = (event) => setValue(event.target.dataset.transfer)
+    const handleChange = (event) => {
+        setValue(event.target.dataset.transfer)
+    }
     return (
         <>
             <div className="group-btn">
-                <Button as="input" type="submit" value="Level 1" data-transfer="0" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 2" data-transfer="1" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 3" data-transfer="2" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 4" data-transfer="3" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 5" data-transfer="4" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 6" data-transfer="5" onClick={handleChange} />{' '}
-                <Button as="input" type="submit" value="Level 7" data-transfer="6" disabled />{' '}
+                <Button as="input" type="submit" variant="info" value="A 1" data-transfer="0" onClick={handleChange} />{' '}
+                <Button
+                    as="input"
+                    type="submit"
+                    variant="warning"
+                    value="A 2"
+                    data-transfer="1"
+                    onClick={handleChange}
+                />{' '}
+                <Button
+                    as="input"
+                    type="submit"
+                    variant="success"
+                    value="B 1"
+                    data-transfer="2"
+                    onClick={handleChange}
+                />{' '}
+                <Button
+                    as="input"
+                    type="submit"
+                    variant="primary"
+                    value="B 2"
+                    data-transfer="3"
+                    onClick={handleChange}
+                />{' '}
+                <Button as="input" type="submit" variant="dark" value="C 1" data-transfer="4" onClick={handleChange} />{' '}
+                <Button
+                    as="input"
+                    type="submit"
+                    variant="danger"
+                    value="C 2"
+                    data-transfer="5"
+                    onClick={handleChange}
+                />{' '}
+                <Button as="input" type="submit" variant="secondary" value="Difficult" data-transfer="6" disabled />{' '}
             </div>
-            <div>
-                <div className="group-btn">
-                    <ReactPaginate
-                        previousLabel="Previous"
-                        nextLabel="Next"
-                        pageCount={pageCount}
-                        siblingCount="1"
-                        onPageChange={changePage}
-                        containerClassName="pagination"
-                        previousLinkClassName="previous-btn"
-                        nextLinkClassName="next-btn"
-                        disabledClassName="disabled-btn"
-                        activeClassName="active-btn"
-                        pageRangeDisplayed={5}
-                    />
-                </div>
-                <div className="word-wrapper"><WordsPage words={words} loading={loading} /></div>
-                
-                <div>
+            <div className="group-btn">
                 <ReactPaginate
-                        previousLabel="Previous"
-                        nextLabel="Next"
-                        pageCount={pageCount}
-                        siblingCount="1"
-                        onPageChange={changePage}
-                        containerClassName="pagination"
-                        previousLinkClassName="previous-btn"
-                        nextLinkClassName="next-btn"
-                        disabledClassName="disabled-btn"
-                        activeClassName="active-btn"
-                        pageRangeDisplayed={5}
-                    />
-                </div>
+                    previousLabel="Previous"
+                    nextLabel="Next"
+                    pageCount={pageCount}
+                    siblingCount="1"
+                    onPageChange={changePage}
+                    containerClassName="pagination"
+                    previousLinkClassName="previous-btn"
+                    nextLinkClassName="next-btn"
+                    disabledClassName="disabled-btn"
+                    activeClassName="active-btn"
+                    pageRangeDisplayed={5}
+                />
+            </div>
+            <div className="word-wrapper">
+                <WordsPage words={words} loading={loading} props={value} />
+            </div>
+            <div className="group-btn">
+                <ReactPaginate
+                    previousLabel="Previous"
+                    nextLabel="Next"
+                    pageCount={pageCount}
+                    siblingCount="1"
+                    onPageChange={changePage}
+                    containerClassName="pagination"
+                    previousLinkClassName="previous-btn"
+                    nextLinkClassName="next-btn"
+                    disabledClassName="disabled-btn"
+                    activeClassName="active-btn"
+                    pageRangeDisplayed={5}
+                />
             </div>
         </>
     )
