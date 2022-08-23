@@ -1,6 +1,6 @@
 import React from 'react'
-import Capabilities from '../components/Capabilities'
-import Team from '../components/Team'
+import Capabilities from '../components/Home/Capabilities'
+import Team from '../components/Home/Team'
 
 function Home() {
     return (
