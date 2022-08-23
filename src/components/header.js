@@ -6,11 +6,27 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 
-function Login() {
+import PropTypes from 'prop-types'
+import useToken from './Auth/UseToken'
+import { loginUser, signUpUser } from './Auth/ApiUser'
+
+function LoginPopup({ setToken }) {
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
+
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const token = await loginUser({
+            email,
+            password,
+        })
+        setToken(token)
+    }
 
     return (
         <>
@@ -22,20 +38,26 @@ function Login() {
                     <Modal.Title>Login</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                minLength="8"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Agree" />
-                        </Form.Group>
                         <Button variant="primary" type="submit">
                             Login
                         </Button>
@@ -46,11 +68,29 @@ function Login() {
     )
 }
 
-function SignUp() {
+LoginPopup.propTypes = {
+    setToken: PropTypes.func.isRequired,
+}
+
+function SignUp({ setToken }) {
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
+
+    const [name, setName] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const token = await signUpUser({
+            name,
+            email,
+            password,
+        })
+        setToken(token)
+    }
 
     return (
         <>
@@ -62,25 +102,34 @@ function SignUp() {
                     <Modal.Title>Sign-up</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicName">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter name" />
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter name"
+                                onChange={(e) => setName(e.target.value)}
+                            />
                         </Form.Group>
-
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                minLength="8"
+                            />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Agree" />
-                        </Form.Group>
                         <Button variant="primary" type="submit">
                             Sign-up
                         </Button>
@@ -91,7 +140,31 @@ function SignUp() {
     )
 }
 
+SignUp.propTypes = {
+    setToken: PropTypes.func.isRequired,
+}
+
 function Header() {
+    const { userId, setToken } = useToken()
+    console.log(userId)
+    if (!userId) {
+        return (
+            <header className="my-2">
+                <Container>
+                    <Row className="align-items-center">
+                        <Col xs={4}>
+                            <h1>RSLANG</h1>
+                        </Col>
+
+                        <Col xs={8} className="text-end">
+                            <LoginPopup setToken={setToken} />
+                            <SignUp setToken={setToken} />
+                        </Col>
+                    </Row>
+                </Container>
+            </header>
+        )
+    }
     return (
         <header className="my-2">
             <Container>
@@ -101,8 +174,7 @@ function Header() {
                     </Col>
 
                     <Col xs={8} className="text-end">
-                        <Login />
-                        <SignUp />
+                        autorize
                     </Col>
                 </Row>
             </Container>

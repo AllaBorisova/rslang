@@ -3,7 +3,6 @@ import Spinner from 'react-bootstrap/Spinner'
 import WordCard from './WordCard'
 import '../../styles/App.scss'
 
-
 function Loading() {
     return (
         <Spinner animation="border" role="status">
