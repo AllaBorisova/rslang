@@ -1,0 +1,55 @@
+.sprint {
+    // display: block;
+    width: 1000px;
+    background-color: teal;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    &__combo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px 100px 10px 100px;
+    }
+    &__correctAnswer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 20px 100px 10px 100px;
+    }
+    &__game{
+        background-color: grey;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &__interface{
+        background-color: palegreen;
+    }
+    &__timeScore{
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        padding: 20px 40px 10px 40px;
+        font-size: 25px;
+    }
+    &__words{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+    }
+    &__xMark{
+        position: absolute;
+        margin-left: 960px;
+        font-size: 25px;
+    }
+    &__buttons{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        padding: 20px 0 40px 0;
+
+    }
+}
