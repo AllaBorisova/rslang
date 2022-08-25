@@ -11,7 +11,7 @@ function Footer() {
                 <Row>
                     <Col>
                         <a href="https://rs.school/js/" target="_blank" rel="noreferrer">
-                            <img src="../public/rs_school.svg" className="img-fluid footer-img" alt="" />
+                            <img src="./public/rs_school.svg" className="img-fluid footer-img" alt="" />
                         </a>
                     </Col>
                     <Col md={6}>
