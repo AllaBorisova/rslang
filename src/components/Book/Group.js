@@ -3,9 +3,10 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 
 function Group(props) {
-    const { action } = props
+    const { action, reset } = props
     const handleChange = (event) => {
         action(event.target.dataset.transfer)
+        reset(0)
     }
     return (
         <div className="group-btn">

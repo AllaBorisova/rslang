@@ -27,7 +27,7 @@ function WordsPage({ words, loading, props }) {
             currentstyle.backgroundColor = '#FFA07A'
             break
         default:
-            return '#FFFFFF'
+            return currentstyle.backgroundColor
     }
     if (loading) {
         return <Loading />
