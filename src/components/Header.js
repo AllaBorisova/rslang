@@ -146,8 +146,10 @@ SignUp.propTypes = {
 
 function Header() {
     const { userId, setToken } = useToken();
+    const [isLoggedin, setIsLoggedin] = useState(false);
 
-    if (!userId) {
+    if ( !userId ) {
+       
         return (
             <header className="my-2">
                 <Container>
@@ -166,7 +168,14 @@ function Header() {
         );
     }
     const userDataString = localStorage.getItem( 'userData' )
-    const userData = JSON.parse(userDataString)
+    const userData = JSON.parse( userDataString )
+    
+    const logout = () => {
+        localStorage.removeItem('userData');
+        window.location.reload()
+      };
+ 
+    
     return (
         <header className="my-2">
             <Container>
@@ -176,7 +185,9 @@ function Header() {
                     </Col>
 
                     <Col xs={8} className="text-end">
-                        Привет, {userData.name}
+                        Привет, {userData.name} 
+                        <Button className="ms-1" variant="primary" onClick={logout}>Выйти</Button>
+                        
                     </Col>
                 </Row>
             </Container>
