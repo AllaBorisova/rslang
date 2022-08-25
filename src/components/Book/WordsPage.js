@@ -1,15 +1,8 @@
 import React from 'react'
-import Spinner from 'react-bootstrap/Spinner'
 import WordCard from './WordCard'
 import '../../styles/App.scss'
+import Loading from '../Loading'
 
-function Loading() {
-    return (
-        <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-        </Spinner>
-    )
-}
 function WordsPage({ words, loading, props }) {
     const currentstyle = {
         backgroundColor: 'white',
@@ -37,17 +30,15 @@ function WordsPage({ words, loading, props }) {
             return '#FFFFFF'
     }
     if (loading) {
-        return Loading()
+        return <Loading />
     }
     return (
         <div className="word-wrapper" style={currentstyle}>
-            <ul>
-                {words.map((item) => (
-                    <li className="group-words" key={item.id}>
-                        <WordCard props={item} />
-                    </li>
-                ))}
-            </ul>
+            {words.map((item) => (
+                <div className="group-words" key={item.id}>
+                    <WordCard props={item} />
+                </div>
+            ))}
         </div>
     )
 }
