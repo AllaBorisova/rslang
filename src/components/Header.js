@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Modal from 'react-bootstrap/Modal'
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
-import PropTypes from 'prop-types'
-import useToken from './Auth/UseToken'
-import { loginUser, signUpUser } from './Auth/ApiUser'
+import PropTypes from 'prop-types';
+import useToken from './Auth/UseToken';
+import { loginUser, signUpUser, getUser } from './Auth/ApiUser';
 
 function LoginPopup({ setToken }) {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const token = await loginUser({
             email,
             password,
-        })
-        setToken(token)
-    }
+        });
+        setToken(token);
+    };
 
     return (
         <>
@@ -65,32 +65,32 @@ function LoginPopup({ setToken }) {
                 </Modal.Body>
             </Modal>
         </>
-    )
+    );
 }
 
 LoginPopup.propTypes = {
     setToken: PropTypes.func.isRequired,
-}
+};
 
 function SignUp({ setToken }) {
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const token = await signUpUser({
             name,
             email,
             password,
-        })
-        setToken(token)
-    }
+        });
+        setToken(token);
+    };
 
     return (
         <>
@@ -137,17 +137,19 @@ function SignUp({ setToken }) {
                 </Modal.Body>
             </Modal>
         </>
-    )
+    );
 }
 
 SignUp.propTypes = {
     setToken: PropTypes.func.isRequired,
-}
+};
 
 function Header() {
-    const { userId, setToken } = useToken()
-    console.log(userId)
-    if (!userId) {
+    const { userId, setToken } = useToken();
+    const [isLoggedin, setIsLoggedin] = useState(false);
+
+    if ( !userId ) {
+       
         return (
             <header className="my-2">
                 <Container>
@@ -163,8 +165,17 @@ function Header() {
                     </Row>
                 </Container>
             </header>
-        )
+        );
     }
+    const userDataString = localStorage.getItem( 'userData' )
+    const userData = JSON.parse( userDataString )
+    
+    const logout = () => {
+        localStorage.removeItem('userData');
+        window.location.reload()
+      };
+ 
+    
     return (
         <header className="my-2">
             <Container>
@@ -174,12 +185,14 @@ function Header() {
                     </Col>
 
                     <Col xs={8} className="text-end">
-                        autorize
+                        Привет, {userData.name} 
+                        <Button className="ms-1" variant="primary" onClick={logout}>Выйти</Button>
+                        
                     </Col>
                 </Row>
             </Container>
         </header>
-    )
+    );
 }
 
-export default Header
+export default Header;
