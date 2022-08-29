@@ -1,13 +1,12 @@
-import React from 'react';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 function Statistics() {
-    const userDataString = localStorage.getItem('userData');
-    const userData = JSON.parse(userDataString);
+    const userDataString = localStorage.getItem('userData')
+    const userData = JSON.parse(userDataString)
 
     if (userData?.userId) {
-        const [userStatistic, setUserStatistic] = useState([]);
+        const [userStatistic, setUserStatistic] = useState([])
 
         useEffect(() => {
             const getStatistic = async () => {
@@ -16,35 +15,29 @@ function Statistics() {
                         `https://teamwork-rs.herokuapp.com/users/${userData?.userId}/statistics`,
                         {
                             headers: {
-                                Authorization: 'Bearer ' + userData?.token,
+                                Authorization: `Bearer ${userData?.token}`,
                                 Accept: 'application/json',
                             },
                         }
-                    );
-                    console.log(res);
-                    setUserStatistic(res.data);
+                    )
+                    setUserStatistic(res.data)
                 } catch (error) {
-                    //throw new Error(error);
+                    // throw new Error(error);
                 }
-            };
-            getStatistic();
-        }, [] );
-        
-        console.log('--', userStatistic);
-        return (
-            <h1>Статистика есть</h1>
-        );
+            }
+            getStatistic()
+        }, [])
 
-        
+        return <h1>Статистика есть</h1>
+
         // return (
         //     <div>
         //         <h1>Статистика</h1>
         //         {userStatistic}
         //     </div>
         // );
-    } else {
-        return <h1>Статистика недоступна</h1>;
     }
+    return <h1>Статистика недоступна</h1>
 }
 
-export default Statistics;
+export default Statistics
