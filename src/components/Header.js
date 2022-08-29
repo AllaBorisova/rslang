@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
-
 import PropTypes from 'prop-types'
 import useToken from './Auth/UseToken'
 import { loginUser, signUpUser } from './Auth/ApiUser'
@@ -72,7 +71,7 @@ LoginPopup.propTypes = {
     setToken: PropTypes.func.isRequired,
 }
 
-function SignUp({ setToken }) {
+export function SignUp({ setToken }) {
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
@@ -146,7 +145,6 @@ SignUp.propTypes = {
 
 function Header() {
     const { userId, setToken } = useToken()
-    console.log(userId)
     if (!userId) {
         return (
             <header className="my-2">

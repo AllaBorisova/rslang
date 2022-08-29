@@ -19,7 +19,6 @@ export async function signUpUser(credentials) {
         body: JSON.stringify(credentials),
     })
     const content = await rawResponse.json();
-    console.log( content );
     return await loginUser(credentials)
 }
 

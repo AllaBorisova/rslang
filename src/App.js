@@ -16,6 +16,7 @@ import Textbook from './pages/Textbook'
 import Audiocall from './pages/Audiocall'
 import Sprint from './pages/Sprint'
 import Statistics from './pages/Statistics'
+import Dictionary from './pages/Dictionary'
 
 function Navigation() {
     return (
@@ -58,6 +59,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/textbook" element={<Textbook />} />
+                <Route path="/dictionary" element={<Dictionary />} />
                 <Route path="/audiocall" element={<Audiocall />} />
                 <Route path="/sprint" element={<Sprint />} />
                 <Route path="/statistics" element={<Statistics />} />

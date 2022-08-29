@@ -3,7 +3,7 @@ import WordCard from './WordCard'
 import '../../styles/App.scss'
 import Loading from '../Loading'
 
-function WordsPage({ words, loading, props }) {
+function WordsPage({ words, loading, props, user, dict }) {
     const currentstyle = {
         backgroundColor: 'white',
     }
@@ -36,7 +36,7 @@ function WordsPage({ words, loading, props }) {
         <div className="word-wrapper" style={currentstyle}>
             {words.map((item) => (
                 <div className="group-words" key={item.id}>
-                    <WordCard props={item} />
+                    <WordCard props={item} user={user} dict={dict} />
                 </div>
             ))}
         </div>

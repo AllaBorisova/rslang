@@ -3,8 +3,11 @@ import axios from 'axios'
 import Group from '../components/Book/Group'
 import Pagination from '../components/Book/Pagination'
 import WordsPage from '../components/Book/WordsPage'
+import DifficultButton from '../components/Book/DifficultButton'
+import GetStorage from '../components/Book/LocalStorage'
 
 function Textbook() {
+    const user = GetStorage('userData', {})[0]
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
@@ -17,6 +20,7 @@ function Textbook() {
     window.addEventListener('beforeunload', () => {
         sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
     })
+
     useEffect(() => {
         const getList = async () => {
             setLoading(true)
@@ -30,13 +34,17 @@ function Textbook() {
     const changePage = ({ selected }) => {
         setPageNumber(selected)
     }
+
     return (
         <section className="textbook-main">
             <h1>Textbook</h1>
-            <Group action={setValue} reset={setPageNumber} />
+            <section className="group-btn">
+                <Group action={setValue} reset={setPageNumber} />
+                <DifficultButton user={user} />
+            </section>
             <Pagination action={changePage} current={pageNumber} />
             <div className="word-wrapper">
-                <WordsPage words={words} loading={loading} props={value} />
+                <WordsPage words={words} loading={loading} props={value} user={user} dict={false} />
             </div>
             <Pagination action={changePage} />
         </section>
