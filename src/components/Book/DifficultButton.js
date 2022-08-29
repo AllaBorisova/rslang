@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom'
-import GetDiffWords from './GetDifficultWords'
+// import GetDiffWords from './GetDifficultWords'
 
 function DifficultButton({ user }) {
     const { userId } = user
