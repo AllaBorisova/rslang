@@ -1,18 +1,18 @@
 import React from 'react'
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 
-function TeamMember (props) {
+function TeamMember(props) {
+    const { avatar, name, text, link } = props
     return (
         <Card>
-            <Card.Img variant="top" src={`./public/${props.avatar}`} />
+            <Card.Img variant="top" src={`./public/${avatar}`} />
             <Card.Body>
-                <Card.Title>{props.name}</Card.Title>
-                <Card.Text>{props.text}</Card.Text>
-                <Card.Link href={props.link} target="_blank">
+                <Card.Title>{name}</Card.Title>
+                <Card.Text>{text}</Card.Text>
+                <Card.Link href={link} target="_blank">
                     GitHub
                 </Card.Link>
             </Card.Body>

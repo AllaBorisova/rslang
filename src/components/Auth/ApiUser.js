@@ -34,7 +34,6 @@ export async function getUser () {
     } )
     
     const content = await rawResponse.json()
-    console.log(content);
     return content
 }
 
