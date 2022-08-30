@@ -2,12 +2,14 @@ import React from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
 
-function WordCard({ props, user, dict }) {
+function WordCard(props) {
+    // console.log(items)
+    const { items, user, dict } = props
     const { userId } = user
-    const img = `https://teamwork-rs.herokuapp.com/${props.image}`
-    const audio = `https://teamwork-rs.herokuapp.com/${props.audio}`
-    const audioMeaning = `https://teamwork-rs.herokuapp.com/${props.audioMeaning}`
-    const audioExample = `https://teamwork-rs.herokuapp.com/${props.audioExample}`
+    const img = `https://teamwork-rs.herokuapp.com/${items.image}`
+    const audio = `https://teamwork-rs.herokuapp.com/${items.audio}`
+    const audioMeaning = `https://teamwork-rs.herokuapp.com/${items.audioMeaning}`
+    const audioExample = `https://teamwork-rs.herokuapp.com/${items.audioExample}`
     const {
         word,
         transcription,
@@ -17,8 +19,7 @@ function WordCard({ props, user, dict }) {
         textExample,
         textExampleTranslate,
         id,
-    } = props
-
+    } = items
     if (!userId) {
         return (
             <div className="wordCard">
@@ -52,6 +53,13 @@ function WordCard({ props, user, dict }) {
             </div>
         )
     }
+    // console.log(items._id)
+    // const newId = items._id
+    // const bookId= items.id
+    let ourId = id
+    if (dict) {
+        ourId = items._id
+    }
     return (
         <div className="wordCard">
             <img src={img} alt={word} />
@@ -81,7 +89,7 @@ function WordCard({ props, user, dict }) {
                     <track default kind="captions" srcLang="en" />
                 </audio>
             </div>
-            <ButtonGroup id={id} props={user} dict={dict} />
+            <ButtonGroup id={ourId} user={user} dict={dict} />
         </div>
     )
 }

@@ -3,7 +3,8 @@ import GetStorage from './LocalStorage'
 
 const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
 
-function ButtonGroup({ id, props, dict }) {
+function ButtonGroup(props) {
+    const { id, user, dict } = props
     const { userId, token } = GetStorage('userData', {})[0]
     const createUserWord = async (wordId, word) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
@@ -49,13 +50,12 @@ function ButtonGroup({ id, props, dict }) {
 
     const word = { difficulty: 'hard', optional: { testFieldString: 'test', testFieldBoolean: true } }
     const word2 = { difficulty: 'easy', optional: { testFieldString: 'test', testFieldBoolean: true } }
-    const NEW_ID = `_${id}`
     if (dict) {
         return (
             <button
                 type="button"
                 className="btn-remove"
-                value={NEW_ID}
+                value={id}
                 onClick={() => {
                     deleteUserWord(id)
                 }}
