@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 function DifficultButton({ user }) {
     if (user) {
         return (
-            <Link to="/dictionary/" params={user}>
+            <Link to="/dictionary" params={user}>
                 <div>
                     <Button
                         as="input"

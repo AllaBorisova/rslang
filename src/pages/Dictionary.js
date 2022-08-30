@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-// import Pagination from '../components/Book/Pagination'
 import WordsPage from '../components/Book/WordsPage'
 import GetDiffWords from '../components/Book/GetDifficultWord'
 import GetStorage from '../components/Book/LocalStorage'
@@ -11,6 +10,7 @@ function Dictionary() {
         return null
     }
     const list = GetDiffWords(user)[0]
+    console.log(list)
     return (
         <>
             <div>

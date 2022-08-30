@@ -1,10 +1,10 @@
 import React from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
+import useToken from '../Auth/UseToken'
 
 function WordCard({ props, user, dict }) {
     const { userId } = user
-    console.log(dict)
     const img = `https://teamwork-rs.herokuapp.com/${props.image}`
     const audio = `https://teamwork-rs.herokuapp.com/${props.audio}`
     const audioMeaning = `https://teamwork-rs.herokuapp.com/${props.audioMeaning}`
@@ -52,7 +52,6 @@ function WordCard({ props, user, dict }) {
             </div>
         )
     }
-
     return (
         <div className="wordCard">
             <img src={img} alt={word} />
@@ -82,7 +81,7 @@ function WordCard({ props, user, dict }) {
                     <track default kind="captions" srcLang="en" />
                 </audio>
             </div>
-            <ButtonGroup id={id} props={user} />
+            <ButtonGroup id={id} props={user} dict={dict} />
         </div>
     )
 }
