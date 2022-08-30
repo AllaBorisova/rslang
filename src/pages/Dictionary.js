@@ -10,7 +10,6 @@ function Dictionary() {
         return null
     }
     const list = GetDiffWords(user)[0]
-    console.log(list)
     return (
         <>
             <div>

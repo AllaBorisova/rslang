@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 
 const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
 
@@ -19,7 +18,6 @@ function GetDiffWords(user) {
             })
             const content = await Res.json()
             const res = content[0].paginatedResults
-            console.log(res)
             setDiff(res)
         }
         diffWordList()

@@ -30,7 +30,7 @@ function ButtonGroup({ id, props, dict }) {
             },
         })
     }
-    const updateUserWord = async (wordId, word) => {
+    const easyUserWord = async (wordId, word) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
             method: 'POST',
             withCredentials: true,
@@ -49,12 +49,13 @@ function ButtonGroup({ id, props, dict }) {
 
     const word = { difficulty: 'hard', optional: { testFieldString: 'test', testFieldBoolean: true } }
     const word2 = { difficulty: 'easy', optional: { testFieldString: 'test', testFieldBoolean: true } }
+    const NEW_ID = `_${id}`
     if (dict) {
         return (
             <button
                 type="button"
                 className="btn-remove"
-                value={id}
+                value={NEW_ID}
                 onClick={() => {
                     deleteUserWord(id)
                 }}
@@ -80,7 +81,7 @@ function ButtonGroup({ id, props, dict }) {
                 className="btn-remove"
                 value={id}
                 onClick={() => {
-                    updateUserWord(id, word2)
+                    easyUserWord(id, word2)
                 }}
             >
                 Изучено

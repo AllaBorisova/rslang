@@ -1,7 +1,6 @@
 import React from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
-import useToken from '../Auth/UseToken'
 
 function WordCard({ props, user, dict }) {
     const { userId } = user
@@ -19,6 +18,7 @@ function WordCard({ props, user, dict }) {
         textExampleTranslate,
         id,
     } = props
+
     if (!userId) {
         return (
             <div className="wordCard">

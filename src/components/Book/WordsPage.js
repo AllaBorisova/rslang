@@ -4,6 +4,7 @@ import '../../styles/App.scss'
 import Loading from '../Loading'
 
 function WordsPage({ words, loading, props, user, dict }) {
+    console.log(words)
     const currentstyle = {
         backgroundColor: 'white',
     }
