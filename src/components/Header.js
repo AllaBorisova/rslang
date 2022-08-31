@@ -8,9 +8,8 @@ import LoginPopup from './LoginPopup'
 import SignUp from './SingUp'
 
 function Header() {
-    const { userId, setToken, logout } = useToken()
+    const { userId, setToken, logout, isAuth } = useToken()
     // const [isLoggedin, setIsLoggedin] = useState(false)
-
     if (!userId) {
         return (
             <header className="my-2">
