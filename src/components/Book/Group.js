@@ -16,7 +16,6 @@ function Group(props) {
             <Button as="input" type="submit" variant="primary" value="B 2" data-transfer="3" onClick={handleChange} />{' '}
             <Button as="input" type="submit" variant="dark" value="C 1" data-transfer="4" onClick={handleChange} />{' '}
             <Button as="input" type="submit" variant="danger" value="C 2" data-transfer="5" onClick={handleChange} />{' '}
-            <Button as="input" type="submit" variant="secondary" value="Difficult" data-transfer="6" disabled />{' '}
         </div>
     )
 }

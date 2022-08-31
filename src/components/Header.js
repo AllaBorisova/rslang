@@ -9,7 +9,6 @@ import SignUp from './SingUp'
 
 function Header() {
     const { token, setToken, logout, userId } = useToken()
-
     if (!token) {
         return (
             <header className="my-2">
