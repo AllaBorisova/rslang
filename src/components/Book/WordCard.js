@@ -5,7 +5,7 @@ import Player from './Player'
 
 function WordCard(props) {
     // console.log(items)
-    const { items, user, dict } = props
+    const { items, user, dict, currentstyle } = props
     const { userId } = user
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
     const audio = `https://teamwork-rs.herokuapp.com/${items.audio}`
@@ -46,7 +46,7 @@ function WordCard(props) {
     } = items
     if (!userId) {
         return (
-            <div className="wordCard">
+            <div className="wordCard" style={{background:currentstyle}}>
                 <img src={img} alt={word} />
                 <div className="wordCard__word">
                     <div className="wordCard__wordTranscrTransl">

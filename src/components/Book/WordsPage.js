@@ -2,44 +2,44 @@ import React from 'react'
 import WordCard from './WordCard'
 import '../../styles/App.scss'
 import Loading from '../Loading'
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col'
 
 function WordsPage({ words, loading, props, user, dict }) {
-    const currentstyle = {
-        backgroundColor: 'white',
-    }
+    let currentstyle = 'white'
     switch (props) {
         case '0':
-            currentstyle.backgroundColor = '#E0FFFF'
+            currentstyle = '#E0FFFF'
             break
         case '1':
-            currentstyle.backgroundColor = '#FFFACD'
+            currentstyle = '#FFFACD'
             break
         case '2':
-            currentstyle.backgroundColor = '#98FB98'
+            currentstyle = '#98FB98'
             break
         case '3':
-            currentstyle.backgroundColor = '#FFFFF0'
+            currentstyle = '#FFFFF0'
             break
         case '4':
-            currentstyle.backgroundColor = '#D3D3D3'
+            currentstyle = '#D3D3D3'
             break
         case '5':
-            currentstyle.backgroundColor = '#FFA07A'
+            currentstyle = '#FFA07A'
             break
         default:
-            return currentstyle.backgroundColor
+            return currentstyle
     }
     if (loading) {
         return <Loading />
     }
     return (
-        <div className="word-wrapper" style={currentstyle}>
+        <Row className="word-wrapper">
             {words.map((item) => (
-                <div className="group-words" key={item.id}>
-                    <WordCard items={item} user={user} dict={dict} />
-                </div>
+                <Col md={6} className="group-words" key={item.id}>
+                    <WordCard items={item} user={user} dict={dict} currentstyle={currentstyle} />
+                </Col>
             ))}
-        </div>
+        </Row>
     )
 }
 

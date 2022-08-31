@@ -30,12 +30,6 @@ function Header() {
     const userDataString = localStorage.getItem('userData')
     const userData = JSON.parse(userDataString)
 
-    // const logout = () => {
-    //     localStorage.removeItem('userData')
-    //     // useToken.setIsAuth(false)
-    //     window.location.reload()
-    // }
-
     return (
         <header className="my-2">
             <Container>
