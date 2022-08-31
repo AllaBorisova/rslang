@@ -3,8 +3,12 @@ import axios from 'axios'
 import Group from '../components/Book/Group'
 import Pagination from '../components/Book/Pagination'
 import WordsPage from '../components/Book/WordsPage'
+import useToken from '../components/Auth/UseToken'
 
-function Textbook() {
+function Textbook () {
+    const { token, setToken, logout } = useToken()
+    console.log( token );
+    
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'

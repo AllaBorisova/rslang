@@ -1,23 +1,29 @@
 import { useState } from 'react'
 
-export default function useToken() {
-    // const getToken = () => {
+
+
+export default function useToken () {
+    const getToken = () => {
+        const userDataString = localStorage.getItem('userData')
+        const userData = JSON.parse( userDataString )
+        // setIsAuth(true)
+        return userData?.token
+    }
+
+    // const [isAuth, setIsAuth] = useState(false)
+    const [ token, setToken ] = useState( getToken() )
+    
+   
+
+    // const getUserId = () => {
     //     const userDataString = localStorage.getItem('userData')
     //     const userData = JSON.parse(userDataString)
-    //     return userData?.token
+    //     return userData?.userId
     // }
 
-    const getUserId = () => {
-        const userDataString = localStorage.getItem('userData')
-        const userData = JSON.parse(userDataString)
-        return userData?.userId
-    }
-    const [isAuth, setIsAuth] = useState(false)
-    // const [ token, setToken ] = useState( getToken() );
-    const [userId, setToken] = useState(getUserId())
     const saveUserData = (userToken) => {
         localStorage.setItem('userData', JSON.stringify(userToken))
-        setIsAuth(true)
+        // setIsAuth(true)
         setToken(userToken.token)
     }
     const logout = () => {
@@ -25,13 +31,12 @@ export default function useToken() {
 
         localStorage.removeItem('userData')
         setToken(null)
-        setIsAuth(false)
+        // setIsAuth(false)
     }
 
     return {
         setToken: saveUserData,
-        userId,
-        logout,
-        isAuth,
+        token,
+        logout
     }
 }
