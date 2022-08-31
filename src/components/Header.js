@@ -8,10 +8,8 @@ import LoginPopup from './LoginPopup'
 import SignUp from './SingUp'
 
 function Header() {
-    const { userId, setToken, logout } = useToken()
-    // const [isLoggedin, setIsLoggedin] = useState(false)
-
-    if (!userId) {
+    const { token, setToken, logout, userId } = useToken()
+    if (!token) {
         return (
             <header className="my-2">
                 <Container>
@@ -31,12 +29,6 @@ function Header() {
     }
     const userDataString = localStorage.getItem('userData')
     const userData = JSON.parse(userDataString)
-
-    // const logout = () => {
-    //     localStorage.removeItem('userData')
-    //     // useToken.setIsAuth(false)
-    //     window.location.reload()
-    // }
 
     return (
         <header className="my-2">

@@ -11,6 +11,7 @@ import ToggleMute from '../UI/ToggleMute'
 import DifficultiesScreen from '../GameComponents/DifficultiesScreen'
 import FinishStat from '../GameComponents/FinishStat'
 
+
 const TIME_LIMIT = 20000
 
 function Game() {
