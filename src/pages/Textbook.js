@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 import Group from '../components/Book/Group'
 import Pagination from '../components/Book/Pagination'
 import WordsPage from '../components/Book/WordsPage'
 import DifficultButton from '../components/Book/DiffucultButton'
 import GetStorage from '../components/Book/LocalStorage'
-import Dictionary from './Dictionary'
 
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`

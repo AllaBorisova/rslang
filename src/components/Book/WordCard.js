@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
+import Player from './Player'
 
 function WordCard(props) {
     // console.log(items)
@@ -10,6 +11,29 @@ function WordCard(props) {
     const audio = `https://teamwork-rs.herokuapp.com/${items.audio}`
     const audioMeaning = `https://teamwork-rs.herokuapp.com/${items.audioMeaning}`
     const audioExample = `https://teamwork-rs.herokuapp.com/${items.audioExample}`
+    // Player
+    const [sound] = useState([
+        {
+            src: `https://teamwork-rs.herokuapp.com/${items.audio}`,
+        },
+
+        { src: `https://teamwork-rs.herokuapp.com/${items.audioMeaning}` },
+        {
+            src: `https://teamwork-rs.herokuapp.com/${items.audioExample}`,
+        },
+    ])
+    const [currentSound, SetCurrentIndex] = useState(0)
+    const [nextSound, SetNextIndex] = useState(0)
+
+    useEffect(() => {
+        SetNextIndex(() => {
+            if (currentSound + 1 > sound.length - 1) {
+                return 0
+            }
+            return currentSound + 1
+        })
+    }, [currentSound, sound.length])
+    //
     const {
         word,
         transcription,
@@ -30,25 +54,31 @@ function WordCard(props) {
                         <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                         <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     </div>
-                    <audio controls src={audio}>
+                    <Player
+                        currentSound={currentSound}
+                        SetCurrentIndex={SetCurrentIndex}
+                        nextSound={nextSound}
+                        sound={sound}
+                    />
+                    {/* <audio controls src={audio}>
                         <track default kind="captions" srcLang="en" />
-                    </audio>
+                    </audio> */}
                 </div>
 
                 <div className="wordCard__example">
                     <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    <audio controls src={audioMeaning}>
+                    {/* <audio controls src={audioMeaning}>
                         <track default kind="captions" srcLang="en" />
-                    </audio>
+                    </audio> */}
                 </div>
 
                 <div className="wordCard__example">
                     <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    <audio controls src={audioExample}>
+                    {/* <audio controls src={audioExample}>
                         <track default kind="captions" srcLang="en" />
-                    </audio>
+                    </audio> */}
                 </div>
             </div>
         )
@@ -58,6 +88,7 @@ function WordCard(props) {
     // const bookId= items.id
     let ourId = id
     if (dict) {
+        // eslint-disable-next-line no-underscore-dangle
         ourId = items._id
     }
     return (
@@ -69,25 +100,31 @@ function WordCard(props) {
                     <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 </div>
-                <audio controls src={audio}>
+                <Player
+                    currentSound={currentSound}
+                    SetCurrentIndex={SetCurrentIndex}
+                    nextSound={nextSound}
+                    sound={sound}
+                />
+                {/* <audio controls src={audio}>
                     <track default kind="captions" srcLang="en" />
-                </audio>
+                </audio> */}
             </div>
 
             <div className="wordCard__example">
                 <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                <audio controls src={audioMeaning}>
+                {/* <audio controls src={audioMeaning}>
                     <track default kind="captions" srcLang="en" />
-                </audio>
+                </audio> */}
             </div>
 
             <div className="wordCard__example">
                 <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                <audio controls src={audioExample}>
+                {/* <audio controls src={audioExample}>
                     <track default kind="captions" srcLang="en" />
-                </audio>
+                </audio> */}
             </div>
             <ButtonGroup id={ourId} user={user} dict={dict} />
         </div>
