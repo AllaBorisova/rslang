@@ -6,9 +6,10 @@ import WordsPage from '../components/Book/WordsPage'
 import useToken from '../components/Auth/UseToken'
 
 function Textbook () {
-    const { token, setToken, logout } = useToken()
+    const { token, setToken, logout, userId } = useToken()
     console.log( token );
-    
+    console.log( userId );
+
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'

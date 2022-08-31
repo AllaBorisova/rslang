@@ -1,26 +1,36 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-export default function useToken () {
+export default function useToken() {
     const getToken = () => {
-        const userDataString = localStorage.getItem('userData')
-        const userData = JSON.parse( userDataString )
-        return userData?.token ? userData?.token : null
-    }
+        const userDataString = localStorage.getItem('userData');
+        const userData = JSON.parse(userDataString);
+        return userData?.token ? userData?.token : null;
+    };
 
-    const [ token, setToken ] = useState( getToken() )
-   
+    const getUserId = () => {
+        const userDataString = localStorage.getItem('userData');
+        const userData = JSON.parse(userDataString);
+        return userData?.userId ? userData?.userId : null;
+    };
+
+    const [token, setToken] = useState(getToken());
+    const [userId, setUserId] = useState(getUserId());
+
     const saveUserData = (userToken) => {
-        localStorage.setItem('userData', JSON.stringify(userToken))
-        setToken(userToken.token)
-    }
+        localStorage.setItem('userData', JSON.stringify(userToken));
+        setToken(userToken.token);
+        setUserId(userToken.userId);
+    };
     const logout = () => {
-        localStorage.removeItem('userData')
-        setToken(null)
-    }
+        localStorage.removeItem('userData');
+        setToken(null);
+        setUserId(null);
+    };
 
     return {
         setToken: saveUserData,
         token,
-        logout
-    }
+        logout,
+        userId
+    };
 }

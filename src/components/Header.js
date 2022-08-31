@@ -8,7 +8,7 @@ import LoginPopup from './LoginPopup'
 import SignUp from './SingUp'
 
 function Header() {
-    const { token, setToken, logout } = useToken()
+    const { token, setToken, logout, userId } = useToken()
 
     if (!token) {
         return (
