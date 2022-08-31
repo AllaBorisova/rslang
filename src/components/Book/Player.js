@@ -13,10 +13,26 @@ function Player(props) {
         }
     })
 
+    //    useEffect(()=>{
+    //      const audio = document.querySelector('.player__audio')
+    //    },[])
+
+    // audio.addEventListener('ended', () => {
+    //     console.log('hi"')
+    //     // if (sound[currentSound].src.duration === sound[currentSound].src.currentTime) {
+    //     //     sound[currentSound].src.play()
+    //     // }
+    // })
+
     return (
         <>
             <div className="player">
-                <audio className="player__audio" src={sound[currentSound].src} ref={soundItem}>
+                <audio
+                    className="player__audio"
+                    src={sound[currentSound].src}
+                    ref={soundItem}
+                    onEnded={() => SetCurrentIndex(nextSound)}
+                >
                     <track default kind="captions" srcLang="en" />
                 </audio>
             </div>

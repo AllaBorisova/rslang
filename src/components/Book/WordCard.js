@@ -10,10 +10,7 @@ function WordCard(props) {
     const { items, user, dict, currentstyle } = props
     // const { userId } = user
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
-    const audio = `https://teamwork-rs.herokuapp.com/${items.audio}`
-    const audioMeaning = `https://teamwork-rs.herokuapp.com/${items.audioMeaning}`
-    const audioExample = `https://teamwork-rs.herokuapp.com/${items.audioExample}`
-    // Player
+
     const [sound] = useState([
         {
             src: `https://teamwork-rs.herokuapp.com/${items.audio}`,
@@ -62,32 +59,21 @@ function WordCard(props) {
                         nextSound={nextSound}
                         sound={sound}
                     />
-                    {/* <audio controls src={audio}>
-                        <track default kind="captions" srcLang="en" />
-                    </audio> */}
                 </div>
 
                 <div className="wordCard__example">
                     <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    {/* <audio controls src={audioMeaning}>
-                        <track default kind="captions" srcLang="en" />
-                    </audio> */}
                 </div>
 
                 <div className="wordCard__example">
                     <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    {/* <audio controls src={audioExample}>
-                        <track default kind="captions" srcLang="en" />
-                    </audio> */}
                 </div>
             </div>
         )
     }
-    // console.log(items._id)
-    // const newId = items._id
-    // const bookId= items.id
+
     let ourId = id
     if (dict) {
         // eslint-disable-next-line no-underscore-dangle
@@ -116,17 +102,11 @@ function WordCard(props) {
             <div className="wordCard__example">
                 <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                {/* <audio controls src={audioMeaning}>
-                    <track default kind="captions" srcLang="en" />
-                </audio> */}
             </div>
 
             <div className="wordCard__example">
                 <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                {/* <audio controls src={audioExample}>
-                    <track default kind="captions" srcLang="en" />
-                </audio> */}
             </div>
             <ButtonGroup id={ourId} user={user} dict={dict} />
         </div>
