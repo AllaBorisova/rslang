@@ -3,10 +3,15 @@ import axios from 'axios'
 import Group from '../components/Book/Group'
 import Pagination from '../components/Book/Pagination'
 import WordsPage from '../components/Book/WordsPage'
+import useToken from '../components/Auth/UseToken'
 import DifficultButton from '../components/Book/DiffucultButton'
 import GetStorage from '../components/Book/LocalStorage'
 
-function Textbook() {
+function Textbook () {
+    const { token, setToken, logout, userId } = useToken()
+    console.log( token );
+    console.log( userId );
+
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [user, setUser] = GetStorage('userData', '')
 
