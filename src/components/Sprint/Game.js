@@ -11,7 +11,7 @@ import ToggleMute from '../UI/ToggleMute';
 import DifficultiesScreen from '../GameComponents/DifficultiesScreen';
 import FinishStat from '../GameComponents/FinishStat';
 import { createUserWord } from '../Auth/ApiUser';
-import useToken from '../Auth/UseToken';
+
 
 const TIME_LIMIT = 60000;
 
@@ -32,9 +32,8 @@ function Game() {
     const [rightAnswers, setRightAnswers] = useState([]);
     const [ wrongAnswers, setWrongAnswers ] = useState( [] );
     
-    const { token, setToken, logout, userId } = useToken();
-    // console.log(token);
-    // console.log(userId);
+    const game = 'Спринт'
+
 
     const onAnswerRight = async (points, word) => {
         if (!ToggleMute.muted) {
