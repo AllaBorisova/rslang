@@ -5,10 +5,11 @@ import Row from 'react-bootstrap/esm/Row'
 
 function DifficultiesScreen(props) {
     const { action } = props
+    const { game } = props
     return (
         <Row className="p-5 justify-content-md-center text-center">
             <Col md={6}>
-                <h1>Спринт</h1>
+                <h1>{game}</h1>
                 <p>Выберите уровень</p>
                 <Button variant="primary" data-level="0" onClick={action}>
                     1

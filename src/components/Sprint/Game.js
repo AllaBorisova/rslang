@@ -30,7 +30,7 @@ function Game() {
     const [answersBonus, setAnswersBonus] = useState(0)
     const [rightAnswers, setRightAnswers] = useState([])
     const [wrongAnswers, setWrongAnswers] = useState([])
-
+    const game = 'Спринт'
     const onAnswerRight = (points, word) => {
         if (!ToggleMute.muted) {
             playAudioRight()
@@ -101,7 +101,7 @@ function Game() {
 
     return (
         <div>
-            {!playing && !finished && <DifficultiesScreen action={startGame} />}
+            {!playing && !finished && <DifficultiesScreen action={startGame} game={game} />}
 
             {playing && (
                 <div>
@@ -133,7 +133,14 @@ function Game() {
                     </Row>
                 </div>
             )}
-            {finished && <FinishStat score={score} rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} />}
+            {finished && (
+                <FinishStat
+                    score={score}
+                    rightAnswers={rightAnswers}
+                    wrongAnswers={wrongAnswers}
+                    // handleClickRestart={startGame}
+                />
+            )}
         </div>
     )
 }
