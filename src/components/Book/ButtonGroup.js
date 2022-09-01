@@ -9,22 +9,19 @@ function ButtonGroup(props) {
     const { userId, token } = GetStorage('userData', '')[0]
 
     const CheckWord = async (Id) => {
-        
-            const res = await fetch(`${USER_URL}${userId}/words/${Id}`, {
-                method: 'GET',
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            const response = await res.status
-            if (res.status!=='200')
-            console.log(response)
-        
+        const res = await fetch(`${USER_URL}${userId}/words/${Id}`, {
+            method: 'GET',
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        const response = await res.status
+        if (res.status !== '200') console.log(response)
 
         const data = await res.json()
         return data.difficulty
     }
     const createUserWord = async (wordId, word) => {
-        const status = await CheckWord(wordId)
-        console.log(status)
+        // const status = await CheckWord(wordId)
+        // console.log(status)
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
             method: 'POST',
             withCredentials: true,
