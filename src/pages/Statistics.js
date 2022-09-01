@@ -1,43 +1,52 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import useToken from '../components/Auth/UseToken';
+import Container from 'react-bootstrap/Container';
 
 function Statistics() {
-    const userDataString = localStorage.getItem('userData')
-    const userData = JSON.parse(userDataString)
-
-    if (userData?.userId) {
-        const [userStatistic, setUserStatistic] = useState([])
-
+    const { token, setToken, logout, userId } = useToken();
+    const [userStatistic, setUserStatistic] = useState([]);
+    if (token) {
         useEffect(() => {
             const getStatistic = async () => {
-                try {
-                    const res = await axios.get(
-                        `https://teamwork-rs.herokuapp.com/users/${userData?.userId}/statistics`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${userData?.token}`,
-                                Accept: 'application/json',
-                            },
-                        }
-                    )
-                    setUserStatistic(res.data)
-                } catch (error) {
-                    // throw new Error(error);
-                }
-            }
-            getStatistic()
-        }, [])
-
-        return <h1>Статистика есть</h1>
-
-        // return (
-        //     <div>
-        //         <h1>Статистика</h1>
-        //         {userStatistic}
-        //     </div>
-        // );
+                const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/statistics`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    }
+                } );
+                console.log(content)
+                const content = await rawResponse.json();
+                
+                // try {
+                //     const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/statistics`, {
+                //         method: 'GET',
+                //         headers: {
+                //             Authorization: `Bearer ${token}`,
+                //             Accept: 'application/json',
+                //         }
+                //     } );
+                    
+                //     const content = await rawResponse.json();
+                //     console.log(res);
+                //     setUserStatistic(res.data);
+                // } catch (error) {
+                //     console.log(error);
+                // }
+            };
+            getStatistic();
+        }, []);
     }
-    return <h1>Статистика недоступна</h1>
+
+    return (
+        <section className="py-4 full-section">
+            <Container>
+                {userStatistic && <h1>Статистика недоступна</h1>}
+                {!userStatistic && <h1>Статистика недоступна</h1>}
+            </Container>
+        </section>
+    );
 }
 
-export default Statistics
+export default Statistics;
