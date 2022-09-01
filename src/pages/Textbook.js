@@ -1,48 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
-import Group from '../components/Book/Group';
-import Pagination from '../components/Book/Pagination';
-import WordsPage from '../components/Book/WordsPage';
-import useToken from '../components/Auth/UseToken';
-import DifficultButton from '../components/Book/DiffucultButton';
-import GetStorage from '../components/Book/LocalStorage';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/esm/Col'
+import Row from 'react-bootstrap/esm/Row'
+import Group from '../components/Book/Group'
+import Pagination from '../components/Book/Pagination'
+import WordsPage from '../components/Book/WordsPage'
+import DifficultButton from '../components/Book/DiffucultButton'
+import GetStorage from '../components/Book/LocalStorage'
+// import GetDiffWords from '../components/Book/GetDifficultWord'
 
 function Textbook() {
-    const { token, setToken, logout, userId } = useToken();
-    console.log(token);
-    console.log(userId);
-
-    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
-    const [user, setUser] = GetStorage('userData', '');
-
+    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
+    const [user, setUser] = GetStorage('userData', '')
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
-    );
+    )
     const [pageNumber, setPageNumber] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
-    );
-    const [words, setWords] = useState([]);
-    const [loading, setLoading] = useState(false);
+    )
+    const [words, setWords] = useState([])
+    const [loading, setLoading] = useState(false)
     window.addEventListener('beforeunload', () => {
-        sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }));
-    });
+        sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
+    })
 
     useEffect(() => {
         const getList = async () => {
-            setLoading(true);
-            const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`);
-            setWords(res.data);
-            setLoading(false);
-        };
-        getList();
-    }, [value, pageNumber, BASE_URL]);
+            setLoading(true)
+            const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`)
+            setWords(res.data)
+            setLoading(false)
+        }
+        getList()
+    }, [value, pageNumber, BASE_URL])
 
     const changePage = ({ selected }) => {
-        setPageNumber(selected);
-    };
+        setPageNumber(selected)
+    }
 
     return (
         <section className="textbook-main my-4">
@@ -57,7 +52,6 @@ function Textbook() {
                         <Group action={setValue} reset={setPageNumber} />
                         <DifficultButton user={user} />
                     </Col>
-                    
                 </Row>
                 <Row>
                     <Col>
@@ -77,7 +71,7 @@ function Textbook() {
                 </Row>
             </Container>
         </section>
-    );
+    )
 }
 
-export default Textbook;
+export default Textbook

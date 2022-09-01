@@ -1,9 +1,9 @@
 import React from 'react'
+import Row from 'react-bootstrap/esm/Row'
+import Col from 'react-bootstrap/esm/Col'
 import WordCard from './WordCard'
 import '../../styles/App.scss'
 import Loading from '../Loading'
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col'
 
 function WordsPage({ words, loading, props, user, dict }) {
     let currentstyle = 'white'
@@ -35,7 +35,7 @@ function WordsPage({ words, loading, props, user, dict }) {
     return (
         <Row className="word-wrapper">
             {words.map((item) => (
-                <Col md={6} className="group-words" key={item.id}>
+                <Col md={6} className="group-words" key={item.word}>
                     <WordCard items={item} user={user} dict={dict} currentstyle={currentstyle} />
                 </Col>
             ))}
