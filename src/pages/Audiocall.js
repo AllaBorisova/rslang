@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
-import AudiocallGame from '../components/Audiocall/AudiocallGame'
+import AudiocallGame from '../components/AudiocallGame/AudiocallGame'
 
 function Audiocall() {
     return (

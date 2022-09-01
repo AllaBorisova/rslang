@@ -17,25 +17,25 @@ const TIME_LIMIT = 60000;
 
 function Game() {
     // audio
-    const { play: playAudioRight } = useAudio('../public/audio/right.mp3');
-    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3');
-    const [sprintScore, setSprintScore] = useState(10);
-    const [playing, setPlaying] = useState(false);
-    const [finished, setFinished] = useState(false);
-    const [score, setScore] = useState(0);
-    const [counterArray, setCounterArray] = useState(0);
-    const [words, setWords] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [level, setLevel] = useState(1);
-    const [pageNumber, setPageNumber] = useState(Math.floor(Math.random() * 30));
-    const [answersBonus, setAnswersBonus] = useState(0);
-    const [rightAnswers, setRightAnswers] = useState([]);
-    const [ wrongAnswers, setWrongAnswers ] = useState( [] );
-    
+
+    const { play: playAudioRight } = useAudio('../public/audio/right.mp3')
+    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3')
+    const [sprintScore, setSprintScore] = useState(10)
+    const [playing, setPlaying] = useState(false)
+    const [finished, setFinished] = useState(false)
+    const [score, setScore] = useState(0)
+    const [counterArray, setCounterArray] = useState(0)
+    const [words, setWords] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [level, setLevel] = useState(1)
+    const [pageNumber, setPageNumber] = useState(Math.floor(Math.random() * 30))
+    const [answersBonus, setAnswersBonus] = useState(0)
+    const [rightAnswers, setRightAnswers] = useState([])
+    const [wrongAnswers, setWrongAnswers] = useState([])
     const game = 'Спринт'
-
-
     const onAnswerRight = async (points, word) => {
+
+
         if (!ToggleMute.muted) {
             playAudioRight();
         }
@@ -111,7 +111,7 @@ function Game() {
 
     return (
         <div>
-            {!playing && !finished && <DifficultiesScreen action={startGame} />}
+            {!playing && !finished && <DifficultiesScreen action={startGame} game={game} />}
 
             {playing && (
                 <div>
@@ -143,7 +143,14 @@ function Game() {
                     </Row>
                 </div>
             )}
-            {finished && <FinishStat score={score} rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} />}
+            {finished && (
+                <FinishStat
+                    score={score}
+                    rightAnswers={rightAnswers}
+                    wrongAnswers={wrongAnswers}
+                    // handleClickRestart={startGame}
+                />
+            )}
         </div>
     );
 }

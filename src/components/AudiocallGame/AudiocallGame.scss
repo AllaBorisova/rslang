@@ -1,0 +1,11 @@
+.hearts {
+    display: flex;
+    flex-direction: row;
+    background-color: green;
+    img{
+        height: 30px;
+    }
+    p{
+        padding-left: 20px;
+    }
+}
