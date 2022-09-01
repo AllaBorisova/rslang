@@ -13,6 +13,17 @@ function Player(props) {
         }
     })
 
+    //    useEffect(()=>{
+    //      const audio = document.querySelector('.player__audio')
+    //    },[])
+
+    // audio.addEventListener('ended', () => {
+    //     console.log('hi"')
+    //     // if (sound[currentSound].src.duration === sound[currentSound].src.currentTime) {
+    //     //     sound[currentSound].src.play()
+    //     // }
+    // })
+
     return (
         <>
             <div className="player">
