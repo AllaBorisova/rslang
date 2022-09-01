@@ -117,6 +117,7 @@ h1 {
 	display:none;
   }
 
+
 .sprint-section{
 	// min-height: 100vh;
 	display:flex;
@@ -130,4 +131,12 @@ h1 {
   .full-section{
 	flex:1;
   }
+
+	.soundOn{
+		width: 60px;
+		height: 60px;
+		background-color: transparent;
+		border: none;
+	}
+
 	
