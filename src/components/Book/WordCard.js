@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
 import Player from './Player'
-import useToken from '../Auth/UseToken'
 
 function WordCard(props) {
     const [hidden, setHiden] = useState(true)
@@ -21,7 +20,7 @@ function WordCard(props) {
     }
 
     const { items, user, dict, currentstyle } = props
-    // const { userId } = user
+    const { userId } = user
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
 
     const [sound] = useState([
@@ -56,7 +55,7 @@ function WordCard(props) {
         textExampleTranslate,
         id,
     } = items
-    if (!token) {
+    if (!userId) {
         return (
             <div className="wordCard" style={{ background: currentstyle }}>
                 <img src={img} alt={word} />
