@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
 import Player from './Player'
+import useToken from '../Auth/UseToken'
 
 function WordCard(props) {
     // console.log(items)
+    const { token, setToken, logout, userId } = useToken()
     const { items, user, dict, currentstyle } = props
-    const { userId } = user
+    // const { userId } = user
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
     const audio = `https://teamwork-rs.herokuapp.com/${items.audio}`
     const audioMeaning = `https://teamwork-rs.herokuapp.com/${items.audioMeaning}`
@@ -44,7 +46,7 @@ function WordCard(props) {
         textExampleTranslate,
         id,
     } = items
-    if (!userId) {
+    if (!token) {
         return (
             <div className="wordCard" style={{background:currentstyle}}>
                 <img src={img} alt={word} />

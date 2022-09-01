@@ -4,7 +4,7 @@ import Game from '../components/Sprint/Game'
 
 function Sprint() {
     return (
-        <section className="my-4">
+        <section className="py-4 sprint-section full-section">
             <Container>
                 <Game />
             </Container>
