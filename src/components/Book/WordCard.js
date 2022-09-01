@@ -5,8 +5,21 @@ import Player from './Player'
 import useToken from '../Auth/UseToken'
 
 function WordCard(props) {
-    // console.log(items)
-    const { token, setToken, logout, userId } = useToken()
+    const [hidden, setHiden] = useState(true)
+    const HideTheCard = () => {
+        setHiden(false)
+    }
+    const [hard, setHard] = useState(false)
+    const [easy, setEasy] = useState(false)
+    const SetHardStyle = () => {
+        setHard(true)
+        setEasy(false)
+    }
+    const SetEasyStyle = () => {
+        setEasy(true)
+        setHard(false)
+    }
+
     const { items, user, dict, currentstyle } = props
     // const { userId } = user
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
@@ -45,7 +58,7 @@ function WordCard(props) {
     } = items
     if (!token) {
         return (
-            <div className="wordCard" style={{background:currentstyle}}>
+            <div className="wordCard" style={{ background: currentstyle }}>
                 <img src={img} alt={word} />
                 <div className="wordCard__word">
                     <div className="wordCard__wordTranscrTransl">
@@ -79,8 +92,19 @@ function WordCard(props) {
         // eslint-disable-next-line no-underscore-dangle
         ourId = items._id
     }
+
     return (
-        <div className="wordCard">
+        <div
+            className="wordCard"
+            style={{
+                background: currentstyle,
+                display: hidden ? 'block' : 'none',
+                border: hard ? '3px solid red' : '1px solid black',
+                boxShadow: easy
+                    ? `0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px ${currentstyle}, 0 0 40px ${currentstyle}, 0 0 80px ${currentstyle}`
+                    : '',
+            }}
+        >
             <img src={img} alt={word} />
             <div className="wordCard__word">
                 <div className="wordCard__wordTranscrTransl">
@@ -94,9 +118,6 @@ function WordCard(props) {
                     nextSound={nextSound}
                     sound={sound}
                 />
-                {/* <audio controls src={audio}>
-                    <track default kind="captions" srcLang="en" />
-                </audio> */}
             </div>
 
             <div className="wordCard__example">
@@ -108,7 +129,7 @@ function WordCard(props) {
                 <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
             </div>
-            <ButtonGroup id={ourId} user={user} dict={dict} />
+            <ButtonGroup id={ourId} user={user} dict={dict} action={[HideTheCard, SetHardStyle, SetEasyStyle]} />
         </div>
     )
 }
