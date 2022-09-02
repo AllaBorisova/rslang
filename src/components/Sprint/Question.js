@@ -4,7 +4,13 @@ import ButtonGroup from 'react-bootstrap/esm/ButtonGroup'
 import Col from 'react-bootstrap/esm/Col'
 import Row from 'react-bootstrap/esm/Row'
 
-function Question({ originalWord, onAnswerRight, onAnswerWrong, really, otherWord, sprintScore }) {
+function Question ( { originalWord, onAnswerRight, onAnswerWrong, really, otherWord, sprintScore } ) {
+    // const keyboardEvents = (event) =>{
+    //     event.persist();
+    //     console.log(event.key); // this will return string of key name like 'Enter'
+    // }
+    
+      
     return (
         <>
             <Row className="p-2">

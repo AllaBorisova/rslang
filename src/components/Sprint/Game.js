@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import useAudio from '../../hooks/useAudio';
@@ -11,46 +11,45 @@ import ToggleMute from '../UI/ToggleMute';
 import DifficultiesScreen from '../GameComponents/DifficultiesScreen';
 import FinishStat from '../GameComponents/FinishStat';
 import { createUserWord } from '../Auth/ApiUser';
-
+import Loading from '../Loading';
 
 const TIME_LIMIT = 60000;
 
 function Game() {
     // audio
 
-    const { play: playAudioRight } = useAudio('../public/audio/right.mp3')
-    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3')
-    const [sprintScore, setSprintScore] = useState(10)
-    const [playing, setPlaying] = useState(false)
-    const [finished, setFinished] = useState(false)
-    const [score, setScore] = useState(0)
-    const [counterArray, setCounterArray] = useState(0)
-    const [words, setWords] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [level, setLevel] = useState(1)
-    const [pageNumber, setPageNumber] = useState(Math.floor(Math.random() * 30))
-    const [answersBonus, setAnswersBonus] = useState(0)
-    const [rightAnswers, setRightAnswers] = useState([])
-    const [wrongAnswers, setWrongAnswers] = useState([])
-    const game = 'Спринт'
+    const { play: playAudioRight } = useAudio('../public/audio/right.mp3');
+    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3');
+    const [sprintScore, setSprintScore] = useState(10);
+    const [playing, setPlaying] = useState(false);
+    const [finished, setFinished] = useState(false);
+    const [score, setScore] = useState(0);
+    const [counterArray, setCounterArray] = useState(0);
+    const [words, setWords] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [level, setLevel] = useState(1);
+    const [pageNumber, setPageNumber] = useState(Math.floor(Math.random() * 30));
+    const [answersBonus, setAnswersBonus] = useState(0);
+    const [rightAnswers, setRightAnswers] = useState([]);
+    const [wrongAnswers, setWrongAnswers] = useState([]);
+    const [error, setError] = useState('');
+    const game = 'Спринт';
+
     const onAnswerRight = async (points, word) => {
-
-
         if (!ToggleMute.muted) {
             playAudioRight();
         }
         setCounterArray((counterArray + 1) % 60);
         setScore(score + points);
         setAnswersBonus(answersBonus + 1);
-        setRightAnswers( ( oldArray ) => [ ...oldArray, word ] );
-        
-        const res = await createUserWord( userId, word.id, word, token )
-        
+        setRightAnswers((oldArray) => [...oldArray, word]);
+
+        const res = await createUserWord(userId, word.id, word, token);
+
         if (answersBonus === 3) {
             setSprintScore(sprintScore + 10);
             setAnswersBonus(0);
         }
-        
     };
     const onAnswerWrong = (word) => {
         if (!ToggleMute.muted) {
@@ -61,30 +60,40 @@ function Game() {
         setSprintScore(10);
         setAnswersBonus(0);
         setWrongAnswers((oldArray) => [...oldArray, word]);
-        
     };
 
-    useEffect(() => {
-        const getList = async () => {
+    const getList = async () => {
+        try {
+            setError('');
             setLoading(true);
             const res1 = await axios.get(`https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber}`);
-            const res2 = await axios.get(`https://teamwork-rs.herokuapp.com/words?group=${level}&page=${(pageNumber + 1) % 30}`);
-            const res3 = await axios.get(`https://teamwork-rs.herokuapp.com/words?group=${level}&page=${(pageNumber + 2) % 30}`);
+            const res2 = await axios.get(
+                `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${(pageNumber + 1) % 30}`
+            );
+            const res3 = await axios.get(
+                `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${(pageNumber + 2) % 30}`
+            );
             const res1Data = res1.data;
             const res2Data = res2.data;
             const res3Data = res3.data;
-            setWords( res1Data.concat( res2Data, res3Data ) );
-            
-            console.log(words);
+            setWords(res1Data.concat(res2Data, res3Data));
             setLoading(false);
-        };
-        getList();
-    }, [ level, pageNumber ] );
-    
-    // const keyboardEvents = (event) =>{
-    //     event.persist();
-    //     console.log(event.key); // this will return string of key name like 'Enter'
-    // }
+        } catch (e) {
+            const error = e;
+            setLoading(false);
+            setError(error.message);
+        }
+    };
+
+    useEffect(() => {
+        getList(level, pageNumber);
+    }, [level, pageNumber]);
+
+    window.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            console.log('enter');
+        }
+    });
 
     const endGame = () => {
         setPlaying(false);
@@ -107,6 +116,30 @@ function Game() {
     if (!really) {
         const index = (counterArray + 20) % 60;
         otherWord = words[index];
+    }
+
+    if (loading) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <Loading />
+                    </Row>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <p>{error}</p>
+                    </Row>
+                </div>
+            </div>
+        );
     }
 
     return (
