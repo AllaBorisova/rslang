@@ -3,24 +3,53 @@ import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
 import Player from './Player'
 
+const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
+
 function WordCard(props) {
+    const { items, user, dict, currentstyle } = props
+    const { userId, token } = user
+    const {
+        word,
+        transcription,
+        wordTranslate,
+        textMeaning,
+        textMeaningTranslate,
+        textExample,
+        textExampleTranslate,
+        id,
+    } = items
+    let ourId = id
+    if (dict) {
+        // eslint-disable-next-line no-underscore-dangle
+        ourId = items._id
+    }
     const [hidden, setHiden] = useState(true)
     const HideTheCard = () => {
         setHiden(false)
     }
-    const [hard, setHard] = useState(false)
-    const [easy, setEasy] = useState(false)
+    const [status, setStatus] = useState(null)
     const SetHardStyle = () => {
-        setHard(true)
-        setEasy(false)
+        setStatus('hard')
     }
     const SetEasyStyle = () => {
-        setEasy(true)
-        setHard(false)
+        setStatus('easy')
     }
-
-    const { items, user, dict, currentstyle } = props
-    const { userId } = user
+    useEffect(() => {
+        const CheckWord = async (Id) => {
+            await fetch(`${USER_URL}${userId}/words/${Id}`, {
+                method: 'GET',
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then((data) => data.json())
+                .then((result) => {
+                    setStatus(result.difficulty)
+                })
+                .catch((e) => {
+                    console.log('fail')
+                })
+        }
+        CheckWord(ourId)
+    })
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
 
     const [sound] = useState([
@@ -44,18 +73,7 @@ function WordCard(props) {
             return currentSound + 1
         })
     }, [currentSound, sound.length])
-    //
-    const {
-        word,
-        transcription,
-        wordTranslate,
-        textMeaning,
-        textMeaningTranslate,
-        textExample,
-        textExampleTranslate,
-        id,
-    } = items
-    if (!userId) {
+    if (!user) {
         return (
             <div className="wordCard" style={{ background: currentstyle }}>
                 <img src={img} alt={word} />
@@ -86,22 +104,27 @@ function WordCard(props) {
         )
     }
 
-    let ourId = id
-    if (dict) {
-        // eslint-disable-next-line no-underscore-dangle
-        ourId = items._id
+    let statusStyle = ''
+    switch (status) {
+        case 'easy':
+            statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff, 0 0 8px #00ff00, 0 0 10px #00ff00'
+            break
+        case 'hard':
+            statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff,  0 0 8px #ff0000, 0 0 10px #ff0000'
+            break
+        case null:
+            statusStyle = ''
+            break
+        default:
+            return statusStyle
     }
-
     return (
         <div
             className="wordCard"
             style={{
                 background: currentstyle,
                 display: hidden ? 'block' : 'none',
-                border: hard ? '3px solid red' : '1px solid black',
-                boxShadow: easy
-                    ? `0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px ${currentstyle}, 0 0 40px ${currentstyle}, 0 0 80px ${currentstyle}`
-                    : '',
+                boxShadow: statusStyle,
             }}
         >
             <img src={img} alt={word} />
@@ -128,9 +151,16 @@ function WordCard(props) {
                 <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
             </div>
-            <ButtonGroup id={ourId} user={user} dict={dict} action={[HideTheCard, SetHardStyle, SetEasyStyle]} />
+            <ButtonGroup
+                status={status}
+                id={ourId}
+                user={user}
+                dict={dict}
+                action={[HideTheCard, SetHardStyle, SetEasyStyle]}
+            />
         </div>
     )
 }
 
 export default WordCard
+

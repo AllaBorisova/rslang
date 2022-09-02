@@ -7,7 +7,6 @@ function Pagination(props) {
     return (
         <div className="group-btn">
             <ReactPaginate
-                // initialPage={0}
                 forcePage={current}
                 previousLabel="<"
                 nextLabel=">"
