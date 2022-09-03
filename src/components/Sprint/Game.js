@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import usePersistentState from '../../hooks/usePersistentState'
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import useAudio from '../../hooks/useAudio';
@@ -38,8 +39,14 @@ function Game() {
 
     const { token, userId } = useToken()
 
+    const [muted, setMuted] = usePersistentState('muted', true)
+    const toggleMute = () => {
+        setMuted(!muted)
+    }
+    console.log('muted', muted)
+
     const onAnswerRight = async (points, word) => {
-        if (!ToggleMute.muted) {
+        if (!muted) {
             playAudioRight();
         }
         setCounterArray((counterArray + 1) % 60);
@@ -56,7 +63,7 @@ function Game() {
         }
     };
     const onAnswerWrong = (word) => {
-        if (!ToggleMute.muted) {
+        if (!muted) {
             playAudioWrong();
         }
         setCounterArray((counterArray + 1) % 60);
@@ -188,7 +195,7 @@ function Game() {
 
             {playing && (
                 <div>
-                    <ToggleMute />
+                    <ToggleMute muted={muted} toggleMute={toggleMute} />
                     <ToggleButton />
                     <Row className="justify-content-md-center">
                         <Col md={4} className="p-5 mb-4 bg-light rounded-3 text-center">

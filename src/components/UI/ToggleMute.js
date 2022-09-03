@@ -1,11 +1,12 @@
 import React from 'react'
-import usePersistentState from '../../hooks/usePersistentState'
 
-function ToggleMute() {
-    const [muted, setMuted] = usePersistentState('muted', true)
-    const toggleMute = () => {
-        setMuted(!muted)
-    }
+function ToggleMute (props) {
+    const { muted, toggleMute } = props
+    // const [muted, setMuted] = usePersistentState('muted', true)
+    // const toggleMute = () => {
+    //     setMuted(!muted)
+    // }
+    // console.log('muted', muted)
 
     return (
         <button type="button" className="icon-button" onClick={toggleMute}>
