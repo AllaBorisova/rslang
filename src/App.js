@@ -13,12 +13,7 @@ import Sprint from './pages/Sprint';
 import Statistics from './pages/Statistics';
 import Navigation from './components/Navigation';
 import useToken from './components/Auth/UseToken';
-import LoginPopup from './components/LoginPopup';
-import SignUp from './components/SingUp';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+
 
 function App() {
     const { token, setToken, logout, userId } = useToken();

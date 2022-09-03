@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import useAudio from '../../hooks/useAudio';
@@ -36,7 +36,7 @@ function Game() {
     const [error, setError] = useState('');
     const game = 'Спринт';
 
-    const { token, setToken, logout, userId } = useToken()
+    const { token, userId } = useToken()
 
     const onAnswerRight = async (points, word) => {
         if (!ToggleMute.muted) {
@@ -119,43 +119,43 @@ function Game() {
     if (!really) {
         const index = (counterArray + 20) % 60;
         otherWord = words[index];
-        document.addEventListener(
-            'keydown',
-            (event) => {
-                const keyName = event.key;
-                console.log(event.key);
-                if (keyName === 'ArrowRight') {
-                    console.log('неверно');
-                    onAnswerRight(sprintScore, otherWord);
-                    return;
-                }
-                if (keyName === 'ArrowLeft') {
-                    console.log('верно');
-                    onAnswerWrong(otherWord);
-                    return;
-                }
-            },
-            false
-        );
+        // document.addEventListener(
+        //     'keydown',
+        //     (event) => {
+        //         const keyName = event.key;
+        //         console.log(event.key);
+        //         if (keyName === 'ArrowRight') {
+        //             console.log('неверно');
+        //             onAnswerRight(sprintScore, otherWord);
+        //             return;
+        //         }
+        //         if (keyName === 'ArrowLeft') {
+        //             console.log('верно');
+        //             onAnswerWrong(otherWord);
+        //             return;
+        //         }
+        //     },
+        //     false
+        // );
     } else {
-        document.addEventListener(
-            'keydown',
-            (event) => {
-                const keyName = event.key;
-                console.log(event.key);
-                if (keyName === 'ArrowRight') {
-                    console.log('неверно');
-                    onAnswerRight(sprintScore, otherWord);
-                    return;
-                }
-                if (keyName === 'ArrowLeft') {
-                    console.log('верно');
-                    onAnswerWrong(otherWord);
-                    return;
-                }
-            },
-            false
-        );
+        // document.addEventListener(
+        //     'keydown',
+        //     (event) => {
+        //         const keyName = event.key;
+        //         console.log(event.key);
+        //         if (keyName === 'ArrowRight') {
+        //             console.log('неверно');
+        //             onAnswerRight(sprintScore, otherWord);
+        //             return;
+        //         }
+        //         if (keyName === 'ArrowLeft') {
+        //             console.log('верно');
+        //             onAnswerWrong(otherWord);
+        //             return;
+        //         }
+        //     },
+        //     false
+        // );
     }
 
     if (loading) {
