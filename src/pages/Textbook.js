@@ -8,12 +8,11 @@ import Pagination from '../components/Book/Pagination'
 import WordsPage from '../components/Book/WordsPage'
 import DifficultButton from '../components/Book/DiffucultButton'
 import GetStorage from '../components/Book/LocalStorage'
-// import GetDiffWords from '../components/Book/GetDifficultWord'
+
 
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [user, setUser] = GetStorage('userData', '')
-    console.log(user)
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     )
@@ -39,7 +38,6 @@ function Textbook() {
     const changePage = ({ selected }) => {
         setPageNumber(selected)
     }
-
     return (
         <section className="textbook-main my-4">
             <Container>
@@ -62,7 +60,15 @@ function Textbook() {
 
                 <Row>
                     <div className="word-wrapper">
-                        <WordsPage words={words} loading={loading} props={value} user={user} dict={false} />
+                        <WordsPage
+                            words={words}
+                            loading={loading}
+                            props={value}
+                            user={user}
+                            dict={false}
+                            group={value}
+                            page={pageNumber}
+                        />
                     </div>
                 </Row>
                 <Row>

@@ -1,13 +1,14 @@
 import React from 'react'
+
 import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import WordCard from './WordCard'
 import '../../styles/App.scss'
 import Loading from '../Loading'
 
-function WordsPage({ words, loading, props, user, dict }) {
+function WordsPage({ words, loading, user, dict, group, page }) {
     let currentstyle = 'white'
-    switch (props) {
+    switch (group) {
         case '0':
             currentstyle = '#E0FFFF'
             break
@@ -29,13 +30,25 @@ function WordsPage({ words, loading, props, user, dict }) {
         default:
             return currentstyle
     }
+    // let backStyle = ''
+    // switch (marked) {
+    //     case true:
+    //         backStyle = '#737778'
+    //         break
+    //     case false:
+    //         backStyle = ''
+    //         break
+    //     default:
+    //         return backStyle
+    // }
+
     if (loading) {
         return <Loading />
     }
     return (
         <Row className="word-wrapper">
             {words.map((item) => (
-                <Col md={6} className="group-words" key={item.word}>
+                <Col md={6} className="group-words" key={item.word} >
                     <WordCard items={item} user={user} dict={dict} currentstyle={currentstyle} />
                 </Col>
             ))}

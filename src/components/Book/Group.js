@@ -10,7 +10,15 @@ function Group(props) {
     }
     return (
         <div className="group-btn">
-            <Button as="input" type="submit" variant="info" value="A 1" data-transfer="0" onClick={handleChange} />{' '}
+            <Button
+                as="input"
+                type="submit"
+                variant="info"
+                value="A 1"
+                data-transfer="0"
+                active={false}
+                onClick={handleChange}
+            />{' '}
             <Button as="input" type="submit" variant="warning" value="A 2" data-transfer="1" onClick={handleChange} />{' '}
             <Button as="input" type="submit" variant="success" value="B 1" data-transfer="2" onClick={handleChange} />{' '}
             <Button as="input" type="submit" variant="primary" value="B 2" data-transfer="3" onClick={handleChange} />{' '}

@@ -62,17 +62,6 @@ function WordCard(props) {
             src: `https://teamwork-rs.herokuapp.com/${items.audioExample}`,
         },
     ])
-    const [currentSound, SetCurrentIndex] = useState(0)
-    const [nextSound, SetNextIndex] = useState(0)
-
-    useEffect(() => {
-        SetNextIndex(() => {
-            if (currentSound + 1 > sound.length - 1) {
-                return 0
-            }
-            return currentSound + 1
-        })
-    }, [currentSound, sound.length])
     if (!user) {
         return (
             <div className="wordCard" style={{ background: currentstyle }}>
@@ -83,12 +72,7 @@ function WordCard(props) {
                         <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                         <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     </div>
-                    <Player
-                        currentSound={currentSound}
-                        SetCurrentIndex={SetCurrentIndex}
-                        nextSound={nextSound}
-                        sound={sound}
-                    />
+                    <Player sound={sound} />
                 </div>
 
                 <div className="wordCard__example">
@@ -134,12 +118,7 @@ function WordCard(props) {
                     <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 </div>
-                <Player
-                    currentSound={currentSound}
-                    SetCurrentIndex={SetCurrentIndex}
-                    nextSound={nextSound}
-                    sound={sound}
-                />
+                <Player sound={sound} />
             </div>
 
             <div className="wordCard__example">
@@ -163,4 +142,3 @@ function WordCard(props) {
 }
 
 export default WordCard
-
