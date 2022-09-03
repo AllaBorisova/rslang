@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import usePersistentState from '../../hooks/usePersistentState'
+import usePersistentState from '../../hooks/usePersistentState';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import useAudio from '../../hooks/useAudio';
@@ -11,9 +11,9 @@ import ToggleButton from '../UI/ToggleButton';
 import ToggleMute from '../UI/ToggleMute';
 import DifficultiesScreen from '../GameComponents/DifficultiesScreen';
 import FinishStat from '../GameComponents/FinishStat';
-import { createUserWord } from '../Auth/ApiUser';
+import { createUserWord, getUserWord, changeUserWord } from '../Auth/ApiUser';
 import Loading from '../Loading';
-import useToken from '../Auth//UseToken'
+import useToken from '../Auth//UseToken';
 
 const TIME_LIMIT = 60000;
 
@@ -37,13 +37,12 @@ function Game() {
     const [error, setError] = useState('');
     const game = 'Спринт';
 
-    const { token, userId } = useToken()
+    const { token, userId } = useToken();
 
-    const [muted, setMuted] = usePersistentState('muted', true)
+    const [muted, setMuted] = usePersistentState('muted', true);
     const toggleMute = () => {
-        setMuted(!muted)
-    }
-    console.log('muted', muted)
+        setMuted(!muted);
+    };
 
     const onAnswerRight = async (points, word) => {
         if (!muted) {
@@ -53,19 +52,39 @@ function Game() {
         setScore(score + points);
         setAnswersBonus(answersBonus + 1);
         setRightAnswers((oldArray) => [...oldArray, word]);
-
-        const res = await createUserWord( userId, word.id, word, token );
-        console.log(res)
+        if (token) {
+            const res = await getUserWord(userId, word.id, token);
+            if (res === false) {
+                const optional = { source: 'game', game: 'sprint', score: "1" };
+                await createUserWord(userId, word.id, token, optional);
+            } else {
+                console.log('change', res['optional']);
+                const optional = { source: 'game', game: 'sprint', score: `${parseInt(res['optional'].score) + 1}` };
+                await changeUserWord(userId, word.id, token, optional);
+            }
+        }
 
         if (answersBonus === 3) {
             setSprintScore(sprintScore + 10);
             setAnswersBonus(0);
         }
     };
-    const onAnswerWrong = (word) => {
+    const onAnswerWrong = async (word) => {
         if (!muted) {
             playAudioWrong();
         }
+        if (token) {
+            const res = await getUserWord(userId, word.id, token);
+            if (res === false) {
+                const optional = { source: 'game', game: 'sprint', score: "1" };
+                await createUserWord(userId, word.id, token, optional);
+            } else {
+                console.log('change', res['optional']);
+                const optional = { source: 'game', game: 'sprint', score: `${parseInt(res['optional'].score) - 1}` };
+                await changeUserWord(userId, word.id, token, optional);
+            }
+        }
+
         setCounterArray((counterArray + 1) % 60);
         setScore(score);
         setSprintScore(10);
@@ -73,7 +92,7 @@ function Game() {
         setWrongAnswers((oldArray) => [...oldArray, word]);
     };
 
-    const getList = async () => {
+    const getList = async (level, pageNumber) => {
         try {
             setError('');
             setLoading(true);
@@ -88,6 +107,7 @@ function Game() {
             const res2Data = res2.data;
             const res3Data = res3.data;
             setWords(res1Data.concat(res2Data, res3Data));
+            // setWords(res1Data);
             setLoading(false);
         } catch (e) {
             const error = e;
