@@ -12,6 +12,7 @@ import DifficultiesScreen from '../GameComponents/DifficultiesScreen';
 import FinishStat from '../GameComponents/FinishStat';
 import { createUserWord } from '../Auth/ApiUser';
 import Loading from '../Loading';
+import useToken from '../Auth//UseToken'
 
 const TIME_LIMIT = 60000;
 
@@ -35,6 +36,8 @@ function Game() {
     const [error, setError] = useState('');
     const game = 'Спринт';
 
+    const { token, setToken, logout, userId } = useToken()
+
     const onAnswerRight = async (points, word) => {
         if (!ToggleMute.muted) {
             playAudioRight();
@@ -44,7 +47,8 @@ function Game() {
         setAnswersBonus(answersBonus + 1);
         setRightAnswers((oldArray) => [...oldArray, word]);
 
-        const res = await createUserWord(userId, word.id, word, token);
+        const res = await createUserWord( userId, word.id, word, token );
+        console.log(res)
 
         if (answersBonus === 3) {
             setSprintScore(sprintScore + 10);
@@ -89,12 +93,6 @@ function Game() {
         getList(level, pageNumber);
     }, [level, pageNumber]);
 
-    window.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            console.log('enter');
-        }
-    });
-
     const endGame = () => {
         setPlaying(false);
         setFinished(true);
@@ -107,6 +105,11 @@ function Game() {
         setFinished(false);
     };
 
+    const restartGame = (e) => {
+        setPlaying(false);
+        setFinished(false);
+    };
+
     // random
     const really = Math.random() < 0.5;
     const originalWord = words[counterArray];
@@ -116,6 +119,43 @@ function Game() {
     if (!really) {
         const index = (counterArray + 20) % 60;
         otherWord = words[index];
+        document.addEventListener(
+            'keydown',
+            (event) => {
+                const keyName = event.key;
+                console.log(event.key);
+                if (keyName === 'ArrowRight') {
+                    console.log('неверно');
+                    onAnswerRight(sprintScore, otherWord);
+                    return;
+                }
+                if (keyName === 'ArrowLeft') {
+                    console.log('верно');
+                    onAnswerWrong(otherWord);
+                    return;
+                }
+            },
+            false
+        );
+    } else {
+        document.addEventListener(
+            'keydown',
+            (event) => {
+                const keyName = event.key;
+                console.log(event.key);
+                if (keyName === 'ArrowRight') {
+                    console.log('неверно');
+                    onAnswerRight(sprintScore, otherWord);
+                    return;
+                }
+                if (keyName === 'ArrowLeft') {
+                    console.log('верно');
+                    onAnswerWrong(otherWord);
+                    return;
+                }
+            },
+            false
+        );
     }
 
     if (loading) {
@@ -181,7 +221,7 @@ function Game() {
                     score={score}
                     rightAnswers={rightAnswers}
                     wrongAnswers={wrongAnswers}
-                    // handleClickRestart={startGame}
+                    handleClickRestart={restartGame}
                 />
             )}
         </div>

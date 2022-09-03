@@ -1,17 +1,20 @@
 import { useState } from 'react';
 
-export default function useToken() {
-    const getToken = () => {
-        const userDataString = localStorage.getItem('userData');
-        const userData = JSON.parse(userDataString);
-        return userData?.token ? userData?.token : null;
-    };
+const getToken = () => {
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
+    return userData?.token ? userData?.token : null;
+};
 
-    const getUserId = () => {
-        const userDataString = localStorage.getItem('userData');
-        const userData = JSON.parse(userDataString);
-        return userData?.userId ? userData?.userId : null;
-    };
+const getUserId = () => {
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
+    return userData?.userId ? userData?.userId : null;
+};
+
+
+
+export default function useToken() {
 
     const [token, setToken] = useState(getToken());
     const [userId, setUserId] = useState(getUserId());

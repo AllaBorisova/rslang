@@ -1,18 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState, createRef } from 'react';
 import Button from 'react-bootstrap/esm/Button'
 import ButtonGroup from 'react-bootstrap/esm/ButtonGroup'
 import Col from 'react-bootstrap/esm/Col'
 import Row from 'react-bootstrap/esm/Row'
 
 function Question ( { originalWord, onAnswerRight, onAnswerWrong, really, otherWord, sprintScore } ) {
-    // const keyboardEvents = (event) =>{
-    //     event.persist();
-    //     console.log(event.key); // this will return string of key name like 'Enter'
-    // }
-    
       
     return (
-        <>
+        <div>
             <Row className="p-2">
                 <Col>
                     <h3>{originalWord.word}</h3>
@@ -49,7 +44,7 @@ function Question ( { originalWord, onAnswerRight, onAnswerWrong, really, otherW
                     )}
                 </Col>
             </Row>
-        </>
+        </div>
     )
 }
 
