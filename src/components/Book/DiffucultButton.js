@@ -8,14 +8,7 @@ function DifficultButton({ user }) {
         return (
             <Link to="/dictionary" params={user}>
                 <div>
-                    <Button
-                        as="input"
-                        type="submit"
-                        variant="secondary"
-                        value="Difficult"
-                        data-transfer="6"
-                        onClick={() => console.log('hi')}
-                    />{' '}
+                    <Button as="input" type="submit" variant="secondary" value="Difficult" data-transfer="6" />{' '}
                 </div>
             </Link>
         )
