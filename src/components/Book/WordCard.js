@@ -35,8 +35,8 @@ function WordCard(props) {
         setStatus('easy')
     }
     useEffect(() => {
-        const CheckWord = async (Id) => {
-            await fetch(`${USER_URL}${userId}/words/${Id}`, {
+        const CheckWord = async () => {
+            await fetch(`${USER_URL}${userId}/words/${ourId}`, {
                 method: 'GET',
                 headers: { Authorization: `Bearer ${token}` },
             })
@@ -48,7 +48,7 @@ function WordCard(props) {
                     console.log('fail')
                 })
         }
-        CheckWord(ourId)
+        CheckWord()
     })
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
 

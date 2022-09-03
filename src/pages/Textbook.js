@@ -13,6 +13,7 @@ import GetStorage from '../components/Book/LocalStorage'
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [user, setUser] = GetStorage('userData', '')
+    console.log(user)
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     )
