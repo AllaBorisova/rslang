@@ -62,6 +62,7 @@ function WordCard(props) {
             src: `https://teamwork-rs.herokuapp.com/${items.audioExample}`,
         },
     ])
+
     if (!user) {
         return (
             <div className="wordCard" style={{ background: currentstyle }}>
@@ -72,7 +73,7 @@ function WordCard(props) {
                         <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                         <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     </div>
-                    <Player sound={sound} />
+                    {/* <Player sound={sound} /> */}
                 </div>
 
                 <div className="wordCard__example">
@@ -118,7 +119,7 @@ function WordCard(props) {
                     <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 </div>
-                <Player sound={sound} />
+                {/* <Player sound={sound} /> */}
             </div>
 
             <div className="wordCard__example">

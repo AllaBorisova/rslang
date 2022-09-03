@@ -9,7 +9,6 @@ import WordsPage from '../components/Book/WordsPage'
 import DifficultButton from '../components/Book/DiffucultButton'
 import GetStorage from '../components/Book/LocalStorage'
 
-
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
     const [user, setUser] = GetStorage('userData', '')
@@ -60,15 +59,7 @@ function Textbook() {
 
                 <Row>
                     <div className="word-wrapper">
-                        <WordsPage
-                            words={words}
-                            loading={loading}
-                            props={value}
-                            user={user}
-                            dict={false}
-                            group={value}
-                            page={pageNumber}
-                        />
+                        <WordsPage words={words} loading={loading} user={user} dict={false} props={value} />
                     </div>
                 </Row>
                 <Row>
