@@ -119,3 +119,22 @@ export const changeUserWord = async (userId, wordId, token, optional) => {
         return false;
     }
 };
+
+
+export const getUserAggregatedWords = async (userId, token) => {
+    try {
+        const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords`, {
+            method: 'GET',
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+            },
+        });
+        const content = await rawResponse.json();
+        console.log('get', content);
+        return content;
+    } catch ( e ) {
+        return false;
+    }
+};

@@ -9,11 +9,15 @@ import WordsPage from '../components/Book/WordsPage';
 import DifficultButton from '../components/Book/DiffucultButton';
 import GetStorage from '../components/Book/LocalStorage';
 
+import {NavLink} from 'react-router-dom'
+
+
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
     const USER_URL = `https://teamwork-rs.herokuapp.com/users/`;
     const [user, setUser] = GetStorage('userData', '');
     const { userId, token } = user;
+
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     );
@@ -21,6 +25,7 @@ function Textbook() {
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
     );
     const [words, setWords] = useState([]);
+
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
     window.addEventListener('beforeunload', () => {
@@ -36,6 +41,7 @@ function Textbook() {
         };
         getList();
     }, [value, pageNumber, BASE_URL]);
+
 
     // useEffect(() => {
     //     const getStat = async () => {
@@ -58,11 +64,19 @@ function Textbook() {
     const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
+
     const handleCount = () => {
         setCount(count + 1);
     };
+
     return (
         <section className="textbook-main my-4">
+            <NavLink to="/sprint" state={settings}>
+                перейти на игру Спринт
+            </NavLink>
+            <NavLink to="/audiocall" state={settings}>
+                перейти на игру Аудиовызов
+            </NavLink>
             <Container>
                 <Row className="pb-5">
                     <Col>

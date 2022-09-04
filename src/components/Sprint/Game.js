@@ -14,23 +14,25 @@ import FinishStat from '../GameComponents/FinishStat';
 import { createUserWord, getUserWord, changeUserWord } from '../Auth/ApiUser';
 import Loading from '../Loading';
 import useToken from '../Auth//UseToken';
+import { useLocation } from 'react-router-dom';
 
 const TIME_LIMIT = 60000;
 
 function Game() {
     // audio
+    const { state } = useLocation();
 
     const { play: playAudioRight } = useAudio('../public/audio/right.mp3');
     const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3');
     const [sprintScore, setSprintScore] = useState(10);
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(!!state);
     const [finished, setFinished] = useState(false);
     const [score, setScore] = useState(0);
     const [counterArray, setCounterArray] = useState(0);
     const [words, setWords] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [level, setLevel] = useState(1);
-    const [pageNumber, setPageNumber] = useState(Math.floor(Math.random() * 30));
+    const [level, setLevel] = useState(parseInt(state?.value) || null);
+    const [pageNumber, setPageNumber] = useState(state?.page || Math.floor(Math.random() * 30));
     const [answersBonus, setAnswersBonus] = useState(0);
     const [rightAnswers, setRightAnswers] = useState([]);
     const [wrongAnswers, setWrongAnswers] = useState([]);
@@ -55,7 +57,7 @@ function Game() {
         if (token) {
             const res = await getUserWord(userId, word.id, token);
             if (res === false) {
-                const optional = { source: 'game', game: 'sprint', score: "1" };
+                const optional = { source: 'game', game: 'sprint', score: '1' };
                 await createUserWord(userId, word.id, token, optional);
             } else {
                 console.log('change', res['optional']);
@@ -76,7 +78,7 @@ function Game() {
         if (token) {
             const res = await getUserWord(userId, word.id, token);
             if (res === false) {
-                const optional = { source: 'game', game: 'sprint', score: "0" };
+                const optional = { source: 'game', game: 'sprint', score: '0' };
                 await createUserWord(userId, word.id, token, optional);
             } else {
                 console.log('change', res['optional']);
@@ -106,11 +108,12 @@ function Game() {
             const res1Data = res1.data;
             const res2Data = res2.data;
             const res3Data = res3.data;
+
             setWords(res1Data.concat(res2Data, res3Data));
-            // setWords(res1Data);
             setLoading(false);
         } catch (e) {
             const error = e;
+            console.log(e);
             setLoading(false);
             setError(error.message);
         }
@@ -146,43 +149,18 @@ function Game() {
     if (!really) {
         const index = (counterArray + 20) % 60;
         otherWord = words[index];
-        // document.addEventListener(
-        //     'keydown',
-        //     (event) => {
-        //         const keyName = event.key;
-        //         console.log(event.key);
-        //         if (keyName === 'ArrowRight') {
-        //             console.log('неверно');
-        //             onAnswerRight(sprintScore, otherWord);
-        //             return;
-        //         }
-        //         if (keyName === 'ArrowLeft') {
-        //             console.log('верно');
-        //             onAnswerWrong(otherWord);
-        //             return;
-        //         }
-        //     },
-        //     false
-        // );
-    } else {
-        // document.addEventListener(
-        //     'keydown',
-        //     (event) => {
-        //         const keyName = event.key;
-        //         console.log(event.key);
-        //         if (keyName === 'ArrowRight') {
-        //             console.log('неверно');
-        //             onAnswerRight(sprintScore, otherWord);
-        //             return;
-        //         }
-        //         if (keyName === 'ArrowLeft') {
-        //             console.log('верно');
-        //             onAnswerWrong(otherWord);
-        //             return;
-        //         }
-        //     },
-        //     false
-        // );
+    }
+
+    if (!words.length && playing) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <Loading />
+                    </Row>
+                </div>
+            </div>
+        );
     }
 
     if (loading) {
@@ -211,8 +189,7 @@ function Game() {
 
     return (
         <div>
-            {!playing && !finished && <DifficultiesScreen action={startGame} game={game} />}
-
+            {!playing && !finished && !state && <DifficultiesScreen action={startGame} game={game} />}
             {playing && (
                 <div>
                     <ToggleMute muted={muted} toggleMute={toggleMute} />
