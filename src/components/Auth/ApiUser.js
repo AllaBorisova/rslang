@@ -76,6 +76,7 @@ export const createUserWord = async (userId, wordId, token, optional) => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
+
         body: JSON.stringify({ difficulty: 'easy', optional: optional }),
     });
     const content = await rawResponse.json();
@@ -110,6 +111,7 @@ export const changeUserWord = async (userId, wordId, token, optional) => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
+
             body: JSON.stringify({ difficulty: 'easy', optional: optional }),
         });
         const content = await rawResponse.json();

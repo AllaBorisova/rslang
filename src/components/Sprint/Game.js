@@ -136,6 +136,7 @@ function Game() {
     };
 
     const restartGame = (e) => {
+
         setPlaying(false);
         setFinished(false);
     };
@@ -185,6 +186,30 @@ function Game() {
                 </div>
             </div>
         );
+    }
+
+    if (loading) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <Loading />
+                    </Row>
+                </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <p>{error}</p>
+                    </Row>
+                </div>
+            </div>
+        )
     }
 
     return (

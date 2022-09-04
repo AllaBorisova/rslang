@@ -20,27 +20,28 @@ function Textbook() {
 
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
-    );
+    )
     const [pageNumber, setPageNumber] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
+
     );
     const [words, setWords] = useState([]);
 
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
     window.addEventListener('beforeunload', () => {
-        sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }));
-    });
+        sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
+    })
 
     useEffect(() => {
         const getList = async () => {
-            setLoading(true);
-            const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`);
-            setWords(res.data);
-            setLoading(false);
-        };
-        getList();
-    }, [value, pageNumber, BASE_URL]);
+            setLoading(true)
+            const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`)
+            setWords(res.data)
+            setLoading(false)
+        }
+        getList()
+    }, [value, pageNumber, BASE_URL])
 
 
     // useEffect(() => {
@@ -62,12 +63,22 @@ function Textbook() {
     // }, [USER_URL]);
 
     const changePage = ({ selected }) => {
+
+        setPageNumber(selected)
+    }
+    const settings = {
+        fromBook: true,
+        page: pageNumber,
+        value,
+    }
+
         setPageNumber(selected);
     };
 
     const handleCount = () => {
         setCount(count + 1);
     };
+
 
     return (
         <section className="textbook-main my-4">
@@ -115,7 +126,7 @@ function Textbook() {
                 </Row>
             </Container>
         </section>
-    );
+    )
 }
 
-export default Textbook;
+export default Textbook
