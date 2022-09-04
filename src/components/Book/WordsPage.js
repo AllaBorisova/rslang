@@ -6,25 +6,25 @@ import '../../styles/App.scss'
 import Loading from '../Loading'
 
 function WordsPage({ words, loading, user, dict, props, action, count }) {
-    let currentstyle = 'white'
+    let currentstyle = 'black'
     switch (props) {
         case '0':
-            currentstyle = '#E0FFFF'
+            currentstyle = '#0dcaf0'
             break
         case '1':
-            currentstyle = '#FFFACD'
+            currentstyle = '#ffc107'
             break
         case '2':
-            currentstyle = '#98FB98'
+            currentstyle = '#198754'
             break
         case '3':
-            currentstyle = '#FFFFF0'
+            currentstyle = '#0d6efd'
             break
         case '4':
-            currentstyle = '#D3D3D3'
+            currentstyle = '#212529'
             break
         case '5':
-            currentstyle = '#FFA07A'
+            currentstyle = '#dc3545'
             break
         default:
             return currentstyle
@@ -35,7 +35,7 @@ function WordsPage({ words, loading, user, dict, props, action, count }) {
     return (
         <Row className="word-wrapper">
             {words.map((item) => (
-                <Col md={6} className="group-words" key={item.word}>
+                <Col md={12} className="group-words" key={item.word}>
                     <WordCard
                         items={item}
                         user={user}

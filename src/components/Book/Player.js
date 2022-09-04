@@ -22,7 +22,7 @@ function Player({ sound }) {
     })
 
     return (
-        <>
+        <div className='player-block'>
             <div className="player">
                 <audio className="player__audio" src={sound[currentSound].src} ref={soundItem} onEnded={HandleEnded}>
                     <track default kind="captions" srcLang="en" />
@@ -31,7 +31,7 @@ function Player({ sound }) {
             <div className="player__button">
                 <ButtonSound isSound={isSound} setIsSound={setIsSound} />
             </div>
-        </>
+        </div>
     )
 }
 

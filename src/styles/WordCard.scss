@@ -1,9 +1,13 @@
 .wordCard {
     // width: 500px;
-    background-color: rgb(28, 202, 129);
-    border: 1px solid black;
-    border-radius: 20px;
+    background-color: #fff;
+    // border: 1px solid black;
+    display:flex;
+    border-radius: 10px;
     margin-bottom:20px;
+    text-align: left;
+    position: relative;
+    box-shadow: rgb(211 211 212) 0px 0px 2px, rgb(211 211 212) 0px 0px 5px;
     &__word {
         // padding: 20px 40px 40px 20px;
 
@@ -12,20 +16,41 @@
         display: flex;
         flex-wrap:wrap;
         flex-direction: row;
+        align-items: center;
+        gap:10px;
+        line-height: 1.2em;
+        margin-bottom:1rem;
+        padding-left:15px;
+        border-left:3px solid black;
+        
         p{
-            padding-left: 10px;
+           margin-bottom:0px;
+        }
+        .flex-full{
+            width:100%
         }
     }
     &__example{
-        // padding: 20px 40px 40px 20px;
+       
+        padding-bottom:1rem;
+        p{
+            margin-bottom:0rem;
+        }
     }
     img {
-        border-radius: 20px;
-        width: 100%;
+        // border-radius: 20px;
+        // max-width: 100%;
+        object-fit: cover;
+        object-position: center center;
+        height:260px;
     }
 
 }
-
+.player-block{
+    position: absolute;
+    top:1.5rem;
+    right:1.5rem;
+}
 li {
     list-style-type: none;
 }

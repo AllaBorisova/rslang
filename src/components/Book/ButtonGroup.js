@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import GetStorage from './LocalStorage'
+import React, { useState, useEffect } from 'react';
+import GetStorage from './LocalStorage';
+import Button from 'react-bootstrap/esm/Button';
 
-const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
+const USER_URL = `https://teamwork-rs.herokuapp.com/users/`;
 
 function ButtonGroup(props) {
-    const { status, id, dict, action, count, hard, easy } = props
-    console.log(count)
-    const { userId, token } = GetStorage('userData', '')[0]
-    const [request, setRequest] = useState('POST')
+    const { status, id, dict, action, count, hard, easy } = props;
+    console.log(count);
+    const { userId, token } = GetStorage('userData', '')[0];
+    const [request, setRequest] = useState('POST');
     useEffect(() => {
         if (status) {
-            setRequest('PUT')
+            setRequest('PUT');
         }
-    }, [status])
+    }, [status]);
     const createUserWord = async (wordId, word) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
             method: `${request}`,
@@ -26,9 +27,9 @@ function ButtonGroup(props) {
         })
             .then((res) => res.status)
             .catch((error) => {
-                throw error
-            })
-    }
+                throw error;
+            });
+    };
 
     const deleteUserWord = async (wordId) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
@@ -37,8 +38,8 @@ function ButtonGroup(props) {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        })
-    }
+        });
+    };
     const easyUserWord = async (wordId, word) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
             method: `${request}`,
@@ -52,9 +53,9 @@ function ButtonGroup(props) {
         })
             .then((res) => res.status)
             .catch((error) => {
-                throw new Error(error.message)
-            })
-    }
+                throw new Error(error.message);
+            });
+    };
 
     const LearningWord = async (text) => {
         await fetch(`${USER_URL}${userId}/statistics`, {
@@ -69,19 +70,19 @@ function ButtonGroup(props) {
         })
             .then((res) => res.status)
             .catch((error) => {
-                throw new Error(error.message)
-            })
-    }
-    const key = new Date()
-    const word = { difficulty: 'hard', optional: { data: key } }
+                throw new Error(error.message);
+            });
+    };
+    const key = new Date();
+    const word = { difficulty: 'hard', optional: { data: key } };
     const word2 = {
         difficulty: 'easy',
         optional: { data: key },
-    }
+    };
     const learned = {
         learnedWords: `${count}`,
         optional: { date: key },
-    }
+    };
 
     if (dict) {
         return (
@@ -90,44 +91,43 @@ function ButtonGroup(props) {
                 className="btn-remove"
                 value={id}
                 onClick={() => {
-                    deleteUserWord(id)
-                    action[0]()
+                    deleteUserWord(id);
+                    action[0]();
                 }}
             >
                 Удалить
             </button>
-        )
+        );
     }
     return (
         <div className="btn-card-control">
-            <button
-                type="button"
+            <Button
+                variant="danger"
                 className="btn-add"
                 value={id}
                 disabled={hard}
                 onClick={() => {
-                    createUserWord(id, word)
-                    action[1]()
+                    createUserWord(id, word);
+                    action[1]();
                 }}
             >
                 Добавить в сложные
-            </button>
-            <button
-                type="button"
+            </Button>{' '}
+            <Button variant="secondary"
                 className="btn-remove"
                 value={id}
                 disabled={easy}
                 onClick={() => {
-                    easyUserWord(id, word2)
-                    action[3]()
-                    LearningWord(learned)
-                    action[2]()
+                    easyUserWord(id, word2);
+                    action[3]();
+                    LearningWord(learned);
+                    action[2]();
                 }}
             >
                 Изучено
-            </button>
+                </Button>{' '}
         </div>
-    )
+    );
 }
 
-export default ButtonGroup
+export default ButtonGroup;

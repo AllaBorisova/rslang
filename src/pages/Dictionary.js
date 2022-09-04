@@ -11,7 +11,7 @@ function Dictionary() {
     const user = GetStorage('userData', '')[0]
     const list = GetDiffWords()[0]
     return (
-        <section>
+        <section className="py-4 full-section">
             <Container>
                 <Row className="pb-5">
                     <Col>

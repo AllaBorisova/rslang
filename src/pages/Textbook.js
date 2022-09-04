@@ -9,8 +9,8 @@ import WordsPage from '../components/Book/WordsPage';
 import DifficultButton from '../components/Book/DiffucultButton';
 import GetStorage from '../components/Book/LocalStorage';
 
-import {NavLink} from 'react-router-dom'
-
+import { NavLink } from 'react-router-dom';
+import Button from 'react-bootstrap/esm/Button';
 
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
@@ -20,29 +20,27 @@ function Textbook() {
 
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
-    )
+    );
     const [pageNumber, setPageNumber] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
-
     );
     const [words, setWords] = useState([]);
 
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
     window.addEventListener('beforeunload', () => {
-        sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
-    })
+        sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }));
+    });
 
     useEffect(() => {
         const getList = async () => {
-            setLoading(true)
-            const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`)
-            setWords(res.data)
-            setLoading(false)
-        }
-        getList()
-    }, [value, pageNumber, BASE_URL])
-
+            setLoading(true);
+            const res = await axios.get(`${BASE_URL}group=${value}&page=${pageNumber}`);
+            setWords(res.data);
+            setLoading(false);
+        };
+        getList();
+    }, [value, pageNumber, BASE_URL]);
 
     // useEffect(() => {
     //     const getStat = async () => {
@@ -63,41 +61,38 @@ function Textbook() {
     // }, [USER_URL]);
 
     const changePage = ({ selected }) => {
-
-        setPageNumber(selected)
-    }
+        setPageNumber(selected);
+    };
     const settings = {
         fromBook: true,
         page: pageNumber,
         value,
-    }
-
+    };
 
     const handleCount = () => {
         setCount(count + 1);
     };
 
-
     return (
-        <section className="textbook-main py-4">
-            
+        <section className="textbook-main py-4 full-section">
             <Container>
-            <Row className="pb-5">
+                <Row className="pb-5">
                     <Col>
                         <h1>Textbook</h1>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                    <NavLink to="/sprint" state={settings}>
-                        перейти на игру Спринт
-                    </NavLink>
-                    <NavLink to="/audiocall" state={settings}>
-                        перейти на игру Аудиовызов
-                    </NavLink>
+                <Row className="pb-2">
+                    <Col className="text-center">
+                        <Button as={NavLink} to="/sprint" state={settings} className="m-1">
+                            Спринт
+                        </Button>
+                        <Button as={NavLink} to="/audiocall" state={settings} className="m-1">
+                        Аудиовызов
+                        </Button>
+                       
                     </Col>
                 </Row>
-            
+
                 <Row className="justify-content-md-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />
@@ -130,7 +125,7 @@ function Textbook() {
                 </Row>
             </Container>
         </section>
-    )
+    );
 }
 
-export default Textbook
+export default Textbook;
