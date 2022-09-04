@@ -5,9 +5,9 @@ export async function loginUser(credentials) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-    })
-    const content = await rawResponse.json()
-    return content
+    });
+    const content = await rawResponse.json();
+    return content;
 }
 
 export async function signUpUser(credentials) {
@@ -17,29 +17,29 @@ export async function signUpUser(credentials) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-    })
-    const content = await rawResponse.json()
-    return await loginUser(credentials)
+    });
+    const content = await rawResponse.json();
+    return await loginUser(credentials);
 }
 
 export async function getUser() {
-    const userDataString = localStorage.getItem('userData')
-    const userData = JSON.parse(userDataString)
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
     const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userData?.userId}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${userData?.token}`,
             'Content-Type': 'application/json',
         },
-    })
+    });
 
-    const content = await rawResponse.json()
-    return content
+    const content = await rawResponse.json();
+    return content;
 }
 
 export async function updateUser(credentials) {
-    const userDataString = localStorage.getItem('userData')
-    const userData = JSON.parse(userDataString)
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
     const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userData?.userId}`, {
         method: 'PUT',
         headers: {
@@ -47,104 +47,75 @@ export async function updateUser(credentials) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-    })
-    const content = await rawResponse.json()
-    return content
+    });
+    const content = await rawResponse.json();
+    return content;
 }
 
 export async function getUserStatistic() {
-    const userDataString = localStorage.getItem('userData')
-    const userData = JSON.parse(userDataString)
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
     const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userData?.userId}/statistics`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${userData?.token}`,
             'Content-Type': 'application/json',
         },
-    })
+    });
 
-    const content = await rawResponse.json()
-    return content
+    const content = await rawResponse.json();
+    return content;
 }
 
-export const createUserWord = async (userId, wordId, word, token) => {
+export const createUserWord = async (userId, wordId, token, optional) => {
     const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
-      method: 'POST',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-        body: JSON.stringify({ difficulty: 'easy', optional: { game: 'sprint'} })
-        
+        method: 'POST',
+        withCredentials: true,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ difficulty: 'easy', optional: optional }),
     });
     const content = await rawResponse.json();
-  
-    console.log(content);
-  }
-  
-//   createUserWord({
-//     userId: "5ec993df4ca9d600178740ae",
-//     wordId: "5e9f5ee35eb9e72bc21af716",
-//     word: { "difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true} }
-//   });
+    console.log('create', content);
+};
 
-export const getUserWord = async ({ userId, wordId, token }) => {
-    const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
-      method: 'GET',
-      withCredentials: true,
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-      }
-    });
-    const content = await rawResponse.json();
-  
-    console.log(content);
-  };
+export const getUserWord = async (userId, wordId, token) => {
+    try {
+        const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
+            method: 'GET',
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+            },
+        });
+        const content = await rawResponse.json();
+        console.log('get', content);
+        return content;
+    } catch ( e ) {
+        return false;
+    }
+};
 
-// export async function createUserWord ( userId, token, word ) {
-//     console.log(word)
-//     try {
-//         const config = {
-//             method: 'POST',
-//             headers: {
-//                 'Authorization': `Bearer ${token}`,
-//                 'Accept': 'application/json',
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(word)
-//         }
-//         const response = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${word.id}`, config)
-//         //const json = await response.json()
-//         if (response.ok) {
-//             //return json
-//             return response
-//         } else {
-//             //
-//         }
-//     } catch (error) {
-//         return error
-//     }
-//     // console.log(token)
-//     // const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/`, {
-//     //     method: 'POST',
-//     //     withCredentials: true,
-//     //     headers: {
-//     //         'Authorization': `Bearer ${token}`,
-//     //         'Content-Type': 'application/json',
-//     //     },
-//     //     body: JSON.stringify(word),
-//     // }).then
-//     // const content = await rawResponse.json()
-//     // return content
-// }
-
-// function ShowNameUser (props) {
-//     const name = await getUser( props.userId );
-//     console.log( name );
-//     return (
-//         <div>123</div>
-//     );
-// }
+export const changeUserWord = async (userId, wordId, token, optional) => {
+    try {
+        const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
+            method: 'PUT',
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ difficulty: 'easy', optional: optional }),
+        });
+        const content = await rawResponse.json();
+        console.log('put', content);
+        return content;
+    } catch ( e ) {
+        return false;
+    }
+};
