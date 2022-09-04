@@ -4,12 +4,13 @@ import Row from 'react-bootstrap/esm/Row';
 
 function Hearts(props) {
     const { counter } = props;
+
     return (
         <div>
             <Row>
                 <Col>
-                    {[...Array(counter)].map((i) => (
-                        <i key={i} class="bi bi-heart-fill text-danger m-1" style={{ fontSize: 30 }}></i>
+                    {[...Array(counter)].map((i, index) => (
+                        <i key={index} className="bi bi-heart-fill text-danger m-1" style={{ fontSize: 30 }}></i>
                     ))}
                 </Col>
             </Row>

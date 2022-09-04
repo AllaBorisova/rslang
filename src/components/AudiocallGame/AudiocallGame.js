@@ -109,19 +109,20 @@ function AudiocallGame() {
             if (!muted) {
                 playAudioRight();
             }
-            e.target.classList.add('btn-success');
+            // e.target.classList.add('btn-success');
         } else {
             if (!muted) {
                 playAudioWrong();
             }
-            correctAnswer.current.classList.add('btn-success');
-            e.target.classList.add('btn-danger');
+            // correctAnswer.current.classList.add('btn-success');
+            // e.target.classList.add('btn-danger');
         }
-        // setTimeout(() => {
-        allButtons.current.childNodes.forEach((el) => {
-            el.classList.remove('btn-danger');
-            el.classList.remove('btn-success');
-        });
+        setTimeout( () => {
+            // console.log( allButtons.current.childNodes);
+        // allButtons.current.childNodes.forEach((el) => {
+        //     el.classList.remove('btn-danger');
+        //     el.classList.remove('btn-success');
+        // });
         setRightAnswers((oldArray) => [...oldArray, currentWord]);
         setCurrentWord(cards[randomInteger(0, cards.length - 1)]);
         setWrongAnswers((oldArray) => [...oldArray, currentWord]);
@@ -129,7 +130,7 @@ function AudiocallGame() {
         if (counter === 0) {
             setEndGame(true);
         }
-        // }, 1000);
+        }, 1000);
     };
 
     const handleFinishClick = () => {
