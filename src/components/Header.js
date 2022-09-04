@@ -3,12 +3,11 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import useToken from './Auth/UseToken'
 import LoginPopup from './LoginPopup'
 import SignUp from './SingUp'
 
-function Header() {
-    const { token, setToken, logout, userId } = useToken()
+function Header(props) {
+    const {token, logout, setToken} = props
     if (!token) {
         return (
             <header className="my-2">
@@ -27,8 +26,6 @@ function Header() {
             </header>
         )
     }
-    const userDataString = localStorage.getItem('userData')
-    const userData = JSON.parse(userDataString)
 
     return (
         <header className="my-2">
@@ -39,7 +36,6 @@ function Header() {
                     </Col>
 
                     <Col xs={8} className="text-end">
-                        Привет, {userData.name}
                         <Button className="ms-1" variant="primary" onClick={logout}>
                             Выйти
                         </Button>

@@ -1,13 +1,13 @@
-import React from 'react'
-import Button from 'react-bootstrap/esm/Button'
-import ButtonGroup from 'react-bootstrap/esm/ButtonGroup'
-import Col from 'react-bootstrap/esm/Col'
-import Row from 'react-bootstrap/esm/Row'
+import React from 'react';
+import Button from 'react-bootstrap/esm/Button';
+import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
 
 function Question({ originalWord, onAnswerRight, onAnswerWrong, really, otherWord, sprintScore }) {
     // console.log(originalWord)
     return (
-        <>
+        <div>
             <Row className="p-2">
                 <Col>
                     <h3>{originalWord.word}</h3>
@@ -44,8 +44,8 @@ function Question({ originalWord, onAnswerRight, onAnswerWrong, really, otherWor
                     )}
                 </Col>
             </Row>
-        </>
-    )
+        </div>
+    );
 }
 
-export default Question
+export default Question;

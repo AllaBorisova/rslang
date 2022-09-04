@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/esm/Col'
-import Row from 'react-bootstrap/esm/Row'
-import { NavLink } from 'react-router-dom'
-import Group from '../components/Book/Group'
-import Pagination from '../components/Book/Pagination'
-import WordsPage from '../components/Book/WordsPage'
-import useToken from '../components/Auth/UseToken'
-import DifficultButton from '../components/Book/DiffucultButton'
-import GetStorage from '../components/Book/LocalStorage'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
+import Group from '../components/Book/Group';
+import Pagination from '../components/Book/Pagination';
+import WordsPage from '../components/Book/WordsPage';
+import DifficultButton from '../components/Book/DiffucultButton';
+import GetStorage from '../components/Book/LocalStorage';
+
+import {NavLink} from 'react-router-dom'
+
 
 function Textbook() {
-    const { token, setToken, logout, userId } = useToken()
-    // const [game, setGame] = useState()
-    // const handleGamesClick = () => {
-    //     NavLink
-    // }
-
-    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
-    const [user, setUser] = GetStorage('userData', '')
+    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
+    const USER_URL = `https://teamwork-rs.herokuapp.com/users/`;
+    const [user, setUser] = GetStorage('userData', '');
+    const { userId, token } = user;
 
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     )
     const [pageNumber, setPageNumber] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
-    )
-    const [words, setWords] = useState([])
-    const [loading, setLoading] = useState(false)
+
+    );
+    const [words, setWords] = useState([]);
+
+    const [count, setCount] = useState(0);
+    const [loading, setLoading] = useState(false);
     window.addEventListener('beforeunload', () => {
         sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
     })
@@ -43,7 +43,27 @@ function Textbook() {
         getList()
     }, [value, pageNumber, BASE_URL])
 
+
+    // useEffect(() => {
+    //     const getStat = async () => {
+    //         await fetch(`${USER_URL}${userId}/statistics`, {
+    //             method: 'GET',
+    //             headers: { Authorization: `Bearer ${token}` },
+    //         })
+    //             .then((response) => console.log(response.status))
+    //             .then((result) => result.json())
+    //             .then((data) => {
+    //                 console.log(data);
+    //                 setCount(data.learnedWords);
+    //             })
+    //             .catch((e) => console.log(e.message));
+    //     };
+
+    //     getStat();
+    // }, [USER_URL]);
+
     const changePage = ({ selected }) => {
+
         setPageNumber(selected)
     }
     const settings = {
@@ -51,6 +71,15 @@ function Textbook() {
         page: pageNumber,
         value,
     }
+
+        setPageNumber(selected);
+    };
+
+    const handleCount = () => {
+        setCount(count + 1);
+    };
+
+
     return (
         <section className="textbook-main my-4">
             <NavLink to="/sprint" state={settings}>
@@ -68,7 +97,7 @@ function Textbook() {
                 <Row className="justify-content-md-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />
-                        <DifficultButton user={user} />
+                        <DifficultButton userId={userId} />
                     </Col>
                 </Row>
                 <Row>
@@ -79,12 +108,20 @@ function Textbook() {
 
                 <Row>
                     <div className="word-wrapper">
-                        <WordsPage words={words} loading={loading} props={value} user={user} dict={false} />
+                        <WordsPage
+                            words={words}
+                            loading={loading}
+                            user={user}
+                            dict={false}
+                            props={value}
+                            action={handleCount}
+                            count={count}
+                        />
                     </div>
                 </Row>
                 <Row>
                     <Col>
-                        <Pagination action={changePage} />
+                        <Pagination action={changePage} current={pageNumber} />
                     </Col>
                 </Row>
             </Container>

@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import GetStorage from './LocalStorage'
 
 const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
 
 function ButtonGroup(props) {
-    const { id, user, dict } = props
-    const { userId, token } = GetStorage('userData', {})[0]
+    const { status, id, dict, action, count, hard, easy } = props
+    console.log(count)
+    const { userId, token } = GetStorage('userData', '')[0]
+    const [request, setRequest] = useState('POST')
+    useEffect(() => {
+        if (status) {
+            setRequest('PUT')
+        }
+    }, [status])
     const createUserWord = async (wordId, word) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
-            method: 'POST',
+            method: `${request}`,
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -19,9 +26,10 @@ function ButtonGroup(props) {
         })
             .then((res) => res.status)
             .catch((error) => {
-                throw new Error(error.message)
+                throw error
             })
     }
+
     const deleteUserWord = async (wordId) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
             method: 'DELETE',
@@ -33,7 +41,7 @@ function ButtonGroup(props) {
     }
     const easyUserWord = async (wordId, word) => {
         await fetch(`${USER_URL}${userId}/words/${wordId}`, {
-            method: 'POST',
+            method: `${request}`,
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -48,8 +56,33 @@ function ButtonGroup(props) {
             })
     }
 
-    const word = { difficulty: 'hard', optional: { testFieldString: 'test', testFieldBoolean: true } }
-    const word2 = { difficulty: 'easy', optional: { testFieldString: 'test', testFieldBoolean: true } }
+    const LearningWord = async (text) => {
+        await fetch(`${USER_URL}${userId}/statistics`, {
+            method: `PUT`,
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(text),
+        })
+            .then((res) => res.status)
+            .catch((error) => {
+                throw new Error(error.message)
+            })
+    }
+    const key = new Date()
+    const word = { difficulty: 'hard', optional: { data: key } }
+    const word2 = {
+        difficulty: 'easy',
+        optional: { data: key },
+    }
+    const learned = {
+        learnedWords: `${count}`,
+        optional: { date: key },
+    }
+
     if (dict) {
         return (
             <button
@@ -58,6 +91,7 @@ function ButtonGroup(props) {
                 value={id}
                 onClick={() => {
                     deleteUserWord(id)
+                    action[0]()
                 }}
             >
                 Удалить
@@ -70,8 +104,10 @@ function ButtonGroup(props) {
                 type="button"
                 className="btn-add"
                 value={id}
+                disabled={hard}
                 onClick={() => {
                     createUserWord(id, word)
+                    action[1]()
                 }}
             >
                 Добавить в сложные
@@ -80,8 +116,12 @@ function ButtonGroup(props) {
                 type="button"
                 className="btn-remove"
                 value={id}
+                disabled={easy}
                 onClick={() => {
                     easyUserWord(id, word2)
+                    action[3]()
+                    LearningWord(learned)
+                    action[2]()
                 }}
             >
                 Изучено

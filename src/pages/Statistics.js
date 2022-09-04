@@ -1,43 +1,190 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import useToken from '../components/Auth/UseToken';
+import Container from 'react-bootstrap/Container';
+import Loading from '../components/Loading';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
 
 function Statistics() {
-    const userDataString = localStorage.getItem('userData')
-    const userData = JSON.parse(userDataString)
+    const { token, setToken, logout, userId } = useToken();
+    const [userStatistic, setUserStatistic] = useState([]);
+    const [userStatisticHard, setUserStatisticHard] = useState([]);
+    const [ userStatisticEasy, setUserStatisticEasy ] = useState( [] );
+    const [userStatisticSprint, setUserStatisticSprint] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    if (userData?.userId) {
-        const [userStatistic, setUserStatistic] = useState([])
-
-        useEffect(() => {
-            const getStatistic = async () => {
-                try {
-                    const res = await axios.get(
-                        `https://teamwork-rs.herokuapp.com/users/${userData?.userId}/statistics`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${userData?.token}`,
-                                Accept: 'application/json',
-                            },
-                        }
-                    )
-                    setUserStatistic(res.data)
-                } catch (error) {
-                    // throw new Error(error);
+    const getUserAggregatedWords = async (userId, token) => {
+        try {
+            setError('');
+            setLoading(true);
+            const rawResponse = await fetch(
+                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=1000`,
+                {
+                    method: 'GET',
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
                 }
-            }
-            getStatistic()
-        }, [])
+            );
+            const content = await rawResponse.json();
+            console.log('getaaaa', content);
+            const res = content[0].paginatedResults;
+            setUserStatistic(res);
+            setLoading(false);
+        } catch (e) {
+            const error = e;
+            setLoading(false);
+            setError(error.message);
+        }
+    };
 
-        return <h1>Статистика есть</h1>
+    const getUserAggregatedWordsHard = async (userId, token) => {
+        try {
+            setError('');
+            setLoading(true);
+            const rawResponse = await fetch(
+                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"hard"}`,
+                {
+                    method: 'GET',
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
+                }
+            );
+            const content = await rawResponse.json();
+            console.log('geta', content);
+            const res = content[0].paginatedResults;
+            setUserStatisticHard(res);
+            setLoading(false);
+        } catch (e) {
+            const error = e;
+            setLoading(false);
+            setError(error.message);
+        }
+    };
 
-        // return (
-        //     <div>
-        //         <h1>Статистика</h1>
-        //         {userStatistic}
-        //     </div>
-        // );
+    const getUserAggregatedWordsEasy = async (userId, token) => {
+        try {
+            setError('');
+            setLoading(true);
+            const rawResponse = await fetch(
+                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"easy"}`,
+                {
+                    method: 'GET',
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
+                }
+            );
+            const content = await rawResponse.json();
+            console.log('geta', content);
+            const res = content[0].paginatedResults;
+            setUserStatisticEasy(res);
+            setLoading(false);
+        } catch (e) {
+            const error = e;
+            setLoading(false);
+            setError(error.message);
+        }
+    };
+
+    const getUserAggregatedWordsSprint = async (userId, token) => {
+        try {
+            setError('');
+            setLoading(true);
+            const rawResponse = await fetch(
+                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=100&filter={"userWord.optional.source":"game"}`,
+                {
+                    method: 'GET',
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
+                }
+            );
+            const content = await rawResponse.json();
+            console.log('getsp', content);
+            const res = content[0].paginatedResults;
+            setUserStatisticEasy(res);
+            setLoading(false);
+        } catch (e) {
+            const error = e;
+            setLoading(false);
+            setError(error.message);
+        }
+    };
+
+    if (token) {
+        useEffect(() => {
+            getUserAggregatedWords(userId, token);
+            getUserAggregatedWordsHard(userId, token);
+            getUserAggregatedWordsEasy( userId, token );
+            getUserAggregatedWordsSprint( userId, token );
+        }, []);
     }
-    return <h1>Статистика недоступна</h1>
+    
+    
+    if (loading) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <Loading />
+                    </Row>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div>
+                <div>
+                    <Row className="justify-content-md-center">
+                        <p>{error}</p>
+                    </Row>
+                </div>
+            </div>
+        );
+    }
+    return (
+        <section className="py-4 full-section">
+            <Container>
+                {userStatistic && (
+                    <>
+                        <h1>Статистика доступна</h1>
+                        <h2>Сложные слова {userStatisticHard.length}</h2>
+                        <ul>
+                            {userStatisticHard.map((number) => (
+                                <li key="{number._id}">{number.word}</li>
+                            ))}
+                        </ul>
+                        <h2>Легкие слова {userStatisticEasy.length}</h2>
+                        <ul>
+                            {userStatisticEasy.map((number) => (
+                                <li key="{number._id}">{number.word}</li>
+                            ))}
+                        </ul>
+                        <h2>Слова из спринта {userStatisticSprint.length}</h2>
+                        <ul>
+                            {userStatisticSprint.map((number) => (
+                                <li key="{number._id}">{number.word}</li>
+                            ))}
+                        </ul>
+                    </>
+                )}
+                {!userStatistic && <h1>Статистика недоступна</h1>}
+            </Container>
+        </section>
+    );
 }
 
-export default Statistics
+export default Statistics;
