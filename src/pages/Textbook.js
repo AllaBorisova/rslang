@@ -72,8 +72,6 @@ function Textbook() {
         value,
     }
 
-        setPageNumber(selected);
-    };
 
     const handleCount = () => {
         setCount(count + 1);
