@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 
 function Question({ originalWord, onAnswerRight, onAnswerWrong, really, otherWord, sprintScore }) {
-    // console.log(originalWord)
     return (
         <div>
             <Row className="p-2">

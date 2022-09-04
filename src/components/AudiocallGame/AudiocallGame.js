@@ -1,162 +1,212 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable no-await-in-loop */
-import React, { useEffect, useState, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
-import axios from 'axios'
-import ToggleButton from '../UI/ToggleButton'
-import ToggleMute from '../UI/ToggleMute'
-import './AudiocallGame.scss'
-import Loading from '../Loading'
-import DifficultiesScreen from '../GameComponents/DifficultiesScreen'
-import FinishStat from '../GameComponents/FinishStat'
+import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import ToggleButton from '../UI/ToggleButton';
+import ToggleMute from '../UI/ToggleMute';
+import './AudiocallGame.scss';
+import Loading from '../Loading';
+import DifficultiesScreen from '../GameComponents/DifficultiesScreen';
+import FinishStat from '../GameComponents/FinishStat';
+import Row from 'react-bootstrap/esm/Row';
+import Button from 'react-bootstrap/esm/Button';
+import Col from 'react-bootstrap/esm/Col';
+import Hearts from './Hearts';
+import usePersistentState from '../../hooks/usePersistentState';
+import useAudio from '../../hooks/useAudio';
 
 function AudiocallGame() {
-    const { state } = useLocation()
+    const { state } = useLocation();
     // console.log(state)
-    const score = false
+    const score = false;
     function randomInteger(min, max) {
-        const rand = min - 0.5 + Math.random() * (max - min + 1)
-        return Math.round(rand)
+        const rand = min - 0.5 + Math.random() * (max - min + 1);
+        return Math.round(rand);
     }
     function makeRandomArr(a, b) {
-        return Math.random() - 0.5
+        return Math.random() - 0.5;
     }
-    const correctAnswer = useRef()
-    const allButtons = useRef()
-    const [counter, setCounter] = useState(5)
-    const game = 'Аудиовызов'
-    const [level, setLevel] = useState(state?.value || null)
-    const [currentWord, setCurrentWord] = useState(null)
-    const [cards, setCards] = useState([])
-    const [endGame, setEndGame] = useState(false)
-    const [startGame, setStartGame] = useState(true)
-    const [playing, setPlaying] = useState(!!state)
-    const [rightAnswers, setRightAnswers] = useState([])
-    const [wrongAnswers, setWrongAnswers] = useState([])
+    const correctAnswer = useRef();
+    const allButtons = useRef();
+    const [counter, setCounter] = useState(5);
+    const game = 'Аудиовызов';
+    const [level, setLevel] = useState(state?.value || null);
+    const [currentWord, setCurrentWord] = useState(null);
+    const [cards, setCards] = useState([]);
+    const [endGame, setEndGame] = useState(false);
+    const [startGame, setStartGame] = useState(true);
+    const [playing, setPlaying] = useState(!!state);
+    const [rightAnswers, setRightAnswers] = useState([]);
+    const [ wrongAnswers, setWrongAnswers ] = useState( [] );
+    
+    const { play: playAudioRight } = useAudio('../public/audio/right.mp3');
+    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3');
+
+    const [muted, setMuted] = usePersistentState('muted', true);
+    const toggleMute = () => {
+        setMuted(!muted);
+    };
+
     const startGameEvent = (e) => {
-        setLevel(e.target.dataset.level)
-        setPlaying(true)
-        setEndGame(false)
-    }
+        setLevel(e.target.dataset.level);
+        setPlaying(true);
+        setEndGame(false);
+    };
     const restartGameEvent = () => {
-        setStartGame(true)
-        setPlaying(false)
-        setEndGame(false)
-    }
+        setStartGame(true);
+        setPlaying(false);
+        setEndGame(false);
+    };
     useEffect(() => {
         const getList = async () => {
-            const allWords = []
+            const allWords = [];
             for (let i = 0; i < (state?.page || 30); i += 1) {
                 const res = await axios
                     .get(`https://teamwork-rs.herokuapp.com/words?group=${level}&page=${i}`)
-                    .then((resp) => resp.data)
-                allWords.push(...res)
+                    .then((resp) => resp.data);
+                allWords.push(...res);
             }
-            setCards(allWords)
-        }
+            setCards(allWords);
+        };
         if (level !== null) {
-            getList()
+            getList();
         }
-    }, [level, state])
+    }, [level, state]);
     useEffect(() => {
-        setCurrentWord(cards[randomInteger(0, cards.length - 1)])
-    }, [cards])
+        setCurrentWord(cards[randomInteger(0, cards.length - 1)]);
+    }, [cards]);
 
     useEffect(() => {
         if (counter === 0) {
-            setEndGame(true)
-            setPlaying(false)
+            setEndGame(true);
+            setPlaying(false);
         }
-    }, [counter])
+    }, [counter]);
 
     if (!playing && !endGame && !state) {
-        return <DifficultiesScreen action={startGameEvent} game={game} />
+        return <DifficultiesScreen action={startGameEvent} game={game} />;
     }
     if (!cards.length || !currentWord) {
-        return <Loading />
+        return (
+            <div>
+                <Row className="justify-content-md-center">
+                    <Loading />
+                </Row>
+            </div>
+        );
     }
-    const wrong1 = cards[randomInteger(0, cards.length - 1)].wordTranslate
+    const wrong1 = cards[randomInteger(0, cards.length - 1)].wordTranslate;
 
-    const wrong2 = cards[randomInteger(0, cards.length - 1)].wordTranslate
-    const wrong3 = cards[randomInteger(0, cards.length - 1)].wordTranslate
-    const translations = [currentWord.wordTranslate, wrong1, wrong2, wrong3]
+    const wrong2 = cards[randomInteger(0, cards.length - 1)].wordTranslate;
+    const wrong3 = cards[randomInteger(0, cards.length - 1)].wordTranslate;
+    const translations = [currentWord.wordTranslate, wrong1, wrong2, wrong3];
 
-    const finalTranslations = translations.sort(makeRandomArr)
+    const finalTranslations = translations.sort(makeRandomArr);
+
     const handleClick = (e) => {
-        if (e.target.textContent === currentWord.wordTranslate) {
-            e.target.classList.add('correct')
-        } else {
-            correctAnswer.current.classList.add('correct')
-            e.target.classList.add('wrong')
-        }
-        setTimeout(() => {
-            allButtons.current.childNodes.forEach((el) => {
-                el.classList.remove('wrong')
-                el.classList.remove('correct')
-            })
-            setRightAnswers((oldArray) => [...oldArray, currentWord])
-            setCurrentWord(cards[randomInteger(0, cards.length - 1)])
-            setWrongAnswers((oldArray) => [...oldArray, currentWord])
-            setCounter(counter - 1)
-            if (counter === 0) {
-                setEndGame(true)
+        if ( e.target.textContent === currentWord.wordTranslate ) {
+            if (!muted) {
+                playAudioRight();
             }
-        }, 1000)
-    }
+            e.target.classList.add('btn-success');
+        } else {
+            if (!muted) {
+                playAudioWrong();
+            }
+            correctAnswer.current.classList.add('btn-success');
+            e.target.classList.add('btn-danger');
+        }
+        // setTimeout(() => {
+        allButtons.current.childNodes.forEach((el) => {
+            el.classList.remove('btn-danger');
+            el.classList.remove('btn-success');
+        });
+        setRightAnswers((oldArray) => [...oldArray, currentWord]);
+        setCurrentWord(cards[randomInteger(0, cards.length - 1)]);
+        setWrongAnswers((oldArray) => [...oldArray, currentWord]);
+        setCounter(counter - 1);
+        if (counter === 0) {
+            setEndGame(true);
+        }
+        // }, 1000);
+    };
+
     const handleFinishClick = () => {
-        setPlaying(false)
-        setEndGame(true)
-    }
+        setPlaying(false);
+        setEndGame(true);
+    };
 
     return (
         <div>
             {playing && (
                 <div>
-                    <ToggleMute />
-                    <ToggleButton />
-                    <div className="hearts">
-                        <p>lives x{counter}</p>
-                        <img alt="heart" src="https://img.icons8.com/emoji/256/red-heart.png" />
-                    </div>
-                    <audio controls src={`https://teamwork-rs.herokuapp.com/${currentWord.audio}`}>
-                        <track default kind="captions" srcLang="en" />
-                    </audio>
-                    <div ref={allButtons}>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[0] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[0]}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[1] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[1]}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[2] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[2]}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[3] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[3]}
-                        </button>
-                        <button type="button" onClick={handleClick}>
-                            не знаю
-                        </button>
-                    </div>
-                    <button type="button" onClick={handleFinishClick}>
-                        закончить досрочно
-                    </button>
+                    <Row>
+                        <Col className="d-flex">
+                            <ToggleMute muted={muted} toggleMute={toggleMute} />
+                            <ToggleButton />
+                        </Col>
+                    </Row>
+
+                    <Row className="justify-content-md-center">
+                        <Col md={7} className="p-5 mb-4 bg-light rounded-3 text-center">
+                            <Hearts counter={counter} />
+
+                            <Row className="p-2" ref={allButtons}>
+                                <Col>
+                                    <audio
+                                        controls
+                                        src={`https://teamwork-rs.herokuapp.com/${currentWord.audio}`}
+                                        autoPlay
+                                    >
+                                        <track default kind="captions" srcLang="en" />
+                                    </audio>
+                                </Col>
+                            </Row>
+                            <Row className="p-2" ref={allButtons}>
+                                <Col>
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[0] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[0]}
+                                    </Button>{' '}
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[1] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[1]}
+                                    </Button>{' '}
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[2] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[2]}
+                                    </Button>{' '}
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[3] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[3]}
+                                    </Button>{' '}
+                                    <Button variant="light" onClick={handleClick}>
+                                        не знаю
+                                    </Button>{' '}
+                                </Col>
+                            </Row>
+                            <Row className="p-2">
+                                <Col>
+                                    <Button variant="primary" onClick={handleFinishClick}>
+                                        закончить досрочно
+                                    </Button>{' '}
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
             )}
             {endGame && (
@@ -168,7 +218,7 @@ function AudiocallGame() {
                 />
             )}
         </div>
-    )
+    );
 }
 
-export default AudiocallGame
+export default AudiocallGame;

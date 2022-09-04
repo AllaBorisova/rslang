@@ -31,7 +31,7 @@ function Game() {
     const [counterArray, setCounterArray] = useState(0);
     const [words, setWords] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [level, setLevel] = useState(parseInt(state?.value) || null);
+    const [level, setLevel] = useState(parseInt(state?.value) || 0);
     const [pageNumber, setPageNumber] = useState(state?.page || Math.floor(Math.random() * 30));
     const [answersBonus, setAnswersBonus] = useState(0);
     const [rightAnswers, setRightAnswers] = useState([]);
@@ -136,7 +136,6 @@ function Game() {
     };
 
     const restartGame = (e) => {
-
         setPlaying(false);
         setFinished(false);
     };
@@ -155,11 +154,9 @@ function Game() {
     if (!words.length && playing) {
         return (
             <div>
-                <div>
-                    <Row className="justify-content-md-center">
-                        <Loading />
-                    </Row>
-                </div>
+                <Row className="justify-content-md-center">
+                    <Loading />
+                </Row>
             </div>
         );
     }
@@ -167,11 +164,9 @@ function Game() {
     if (loading) {
         return (
             <div>
-                <div>
-                    <Row className="justify-content-md-center">
-                        <Loading />
-                    </Row>
-                </div>
+                <Row className="justify-content-md-center">
+                    <Loading />
+                </Row>
             </div>
         );
     }
@@ -186,30 +181,6 @@ function Game() {
                 </div>
             </div>
         );
-    }
-
-    if (loading) {
-        return (
-            <div>
-                <div>
-                    <Row className="justify-content-md-center">
-                        <Loading />
-                    </Row>
-                </div>
-            </div>
-        )
-    }
-
-    if (error) {
-        return (
-            <div>
-                <div>
-                    <Row className="justify-content-md-center">
-                        <p>{error}</p>
-                    </Row>
-                </div>
-            </div>
-        )
     }
 
     return (
@@ -217,8 +188,12 @@ function Game() {
             {!playing && !finished && !state && <DifficultiesScreen action={startGame} game={game} />}
             {playing && (
                 <div>
-                    <ToggleMute muted={muted} toggleMute={toggleMute} />
-                    <ToggleButton />
+                    <Row>
+                        <Col className="d-flex">
+                            <ToggleMute muted={muted} toggleMute={toggleMute}  />
+                            <ToggleButton />
+                        </Col>
+                    </Row>
                     <Row className="justify-content-md-center">
                         <Col md={4} className="p-5 mb-4 bg-light rounded-3 text-center">
                             <Score value={score} />

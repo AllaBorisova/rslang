@@ -79,19 +79,25 @@ function Textbook() {
 
 
     return (
-        <section className="textbook-main my-4">
-            <NavLink to="/sprint" state={settings}>
-                перейти на игру Спринт
-            </NavLink>
-            <NavLink to="/audiocall" state={settings}>
-                перейти на игру Аудиовызов
-            </NavLink>
+        <section className="textbook-main py-4">
+            
             <Container>
-                <Row className="pb-5">
+            <Row className="pb-5">
                     <Col>
                         <h1>Textbook</h1>
                     </Col>
                 </Row>
+                <Row>
+                    <Col>
+                    <NavLink to="/sprint" state={settings}>
+                        перейти на игру Спринт
+                    </NavLink>
+                    <NavLink to="/audiocall" state={settings}>
+                        перейти на игру Аудиовызов
+                    </NavLink>
+                    </Col>
+                </Row>
+            
                 <Row className="justify-content-md-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />

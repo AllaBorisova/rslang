@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/esm/Row'
 import Table from 'react-bootstrap/esm/Table'
 import Badge from 'react-bootstrap/esm/Badge'
 import Score from '../Sprint/Score'
+import Button from 'react-bootstrap/esm/Button';
 
 function FinishStat(props) {
     const { score } = props
@@ -44,11 +45,9 @@ function FinishStat(props) {
                         ))}
                     </tbody>
                 </Table>
-                {/* <Button variant="info" onClick={onRestart}>Play Again</Button> */}
-                {/* <button onClick={onRestart}>Play Again</button> */}
-                <button type="button" onClick={handleClickRestart}>
-                    restart
-                </button>
+
+                <Button variant="primary" onClick={handleClickRestart}>Еще разок</Button>{' '}
+            
             </Col>
         </Row>
     )
