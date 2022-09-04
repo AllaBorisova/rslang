@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import useToken from '../components/Auth/UseToken';
-import Container from 'react-bootstrap/Container';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Container from 'react-bootstrap/Container'
+import useToken from '../components/Auth/UseToken'
 
 function Statistics() {
-    const { token, setToken, logout, userId } = useToken();
-    const [userStatistic, setUserStatistic] = useState([]);
+    const { token, setToken, logout, userId } = useToken()
+    console.log(userId, token)
+    const [userStatistic, setUserStatistic] = useState([])
     if (token) {
         useEffect(() => {
             const getStatistic = async () => {
@@ -14,11 +15,11 @@ function Statistics() {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         Accept: 'application/json',
-                    }
-                } );
+                    },
+                })
+
+                const content = await rawResponse.json()
                 console.log(content)
-                const content = await rawResponse.json();
-                
                 // try {
                 //     const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/statistics`, {
                 //         method: 'GET',
@@ -27,16 +28,16 @@ function Statistics() {
                 //             Accept: 'application/json',
                 //         }
                 //     } );
-                    
+
                 //     const content = await rawResponse.json();
                 //     console.log(res);
                 //     setUserStatistic(res.data);
                 // } catch (error) {
                 //     console.log(error);
                 // }
-            };
-            getStatistic();
-        }, []);
+            }
+            getStatistic()
+        }, [])
     }
 
     return (
@@ -46,7 +47,7 @@ function Statistics() {
                 {!userStatistic && <h1>Статистика недоступна</h1>}
             </Container>
         </section>
-    );
+    )
 }
 
-export default Statistics;
+export default Statistics

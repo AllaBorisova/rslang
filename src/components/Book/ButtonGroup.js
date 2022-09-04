@@ -4,8 +4,8 @@ import GetStorage from './LocalStorage'
 const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
 
 function ButtonGroup(props) {
-    const { status, id, dict, action } = props
-
+    const { status, id, dict, action, count, hard, easy } = props
+    console.log(count)
     const { userId, token } = GetStorage('userData', '')[0]
     const [request, setRequest] = useState('POST')
     useEffect(() => {
@@ -55,12 +55,34 @@ function ButtonGroup(props) {
                 throw new Error(error.message)
             })
     }
+
+    const LearningWord = async (text) => {
+        await fetch(`${USER_URL}${userId}/statistics`, {
+            method: `PUT`,
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(text),
+        })
+            .then((res) => res.status)
+            .catch((error) => {
+                throw new Error(error.message)
+            })
+    }
     const key = new Date()
-    const word = { difficulty: 'hard', optional: { testFieldString: 'test', testFieldBoolean: true } }
+    const word = { difficulty: 'hard', optional: { data: key } }
     const word2 = {
         difficulty: 'easy',
-        optional: { testFieldString: 'test', testFieldBoolean: true, data: key },
+        optional: { data: key },
     }
+    const learned = {
+        learnedWords: `${count}`,
+        optional: { date: key },
+    }
+
     if (dict) {
         return (
             <button
@@ -82,6 +104,7 @@ function ButtonGroup(props) {
                 type="button"
                 className="btn-add"
                 value={id}
+                disabled={hard}
                 onClick={() => {
                     createUserWord(id, word)
                     action[1]()
@@ -93,8 +116,11 @@ function ButtonGroup(props) {
                 type="button"
                 className="btn-remove"
                 value={id}
+                disabled={easy}
                 onClick={() => {
                     easyUserWord(id, word2)
+                    action[3]()
+                    LearningWord(learned)
                     action[2]()
                 }}
             >
