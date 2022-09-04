@@ -4,7 +4,6 @@ import ButtonGroup from './ButtonGroup'
 import Player from './Player'
 
 function WordCard(props) {
-    // console.log(items)
     const { items, user, dict, currentstyle } = props
     const { userId } = user
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
