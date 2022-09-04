@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import '../../styles/WordCard.scss'
 import ButtonGroup from './ButtonGroup'
+import CheckStatus from './CheckWord'
 import Player from './Player'
 
-const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
-
 function WordCard(props) {
-    const { items, user, dict, currentstyle } = props
-    const { userId, token } = user
+    const { items, user, dict, currentstyle, action, count } = props
     const {
         word,
         transcription,
@@ -27,29 +25,22 @@ function WordCard(props) {
     const HideTheCard = () => {
         setHiden(false)
     }
-    const [status, setStatus] = useState(null)
+
+    const [status, setStatus] = CheckStatus(id)
+    const [isActive, setActive] = useState(false)
+    const [isActiveHard, setActiveHard] = useState(false)
+
     const SetHardStyle = () => {
+        setActiveHard(!isActiveHard)
+        setActive()
         setStatus('hard')
     }
     const SetEasyStyle = () => {
+        setActive(!isActive)
+        setActiveHard(false)
         setStatus('easy')
     }
-    useEffect(() => {
-        const CheckWord = async () => {
-            await fetch(`${USER_URL}${userId}/words/${ourId}`, {
-                method: 'GET',
-                headers: { Authorization: `Bearer ${token}` },
-            })
-                .then((data) => data.json())
-                .then((result) => {
-                    setStatus(result.difficulty)
-                })
-                .catch((e) => {
-                    console.log('fail')
-                })
-        }
-        CheckWord()
-    })
+
     const img = `https://teamwork-rs.herokuapp.com/${items.image}`
 
     const [sound] = useState([
@@ -73,7 +64,7 @@ function WordCard(props) {
                         <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                         <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     </div>
-                    {/* <Player sound={sound} /> */}
+                    <Player sound={sound} />
                 </div>
 
                 <div className="wordCard__example">
@@ -89,7 +80,7 @@ function WordCard(props) {
         )
     }
 
-    let statusStyle = ''
+    let statusStyle = ``
     switch (status) {
         case 'easy':
             statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff, 0 0 8px #00ff00, 0 0 10px #00ff00'
@@ -97,8 +88,8 @@ function WordCard(props) {
         case 'hard':
             statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff,  0 0 8px #ff0000, 0 0 10px #ff0000'
             break
-        case null:
-            statusStyle = ''
+        case undefined:
+            statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff'
             break
         default:
             return statusStyle
@@ -119,7 +110,7 @@ function WordCard(props) {
                     <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                     <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
                 </div>
-                {/* <Player sound={sound} /> */}
+                <Player sound={sound} />
             </div>
 
             <div className="wordCard__example">
@@ -136,7 +127,10 @@ function WordCard(props) {
                 id={ourId}
                 user={user}
                 dict={dict}
-                action={[HideTheCard, SetHardStyle, SetEasyStyle]}
+                action={[HideTheCard, SetHardStyle, SetEasyStyle, action]}
+                count={count}
+                easy={isActive}
+                hard={isActiveHard}
             />
         </div>
     )
