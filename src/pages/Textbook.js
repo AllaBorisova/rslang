@@ -8,11 +8,16 @@ import Pagination from '../components/Book/Pagination';
 import WordsPage from '../components/Book/WordsPage';
 import DifficultButton from '../components/Book/DiffucultButton';
 import GetStorage from '../components/Book/LocalStorage';
+
 import {NavLink} from 'react-router-dom'
+
 
 function Textbook() {
     const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
+    const USER_URL = `https://teamwork-rs.herokuapp.com/users/`;
     const [user, setUser] = GetStorage('userData', '');
+    const { userId, token } = user;
+
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     );
@@ -20,6 +25,8 @@ function Textbook() {
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
     );
     const [words, setWords] = useState([]);
+
+    const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
     window.addEventListener('beforeunload', () => {
         sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }));
@@ -35,14 +42,33 @@ function Textbook() {
         getList();
     }, [value, pageNumber, BASE_URL]);
 
+
+    // useEffect(() => {
+    //     const getStat = async () => {
+    //         await fetch(`${USER_URL}${userId}/statistics`, {
+    //             method: 'GET',
+    //             headers: { Authorization: `Bearer ${token}` },
+    //         })
+    //             .then((response) => console.log(response.status))
+    //             .then((result) => result.json())
+    //             .then((data) => {
+    //                 console.log(data);
+    //                 setCount(data.learnedWords);
+    //             })
+    //             .catch((e) => console.log(e.message));
+    //     };
+
+    //     getStat();
+    // }, [USER_URL]);
+
     const changePage = ({ selected }) => {
         setPageNumber(selected);
     };
-    const settings = {
-        fromBook: true,
-        page: pageNumber,
-        value,
-    }
+
+    const handleCount = () => {
+        setCount(count + 1);
+    };
+
     return (
         <section className="textbook-main my-4">
             <NavLink to="/sprint" state={settings}>
@@ -60,7 +86,7 @@ function Textbook() {
                 <Row className="justify-content-md-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />
-                        <DifficultButton user={user} />
+                        <DifficultButton userId={userId} />
                     </Col>
                 </Row>
                 <Row>
@@ -71,12 +97,20 @@ function Textbook() {
 
                 <Row>
                     <div className="word-wrapper">
-                        <WordsPage words={words} loading={loading} user={user} dict={false} props={value} />
+                        <WordsPage
+                            words={words}
+                            loading={loading}
+                            user={user}
+                            dict={false}
+                            props={value}
+                            action={handleCount}
+                            count={count}
+                        />
                     </div>
                 </Row>
                 <Row>
                     <Col>
-                        <Pagination action={changePage} />
+                        <Pagination action={changePage} current={pageNumber} />
                     </Col>
                 </Row>
             </Container>
