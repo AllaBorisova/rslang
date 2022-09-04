@@ -76,7 +76,7 @@ function Game() {
         if (token) {
             const res = await getUserWord(userId, word.id, token);
             if (res === false) {
-                const optional = { source: 'game', game: 'sprint', score: "1" };
+                const optional = { source: 'game', game: 'sprint', score: "0" };
                 await createUserWord(userId, word.id, token, optional);
             } else {
                 console.log('change', res['optional']);
