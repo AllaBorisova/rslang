@@ -4,7 +4,6 @@ import ButtonGroup from './ButtonGroup';
 import CheckStatus from './CheckWord';
 import Player from './Player';
 import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
 
 function WordCard(props) {
     const { items, user, dict, currentstyle, action, count } = props;
@@ -62,13 +61,15 @@ function WordCard(props) {
                 <Col md={4}>
                     <img src={img} alt={word} />
                 </Col>
-                <Col md={8}>
+                <Col md={8} className="wordCard__right">
                     <div>
                         <div className="wordCard__word">
                             <div className="wordCard__wordTranscrTransl" style={{ borderColor: currentstyle }}>
-                                <p>{word}</p>
-                                <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                                <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                                <p className="fs-3 fw-bold">{word}</p>
+                                <p className="fs-4">{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                                <p className="fs-5 flex-full fst-italic">
+                                    {wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}
+                                </p>
                             </div>
                             <Player sound={sound} />
                         </div>
@@ -102,6 +103,9 @@ function WordCard(props) {
         default:
             return statusStyle;
     }
+    if (dict) {
+        statusStyle = '#f8d7da';
+    }
     return (
         <div
             className="wordCard d-flex p-4"
@@ -113,12 +117,14 @@ function WordCard(props) {
             <Col md={4}>
                 <img src={img} alt={word} />
             </Col>
-            <Col md={8}>
+            <Col md={8} className="wordCard__right">
                 <div className="wordCard__word">
-                    <div className="wordCard__wordTranscrTransl" style={{borderColor: currentstyle}}>
+                    <div className="wordCard__wordTranscrTransl" style={{ borderColor: currentstyle }}>
                         <p className="fs-3 fw-bold">{word}</p>
                         <p className="fs-4">{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                        <p className="fs-5 flex-full fst-italic">{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                        <p className="fs-5 flex-full fst-italic">
+                            {wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}
+                        </p>
                     </div>
                     <Player sound={sound} />
                 </div>

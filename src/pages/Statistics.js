@@ -158,7 +158,7 @@ function Statistics() {
     return (
         <section className="py-4 full-section">
             <Container>
-                {userStatistic && (
+                {token && (
                     <>
                         <h1>Статистика доступна</h1>
                         <h2>Сложные слова {userStatisticHard.length}</h2>
@@ -181,7 +181,7 @@ function Statistics() {
                         </ul>
                     </>
                 )}
-                {!userStatistic && <h1>Статистика недоступна</h1>}
+                {!token && <h1>Статистика недоступна</h1>}
             </Container>
         </section>
     );

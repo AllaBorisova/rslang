@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 import WordsPage from '../components/Book/WordsPage'
 import GetStorage from '../components/Book/LocalStorage'
 import GetDiffWords from '../components/Book/GetDiffWords'
+import Button from 'react-bootstrap/esm/Button'
 
 function Dictionary() {
     const user = GetStorage('userData', '')[0]
@@ -13,13 +14,18 @@ function Dictionary() {
     return (
         <section className="py-4 full-section">
             <Container>
-                <Row className="pb-5">
+                <Row className="pb-5 justify-content-between align-items-center">
                     <Col>
                         <h1>Difficult</h1>
                     </Col>
+                    <Col className="d-flex justify-content-end">
+                    <Button as={NavLink} to="/textbook" className="m-1">
+                        Вернуться к учебнику
+                        </Button>
+                    </Col>
                 </Row>
+
                 <Row>
-                    <NavLink to="/textbook">Вернуться к учебнику</NavLink>
                     <div className="word-wrapper">
                         <WordsPage words={list} props="0" user={user} dict />
                     </div>

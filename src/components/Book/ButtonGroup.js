@@ -86,17 +86,19 @@ function ButtonGroup(props) {
 
     if (dict) {
         return (
-            <button
-                type="button"
-                className="btn-remove"
-                value={id}
-                onClick={() => {
-                    deleteUserWord(id);
-                    action[0]();
-                }}
-            >
-                Удалить
-            </button>
+            <div className="btn-card-control">
+                <Button
+                    variant="danger"
+                    className="btn-remove"
+                    value={id}
+                    onClick={() => {
+                        deleteUserWord(id);
+                        action[0]();
+                    }}
+                >
+                    Удалить
+                </Button>{' '}
+            </div>
         );
     }
     return (
@@ -113,7 +115,8 @@ function ButtonGroup(props) {
             >
                 Добавить в сложные
             </Button>{' '}
-            <Button variant="secondary"
+            <Button
+                variant="secondary"
                 className="btn-remove"
                 value={id}
                 disabled={easy}
@@ -125,7 +128,7 @@ function ButtonGroup(props) {
                 }}
             >
                 Изучено
-                </Button>{' '}
+            </Button>{' '}
         </div>
     );
 }

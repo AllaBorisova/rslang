@@ -76,23 +76,19 @@ function Textbook() {
     return (
         <section className="textbook-main py-4 full-section">
             <Container>
-                <Row className="pb-5">
-                    <Col>
+                <Row className="pb-5 justify-content-between align-items-center">
+                    <Col xs={6}>
                         <h1>Textbook</h1>
                     </Col>
-                </Row>
-                <Row className="pb-2">
-                    <Col className="text-center">
-                        <Button as={NavLink} to="/sprint" state={settings} className="m-1">
+                    <Col xs={6} className="d-flex justify-content-end">
+                    <Button as={NavLink} to="/sprint" state={settings} className="m-1">
                             Спринт
                         </Button>
                         <Button as={NavLink} to="/audiocall" state={settings} className="m-1">
                         Аудиовызов
                         </Button>
-                       
                     </Col>
                 </Row>
-
                 <Row className="justify-content-md-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />

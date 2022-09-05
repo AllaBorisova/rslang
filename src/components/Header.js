@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import LoginPopup from './LoginPopup'
 import SignUp from './SingUp'
+import { NavLink } from 'react-router-dom'
 
 function Header(props) {
     const {token, logout, setToken} = props
@@ -14,7 +15,7 @@ function Header(props) {
                 <Container>
                     <Row className="align-items-center">
                         <Col xs={4}>
-                            <h1>RSLANG</h1>
+                        <h1><NavLink to={'/'}>RSLANG</NavLink></h1>
                         </Col>
 
                         <Col xs={8} className="text-end">
@@ -32,7 +33,7 @@ function Header(props) {
             <Container>
                 <Row className="align-items-center">
                     <Col xs={4}>
-                        <h1>RSLANG</h1>
+                        <h1><NavLink to={'/'}>RSLANG</NavLink></h1>
                     </Col>
 
                     <Col xs={8} className="text-end">
