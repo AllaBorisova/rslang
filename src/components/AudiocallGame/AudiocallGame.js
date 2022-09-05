@@ -58,11 +58,11 @@ function AudiocallGame() {
     const restartGameEvent = () => {
         // setStartGame( true )
         if (!state) {
-            setPlaying(false);
+            setPlaying(false)
         } else {
-            setPlaying(true);
+            setPlaying(true)
         }
-       
+        setCounter(5)
         setEndGame(false)
     }
     useEffect(() => {
@@ -146,7 +146,6 @@ function AudiocallGame() {
             e.target.classList.add('btn-danger')
         }
         setTimeout(async () => {
-
             setCurrentWord(cards[randomInteger(0, cards.length - 1)])
             if (e.target.textContent === currentWord.wordTranslate) {
                 if (token) {
