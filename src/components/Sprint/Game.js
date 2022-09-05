@@ -58,6 +58,10 @@ function Game() {
             const res = await getUserWord(userId, word.id, token)
             if (res === false) {
                 const optional = {
+                    audiocall: {
+                        wrong: 0,
+                        correct: 0,
+                    },
                     sprint: {
                         wrong: 0,
                         correct: 1,
@@ -65,8 +69,12 @@ function Game() {
                 }
                 await createUserWord(userId, word.id, token, optional)
             } else {
-                // console.log('change', res.optional)
+                 console.log('change', res.optional)
                 const optional = {
+                    audiocall: {
+                        wrong: `${parseInt(res.optional.audiocall.wrong, 10)}`,
+                        correct: `${parseInt(res.optional.audiocall.correct, 10)}`,
+                    },
                     sprint: {
                         wrong: `${parseInt(res.optional.sprint.wrong, 10)}`,
                         correct: `${parseInt(res.optional.sprint.correct, 10) + 1}`,
@@ -101,7 +109,7 @@ function Game() {
                 }
                 await createUserWord(userId, word.id, token, optional)
             } else {
-                // console.log('change', res.optional)
+                 console.log('change', res.optional)
                 const optional = {
                     audiocall: {
                         wrong: `${parseInt(res.optional.audiocall.wrong, 10)}`,

@@ -53,7 +53,7 @@ function WordCard(props) {
         if (resp.ok) {
             const data = await resp.json()
 
-            // console.log(data.optional, data.optional)
+            //  console.log(data.optional)
             // console.log(data.optional, data.optional)
             setCorrect((Number(data.optional.sprint.correct) || 0) + (Number(data.optional.audiocall.correct) || 0))
             setWrong((Number(data.optional.sprint.wrong) || 0) + (Number(data.optional.audiocall.wrong) || 0))
