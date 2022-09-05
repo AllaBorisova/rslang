@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import 'bootstrap/scss/bootstrap.scss'
@@ -11,11 +11,10 @@ import Textbook from './pages/Textbook'
 import Audiocall from './pages/Audiocall'
 import Sprint from './pages/Sprint'
 import Statistics from './pages/Statistics'
-import Navigation from './components/Navigation'
 import useToken from './components/Auth/UseToken'
 
 function App() {
-    const { token, setToken, logout, userId } = useToken()
+    const { token, setToken, logout } = useToken()
 
     return (
         <main>

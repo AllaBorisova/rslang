@@ -21,8 +21,8 @@ function FinishStat(props) {
                 </h3>
                 <Table striped>
                     <tbody>
-                        {rightAnswers.map((element, index) => (
-                            <tr key={index}>
+                        {rightAnswers.map((element) => (
+                            <tr key={element.wordId}>
                                 <td>{element.word}</td>
                                 <td>{element.transcription}</td>
                                 <td>{element.wordTranslate}</td>
@@ -35,8 +35,8 @@ function FinishStat(props) {
                 </h3>
                 <Table striped>
                     <tbody>
-                        {wrongAnswers.map((element, index) => (
-                            <tr key={index}>
+                        {wrongAnswers.map((element) => (
+                            <tr key={element.wordId}>
                                 <td>{element.word}</td>
                                 <td>{element.transcription}</td>
                                 <td>{element.wordTranslate}</td>

@@ -19,14 +19,11 @@ const CheckStatus = (id) => {
                         setStatus(filtered[0].difficulty)
                     }
                 })
-                .catch((e) => {
-                    
-                })
+                .catch(() => {})
         }
         CheckWord()
     }, [token, userId])
     return [status, setStatus]
 }
-
 
 export default CheckStatus
