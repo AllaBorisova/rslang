@@ -32,7 +32,7 @@ function Game() {
     const [words, setWords] = useState([])
     const [loading, setLoading] = useState(false)
     const [level, setLevel] = useState(parseInt(state?.value, 10) || 0)
-    const [pageNumber, setPageNumber] = useState(state?.page || Math.floor(Math.random() * 30))
+    const [pageNumber] = useState(state?.page || Math.floor(Math.random() * 30))
     const [answersBonus, setAnswersBonus] = useState(0)
     const [rightAnswers, setRightAnswers] = useState([])
     const [wrongAnswers, setWrongAnswers] = useState([])
@@ -139,13 +139,11 @@ function Game() {
                 const res1 = await axios.get(
                     `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber}`
                 )
-                setPageNumber(pageNumber + 1)
                 const res2 = await axios.get(
-                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber % 30}`
+                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber + 1 % 30}`
                 )
-                setPageNumber(pageNumber + 1)
                 const res3 = await axios.get(
-                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber % 30}`
+                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber + 2 % 30}`
                 )
                 const res1Data = res1.data
                 const res2Data = res2.data
