@@ -88,7 +88,7 @@ function Textbook() {
                         </Button>
                     </Col>
                 </Row>
-                <Row className="justify-content-center">
+                <Row className="pb-3 justify-content-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />
                         <DifficultButton userId={userId} />
