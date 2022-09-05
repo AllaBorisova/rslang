@@ -108,6 +108,9 @@ function ButtonGroup(props) {
                 onClick={() => {
                     createUserWord(id, word)
                     action[1]()
+                    LearningWord(learned)
+                    action[3][1](status)
+                    
                 }}
             >
                 Добавить в сложные
@@ -119,9 +122,10 @@ function ButtonGroup(props) {
                 disabled={easy}
                 onClick={() => {
                     easyUserWord(id, word2)
-                    action[3]()
-                    LearningWord(learned)
                     action[2]()
+                    LearningWord(learned)
+                    action[3][0](status)
+                    
                 }}
             >
                 Изучено

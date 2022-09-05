@@ -1,34 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
-import Group from '../components/Book/Group';
-import Pagination from '../components/Book/Pagination';
-import WordsPage from '../components/Book/WordsPage';
-import DifficultButton from '../components/Book/DiffucultButton';
-import GetStorage from '../components/Book/LocalStorage';
-
-import {NavLink} from 'react-router-dom'
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/esm/Col'
+import Row from 'react-bootstrap/esm/Row'
+import { NavLink } from 'react-router-dom'
+import Group from '../components/Book/Group'
+import Pagination from '../components/Book/Pagination'
+import WordsPage from '../components/Book/WordsPage'
+import DifficultButton from '../components/Book/DiffucultButton'
+import GetStorage from '../components/Book/LocalStorage'
 
 function Textbook() {
-    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
-    const USER_URL = `https://teamwork-rs.herokuapp.com/users/`;
-    const [user, setUser] = GetStorage('userData', '');
-    const { userId, token } = user;
+    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
+    const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
+    const [user, setUser] = GetStorage('userData', '')
+    const { userId, token } = user
 
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     )
     const [pageNumber, setPageNumber] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
+    )
+    const [words, setWords] = useState([])
 
-    );
-    const [words, setWords] = useState([]);
-
-    const [count, setCount] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0)
+    const [loading, setLoading] = useState(false)
     window.addEventListener('beforeunload', () => {
         sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
     })
@@ -43,27 +40,25 @@ function Textbook() {
         getList()
     }, [value, pageNumber, BASE_URL])
 
+    if (user) {
+        useEffect(() => {
+            const getStat = async () => {
+                await fetch(`${USER_URL}${userId}/statistics`, {
+                    method: 'GET',
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data)
+                        setCount(data.learnedWords)
+                    })
+                    .catch((e) => console.log(e.message))
+            }
 
-    // useEffect(() => {
-    //     const getStat = async () => {
-    //         await fetch(`${USER_URL}${userId}/statistics`, {
-    //             method: 'GET',
-    //             headers: { Authorization: `Bearer ${token}` },
-    //         })
-    //             .then((response) => console.log(response.status))
-    //             .then((result) => result.json())
-    //             .then((data) => {
-    //                 console.log(data);
-    //                 setCount(data.learnedWords);
-    //             })
-    //             .catch((e) => console.log(e.message));
-    //     };
-
-    //     getStat();
-    // }, [USER_URL]);
-
+            getStat()
+        }, [USER_URL])
+    }
     const changePage = ({ selected }) => {
-
         setPageNumber(selected)
     }
     const settings = {
@@ -72,12 +67,22 @@ function Textbook() {
         value,
     }
 
-
-    const handleCount = () => {
-        setCount(count + 1);
-    };
-
-
+    const handleCountEasy = (status) => {
+        console.log(status)
+        if (status === 'easy') {
+            setCount(count)
+        } else {
+            setCount(count + 1)
+        }
+    }
+    const handleCountHard = (status) => {
+        console.log(status)
+        if (status === 'easy') {
+            setCount(count - 1)
+        } else {
+            setCount(count)
+        }
+    }
     return (
         <section className="textbook-main my-4">
             <NavLink to="/sprint" state={settings}>
@@ -112,7 +117,7 @@ function Textbook() {
                             user={user}
                             dict={false}
                             props={value}
-                            action={handleCount}
+                            action={[handleCountEasy, handleCountHard]}
                             count={count}
                         />
                     </div>
