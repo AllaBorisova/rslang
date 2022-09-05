@@ -31,7 +31,7 @@ function Game() {
     const [counterArray, setCounterArray] = useState(0)
     const [words, setWords] = useState([])
     const [loading, setLoading] = useState(false)
-    const [level, setLevel] = useState(parseInt(state?.value) || 0)
+    const [level, setLevel] = useState(parseInt(state?.value, 10) || 0)
     const [pageNumber, setPageNumber] = useState(state?.page || Math.floor(Math.random() * 30))
     const [answersBonus, setAnswersBonus] = useState(0)
     const [rightAnswers, setRightAnswers] = useState([])
@@ -69,7 +69,7 @@ function Game() {
                 }
                 await createUserWord(userId, word.id, token, optional)
             } else {
-                 console.log('change', res.optional)
+                console.log('change', res.optional)
                 const optional = {
                     audiocall: {
                         wrong: `${parseInt(res.optional.audiocall.wrong, 10)}`,
@@ -109,7 +109,7 @@ function Game() {
                 }
                 await createUserWord(userId, word.id, token, optional)
             } else {
-                 console.log('change', res.optional)
+                console.log('change', res.optional)
                 const optional = {
                     audiocall: {
                         wrong: `${parseInt(res.optional.audiocall.wrong, 10)}`,
@@ -131,7 +131,7 @@ function Game() {
         setWrongAnswers((oldArray) => [...oldArray, word])
     }
 
-    const getList = async (level, pageNumber) => {
+    const getList = async () => {
         try {
             setError('')
             setLoading(true)
@@ -139,11 +139,13 @@ function Game() {
                 const res1 = await axios.get(
                     `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber}`
                 )
+                setPageNumber(pageNumber + 1)
                 const res2 = await axios.get(
-                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${(pageNumber + 1) % 30}`
+                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber % 30}`
                 )
+                setPageNumber(pageNumber + 1)
                 const res3 = await axios.get(
-                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${(pageNumber + 2) % 30}`
+                    `https://teamwork-rs.herokuapp.com/words?group=${level}&page=${pageNumber % 30}`
                 )
                 const res1Data = res1.data
                 const res2Data = res2.data
@@ -158,9 +160,8 @@ function Game() {
             }
             setLoading(false)
         } catch (e) {
-            const error = e
             setLoading(false)
-            setError(error.message)
+            setError(e.message)
         }
     }
 
@@ -180,7 +181,7 @@ function Game() {
         setFinished(false)
     }
 
-    const restartGame = (e) => {
+    const restartGame = () => {
         if (!state) {
             setPlaying(false)
         } else {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useAudio = (src, volume = 1) => {
     const [audio, setAudio] = useState(null)

@@ -1,59 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/esm/Col'
+
 import Row from 'react-bootstrap/esm/Row'
 import Loading from '../components/Loading'
 import useToken from '../components/Auth/UseToken'
 
 function Statistics() {
-    const { token, setToken, logout, userId } = useToken()
-    const [userStatistic, setUserStatistic] = useState([])
+    const { token, userId } = useToken()
+
     const [userStatisticHard, setUserStatisticHard] = useState([])
     const [userStatisticEasy, setUserStatisticEasy] = useState([])
-    const [userStatisticSprint, setUserStatisticSprint] = useState([])
+
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const [allStatistics, setAllStatistics] = useState('')
 
-    const getUserAggregatedWords = async (userId, token) => {
-        try {
-            setError('')
-            setLoading(true)
-            const rawResponse = await fetch(
-                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=1000`,
-                {
-                    method: 'GET',
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        Accept: 'application/json',
-                    },
-                }
-            )
-            const content = await rawResponse.json()
-            const res = content[0].paginatedResults
-            setUserStatistic(res)
-            setLoading(false)
-        } catch (e) {
-            const error = e
-            setLoading(false)
-            setError(error.message)
-        }
-    }
-
-    const getStatistic = async (userId, token) => {
-        const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/settings`, {
-            method: 'GET',
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                Accept: 'application/json',
-            },
-        })
-        const content = await rawResponse.json()
-    }
-
-    const getUserAggregatedWordsHard = async (userId, token) => {
+    const getUserAggregatedWordsHard = async () => {
         try {
             setError('')
             setLoading(true)
@@ -73,13 +34,12 @@ function Statistics() {
             setUserStatisticHard(res)
             setLoading(false)
         } catch (e) {
-            const error = e
             setLoading(false)
-            setError(error.message)
+            setError(e.message)
         }
     }
 
-    const getUserAggregatedWordsEasy = async (userId, token) => {
+    const getUserAggregatedWordsEasy = async () => {
         try {
             setError('')
             setLoading(true)
@@ -99,70 +59,17 @@ function Statistics() {
             setUserStatisticEasy(res)
             setLoading(false)
         } catch (e) {
-            const error = e
             setLoading(false)
-            setError(error.message)
+            setError(e.message)
         }
     }
 
-    const getUserAggregatedWordsSprint = async (userId, token) => {
-        try {
-            setError('')
-            setLoading(true)
-            const rawResponse = await fetch(
-                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?filter={"userWord.optional.game":"sprint"}`,
-
-                {
-                    method: 'GET',
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        Accept: 'application/json',
-                    },
-                }
-            )
-            const content = await rawResponse.json()
-
-            const res = content[0].paginatedResults
-            setUserStatisticSprint(res)
-            setLoading(false)
-            setError(error.message)
-        } catch (e) {}
-    }
-
-    const getUserAggregatedWordsOneWord = async (userId, token) => {
-        try {
-            setError('')
-            setLoading(true)
-            const rawResponse = await fetch(
-                `https://teamwork-rs.herokuapp.com/users/${userId}/words/5e9f5ee35eb9e72bc21af582`,
-                {
-                    method: 'GET',
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        Accept: 'application/json',
-                    },
-                }
-            )
-            const content = await rawResponse.json()
-        } catch (e) {
-            const error = e
-            setLoading(false)
-            setError(error.message)
+    useEffect(() => {
+        if (token) {
+            getUserAggregatedWordsHard()
+            getUserAggregatedWordsEasy()
         }
-    }
-
-    if (token) {
-        useEffect(() => {
-            getUserAggregatedWords(userId, token)
-            getUserAggregatedWordsHard(userId, token)
-            getUserAggregatedWordsEasy(userId, token)
-            getUserAggregatedWordsSprint(userId, token)
-            getUserAggregatedWordsOneWord(userId, token)
-            getStatistic(userId, token)
-        }, [])
-    }
+    }, [])
 
     if (loading) {
         return (

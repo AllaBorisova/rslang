@@ -26,7 +26,7 @@ function AudiocallGame() {
         const rand = min - 0.5 + Math.random() * (max - min + 1)
         return Math.round(rand)
     }
-    function makeRandomArr(a, b) {
+    function makeRandomArr() {
         return Math.random() - 0.5
     }
     const correctAnswer = useRef()
@@ -84,7 +84,7 @@ function AudiocallGame() {
     useEffect(() => {
         if (endGame) {
             const postList = async () => {
-                const res = await axios.get(`https://teamwork-rs.herokuapp.com/words`).then((resp) => resp.data)
+                await axios.get(`https://teamwork-rs.herokuapp.com/words`).then((resp) => resp.data)
             }
             postList()
         }
@@ -174,7 +174,7 @@ function AudiocallGame() {
                         await changeUserWord(userId, currentWord.id, token, optional)
                     }
                 }
-                
+
                 setRightAnswers((oldArray) => [...oldArray, currentWord])
             } else {
                 if (token) {

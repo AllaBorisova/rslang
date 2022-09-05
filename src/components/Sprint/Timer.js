@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React, { useEffect, useState, useRef } from 'react'
 
 function Timer({ time, interval = 1000, onEnd }) {

@@ -11,15 +11,15 @@ export async function loginUser(credentials) {
 }
 
 export async function signUpUser(credentials) {
-    const rawResponse = await fetch('https://teamwork-rs.herokuapp.com/users', {
+    await fetch('https://teamwork-rs.herokuapp.com/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
     })
-    const content = await rawResponse.json()
-    return await loginUser(credentials)
+    // const content = await rawResponse.json()
+    return loginUser(credentials)
 }
 
 export async function getUser() {
@@ -68,7 +68,7 @@ export async function getUserStatistic() {
 }
 
 export const createUserWord = async (userId, wordId, token, optional) => {
-    const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
+    await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
         method: 'POST',
         withCredentials: true,
         headers: {
@@ -79,8 +79,7 @@ export const createUserWord = async (userId, wordId, token, optional) => {
 
         body: JSON.stringify({ difficulty: 'normal', optional }),
     })
-    const content = await rawResponse.json()
-    
+    // const content = await rawResponse.json()
 }
 
 export const getUserWord = async (userId, wordId, token) => {
@@ -94,7 +93,7 @@ export const getUserWord = async (userId, wordId, token) => {
             },
         })
         const content = await rawResponse.json()
-        
+
         return content
     } catch (e) {
         return false
@@ -132,7 +131,7 @@ export const getUserAggregatedWords = async (userId, token) => {
             },
         })
         const content = await rawResponse.json()
-        
+
         return content
     } catch (e) {
         return false
