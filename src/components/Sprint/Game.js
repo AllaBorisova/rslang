@@ -57,12 +57,23 @@ function Game() {
         if (token) {
             const res = await getUserWord(userId, word.id, token);
             if (res === false) {
-                const optional = { source: 'game', game: 'sprint', score: '1' };
-                await createUserWord(userId, word.id, token, optional);
+                const optional = {
+                    sprint: {
+                        wrong: 0,
+                        correct: 1,
+                    },
+                }
+                await createUserWord(userId, word.id, token, optional)
             } else {
-                
-                const optional = { source: 'game', game: 'sprint', score: `${parseInt(res.optional.score) + 1}` };
-                await changeUserWord(userId, word.id, token, optional);
+                // console.log('change', res.optional)
+                const optional = {
+                    sprint: {
+                        wrong: `${parseInt(res.optional.sprint.wrong, 10)}`,
+                        correct: `${parseInt(res.optional.sprint.correct, 10) + 1}`,
+                    },
+                }
+                await changeUserWord(userId, word.id, token, optional)
+
             }
         }
 
@@ -78,11 +89,23 @@ function Game() {
         if (token) {
             const res = await getUserWord(userId, word.id, token);
             if (res === false) {
-                const optional = { source: 'game', game: 'sprint', score: '0' };
-                await createUserWord(userId, word.id, token, optional);
+                // `${parseInt(res.optional.sprint.wrong) - 1}`
+                const optional = {
+                    sprint: {
+                        wrong: 1,
+                        correct: 0,
+                    },
+                }
+                await createUserWord(userId, word.id, token, optional)
             } else {
-                const optional = { source: 'game', game: 'sprint', score: `${parseInt(res.optional.score) - 1}` };
-                await changeUserWord(userId, word.id, token, optional);
+                // console.log('change', res.optional)
+                const optional = {
+                    sprint: {
+                        wrong: `${parseInt(res.optional.sprint.wrong, 10) + 1}`,
+                        correct: `${parseInt(res.optional.sprint.correct, 10)}`,
+                    },
+                }
+                await changeUserWord(userId, word.id, token, optional)
             }
         }
 
@@ -95,6 +118,7 @@ function Game() {
 
     const getList = async (level, pageNumber) => {
         try {
+
             setError('');
             setLoading(true);
             if (!state) {
@@ -127,6 +151,7 @@ function Game() {
     };
 
     useEffect(() => {
+
         getList(level, pageNumber);
     }, [level, pageNumber]);
 

@@ -93,6 +93,7 @@ function ButtonGroup(props) {
                     onClick={() => {
                         deleteUserWord(id)
                         action[0]()
+                        console.log(action[0])
                     }}
                 >
                     Удалить
