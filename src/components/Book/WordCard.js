@@ -41,12 +41,7 @@ function WordCard(props) {
         setActive()
         setStatus('hard')
     }
-    // const userId = '630ce643881cc20016946bab'
-    // const wordId = '5e9f5ee35eb9e72bc21af584'
-    // const token =
-    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGNlNjQzODgxY2MyMDAxNjk0NmJhYiIsImlhdCI6MTY2MjM4NTI5MCwiZXhwIjoxNjYyMzk5NjkwfQ.pTqhG8O7K9hpMRs82Ojx6ooV6J5cF_bcXXEz6Ud8Qi4'
-
-    const getUserAggregatedWordsOneWord = async (userId, token, wordId) => {
+    const getUserAggregatedWordsOneWord = async (wordId) => {
         const resp = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
             method: 'GET',
             withCredentials: true,
@@ -57,15 +52,16 @@ function WordCard(props) {
         })
         if (resp.ok) {
             const data = await resp.json()
+
+            // console.log(data.optional, data.optional)
+            // console.log(data.optional, data.optional)
             setCorrect((Number(data.optional.sprint.correct) || 0) + (Number(data.optional.audiocall.correct) || 0))
             setWrong((Number(data.optional.sprint.wrong) || 0) + (Number(data.optional.audiocall.wrong) || 0))
             setAllScore(wrong + correct)
         }
-
-        // return data
     }
     useEffect(() => {
-        getUserAggregatedWordsOneWord(userId, token, id)
+        getUserAggregatedWordsOneWord(id)
     }, [allScore, userId, id, token, wrong, correct])
 
     const SetEasyStyle = () => {

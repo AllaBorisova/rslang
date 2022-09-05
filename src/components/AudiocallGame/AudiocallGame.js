@@ -38,7 +38,6 @@ function AudiocallGame() {
 
     const [cards, setCards] = useState([])
     const [endGame, setEndGame] = useState(false)
-    const [startGame, setStartGame] = useState(true)
     const [playing, setPlaying] = useState(!!state)
     const [rightAnswers, setRightAnswers] = useState([])
     const [wrongAnswers, setWrongAnswers] = useState([])
@@ -56,7 +55,6 @@ function AudiocallGame() {
         setEndGame(false)
     }
     const restartGameEvent = () => {
-        // setStartGame( true )
         if (!state) {
             setPlaying(false)
         } else {
@@ -87,7 +85,6 @@ function AudiocallGame() {
         if (endGame) {
             const postList = async () => {
                 const res = await axios.get(`https://teamwork-rs.herokuapp.com/words`).then((resp) => resp.data)
-                console.log(res)
             }
             postList()
         }
@@ -156,14 +153,21 @@ function AudiocallGame() {
                                 wrong: 0,
                                 correct: 1,
                             },
+                            sprint: {
+                                wrong: 0,
+                                correct: 0,
+                            },
                         }
                         await createUserWord(userId, currentWord.id, token, optional)
                     } else {
-                        // console.log('change', res.optional)
                         const optional = {
                             audiocall: {
                                 wrong: `${parseInt(res.optional.audiocall.wrong, 10)}`,
                                 correct: `${parseInt(res.optional.audiocall.correct, 10) + 1}`,
+                            },
+                            sprint: {
+                                wrong: `${parseInt(res.optional.sprint.wrong, 10)}`,
+                                correct: `${parseInt(res.optional.sprint.correct, 10)}`,
                             },
                         }
                         await changeUserWord(userId, currentWord.id, token, optional)
@@ -174,7 +178,6 @@ function AudiocallGame() {
                 if (token) {
                     const res = await getUserWord(userId, currentWord.id, token)
                     if (res === false) {
-                        // `${parseInt(res.optional.sprint.wrong) - 1}`
                         const optional = {
                             audiocall: {
                                 wrong: 1,
@@ -183,7 +186,6 @@ function AudiocallGame() {
                         }
                         await createUserWord(userId, currentWord.id, token, optional)
                     } else {
-                        // console.log('change', res.optional)
                         const optional = {
                             audiocall: {
                                 wrong: `${parseInt(res.optional.audiocall.wrong, 10) + 1}`,
