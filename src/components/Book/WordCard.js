@@ -5,7 +5,6 @@ import CheckStatus from './CheckWord'
 import Player from './Player'
 
 function WordCard(props) {
-
     const { items, user, dict, currentstyle, action, count } = props
     const {
         word,

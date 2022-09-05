@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Col'
 import WordCard from './WordCard'
 import '../../styles/App.scss'
 import Loading from '../Loading'
+
 
 function WordsPage({ words, loading, user, dict, props, action, count }) {
     let currentstyle = 'white'
