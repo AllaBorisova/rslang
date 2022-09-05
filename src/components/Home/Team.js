@@ -24,12 +24,12 @@ function Team() {
     return (
         <section className="my-4 text-center">
             <Container>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-center">
                     <Col>
                         <h2 className="display-5 fw-bold  mb-3">Наша команда</h2>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-center">
                     <Col>
                         <TeamMember
                             name="Harleycat80"

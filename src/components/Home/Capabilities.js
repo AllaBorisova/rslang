@@ -7,7 +7,7 @@ function Capabilities() {
     return (
         <section className="my-4">
             <Container>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-center">
                     <Col md={6}>
                         <h2 className="display-5 fw-bold mb-4">Возможности и преимущества приложения</h2>
                         <ul>

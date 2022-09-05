@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/esm/Col'
 import Row from 'react-bootstrap/esm/Row'
 import Table from 'react-bootstrap/esm/Table'
 import Badge from 'react-bootstrap/esm/Badge'
+import Button from 'react-bootstrap/esm/Button'
 import Score from '../Sprint/Score'
 
 function FinishStat(props) {
@@ -11,11 +12,10 @@ function FinishStat(props) {
     const { wrongAnswers } = props
     const { handleClickRestart } = props
     return (
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
             <Col md={4} className="p-5 mb-4 bg-light rounded-3 text-center">
                 <h2>Результаты</h2>
                 {(score || score === 0) && <Score value={score} />}
-
                 <h3>
                     Правильные ответы <Badge bg="success">{rightAnswers.length}</Badge>
                 </h3>
@@ -44,11 +44,9 @@ function FinishStat(props) {
                         ))}
                     </tbody>
                 </Table>
-                {/* <Button variant="info" onClick={onRestart}>Play Again</Button> */}
-                {/* <button onClick={onRestart}>Play Again</button> */}
-                <button type="button" onClick={handleClickRestart}>
-                    restart
-                </button>
+                <Button variant="primary" onClick={handleClickRestart}>
+                    Еще разок
+                </Button>{' '}
             </Col>
         </Row>
     )

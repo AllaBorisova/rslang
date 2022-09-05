@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import '../../styles/WordCard.scss'
+import Col from 'react-bootstrap/esm/Col'
 import ButtonGroup from './ButtonGroup'
 import CheckStatus from './CheckWord'
 import Player from './Player'
 
 function WordCard(props) {
-
     const { items, user, dict, currentstyle, action, count } = props
     const {
         word,
@@ -57,26 +57,34 @@ function WordCard(props) {
 
     if (!user) {
         return (
-            <div className="wordCard" style={{ background: currentstyle }}>
-                <img src={img} alt={word} />
-                <div className="wordCard__word">
-                    <div className="wordCard__wordTranscrTransl">
-                        <p>{word}</p>
-                        <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                        <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+            <div className="wordCard d-flex p-4">
+                <Col md={4}>
+                    <img src={img} alt={word} />
+                </Col>
+                <Col md={8} className="wordCard__right">
+                    <div>
+                        <div className="wordCard__word">
+                            <div className="wordCard__wordTranscrTransl" style={{ borderColor: currentstyle }}>
+                                <p className="fs-3 fw-bold">{word}</p>
+                                <p className="fs-4">{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                                <p className="fs-5 flex-full fst-italic">
+                                    {wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}
+                                </p>
+                            </div>
+                            <Player sound={sound} />
+                        </div>
+
+                        <div className="wordCard__example">
+                            <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                            <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                        </div>
+
+                        <div className="wordCard__example">
+                            <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                            <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                        </div>
                     </div>
-                    <Player sound={sound} />
-                </div>
-
-                <div className="wordCard__example">
-                    <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                </div>
-
-                <div className="wordCard__example">
-                    <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                </div>
+                </Col>
             </div>
         )
     }
@@ -84,55 +92,63 @@ function WordCard(props) {
     let statusStyle = ``
     switch (status) {
         case 'easy':
-            statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff, 0 0 8px #00ff00, 0 0 10px #00ff00'
+            statusStyle = '#d1e7dd'
             break
         case 'hard':
-            statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff,  0 0 8px #ff0000, 0 0 10px #ff0000'
+            statusStyle = '#f8d7da'
             break
         case undefined:
-            statusStyle = '0 0 2px #ffffff, 0 0 5px #ffffff'
+            statusStyle = '#ffffff'
             break
         default:
             return statusStyle
     }
+    if (dict) {
+        statusStyle = '#f8d7da'
+    }
     return (
         <div
-            className="wordCard"
+            className="wordCard d-flex p-4"
             style={{
-                background: currentstyle,
-                display: hidden ? 'block' : 'none',
-                boxShadow: statusStyle,
+                display: hidden ? 'flex' : 'none',
+                background: statusStyle,
             }}
         >
-            <img src={img} alt={word} />
-            <div className="wordCard__word">
-                <div className="wordCard__wordTranscrTransl">
-                    <p>{word}</p>
-                    <p>{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                    <p>{wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+            <Col md={4}>
+                <img src={img} alt={word} />
+            </Col>
+            <Col md={8} className="wordCard__right">
+                <div className="wordCard__word">
+                    <div className="wordCard__wordTranscrTransl" style={{ borderColor: currentstyle }}>
+                        <p className="fs-3 fw-bold">{word}</p>
+                        <p className="fs-4">{transcription.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                        <p className="fs-5 flex-full fst-italic">
+                            {wordTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}
+                        </p>
+                    </div>
+                    <Player sound={sound} />
                 </div>
-                <Player sound={sound} />
-            </div>
 
-            <div className="wordCard__example">
-                <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                <p>{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-            </div>
+                <div className="wordCard__example">
+                    <p>{textMeaning.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                    <p className="text-muted">{textMeaningTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                </div>
 
-            <div className="wordCard__example">
-                <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-                <p>{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
-            </div>
-            <ButtonGroup
-                status={status}
-                id={ourId}
-                user={user}
-                dict={dict}
-                action={[HideTheCard, SetHardStyle, SetEasyStyle, action]}
-                count={count}
-                easy={isActive}
-                hard={isActiveHard}
-            />
+                <div className="wordCard__example">
+                    <p>{textExample.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                    <p className="text-muted">{textExampleTranslate.replace(/<\/?[a-z][^>]*(>|$)/gi, '')}</p>
+                </div>
+                <ButtonGroup
+                    status={status}
+                    id={ourId}
+                    user={user}
+                    dict={dict}
+                    action={[HideTheCard, SetHardStyle, SetEasyStyle, action]}
+                    count={count}
+                    easy={isActive}
+                    hard={isActiveHard}
+                />
+            </Col>
         </div>
     )
 }

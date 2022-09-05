@@ -56,7 +56,7 @@ const CheckStatus = (id) => {
 //         CheckThePage()
 //     }, [token, userId])
 
-//     return [active, SetActive] 
+//     return [active, SetActive]
 // }
 
 export default CheckStatus

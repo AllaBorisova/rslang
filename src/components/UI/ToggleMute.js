@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ToggleMute (props) {
+function ToggleMute(props) {
     const { muted, toggleMute } = props
     // const [muted, setMuted] = usePersistentState('muted', true)
     // const toggleMute = () => {

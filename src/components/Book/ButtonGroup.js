@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Button from 'react-bootstrap/esm/Button'
 import GetStorage from './LocalStorage'
 
 const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
@@ -85,23 +86,25 @@ function ButtonGroup(props) {
 
     if (dict) {
         return (
-            <button
-                type="button"
-                className="btn-remove"
-                value={id}
-                onClick={() => {
-                    deleteUserWord(id)
-                    action[0]()
-                }}
-            >
-                Удалить
-            </button>
+            <div className="btn-card-control">
+                <Button
+                    variant="danger"
+                    className="btn-remove"
+                    value={id}
+                    onClick={() => {
+                        deleteUserWord(id)
+                        action[0]()
+                    }}
+                >
+                    Удалить
+                </Button>{' '}
+            </div>
         )
     }
     return (
         <div className="btn-card-control">
-            <button
-                type="button"
+            <Button
+                variant="danger"
                 className="btn-add"
                 value={id}
                 disabled={hard}
@@ -111,9 +114,9 @@ function ButtonGroup(props) {
                 }}
             >
                 Добавить в сложные
-            </button>
-            <button
-                type="button"
+            </Button>{' '}
+            <Button
+                variant="secondary"
                 className="btn-remove"
                 value={id}
                 disabled={easy}
@@ -125,7 +128,7 @@ function ButtonGroup(props) {
                 }}
             >
                 Изучено
-            </button>
+            </Button>{' '}
         </div>
     )
 }

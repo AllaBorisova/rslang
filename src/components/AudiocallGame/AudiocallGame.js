@@ -3,12 +3,18 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import Button from 'react-bootstrap/esm/Button'
+import Row from 'react-bootstrap/esm/Row'
+import Col from 'react-bootstrap/esm/Col'
 import ToggleButton from '../UI/ToggleButton'
 import ToggleMute from '../UI/ToggleMute'
 import './AudiocallGame.scss'
 import Loading from '../Loading'
 import DifficultiesScreen from '../GameComponents/DifficultiesScreen'
 import FinishStat from '../GameComponents/FinishStat'
+import Hearts from './Hearts'
+import usePersistentState from '../../hooks/usePersistentState'
+import useAudio from '../../hooks/useAudio'
 
 function AudiocallGame() {
     const { state } = useLocation()
@@ -33,6 +39,15 @@ function AudiocallGame() {
     const [playing, setPlaying] = useState(!!state)
     const [rightAnswers, setRightAnswers] = useState([])
     const [wrongAnswers, setWrongAnswers] = useState([])
+
+    const { play: playAudioRight } = useAudio('../public/audio/right.mp3')
+    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3')
+
+    const [muted, setMuted] = usePersistentState('muted', true)
+    const toggleMute = () => {
+        setMuted(!muted)
+    }
+
     const startGameEvent = (e) => {
         setLevel(e.target.dataset.level)
         setPlaying(true)
@@ -73,7 +88,13 @@ function AudiocallGame() {
         return <DifficultiesScreen action={startGameEvent} game={game} />
     }
     if (!cards.length || !currentWord) {
-        return <Loading />
+        return (
+            <div>
+                <Row className="justify-content-center">
+                    <Loading />
+                </Row>
+            </div>
+        )
     }
     const wrong1 = cards[randomInteger(0, cards.length - 1)].wordTranslate
 
@@ -82,18 +103,26 @@ function AudiocallGame() {
     const translations = [currentWord.wordTranslate, wrong1, wrong2, wrong3]
 
     const finalTranslations = translations.sort(makeRandomArr)
+
     const handleClick = (e) => {
         if (e.target.textContent === currentWord.wordTranslate) {
-            e.target.classList.add('correct')
+            if (!muted) {
+                playAudioRight()
+            }
+            // e.target.classList.add('btn-success');
         } else {
-            correctAnswer.current.classList.add('correct')
-            e.target.classList.add('wrong')
+            if (!muted) {
+                playAudioWrong()
+            }
+            // correctAnswer.current.classList.add('btn-success');
+            // e.target.classList.add('btn-danger');
         }
         setTimeout(() => {
-            allButtons.current.childNodes.forEach((el) => {
-                el.classList.remove('wrong')
-                el.classList.remove('correct')
-            })
+            // console.log( allButtons.current.childNodes);
+            // allButtons.current.childNodes.forEach((el) => {
+            //     el.classList.remove('btn-danger');
+            //     el.classList.remove('btn-success');
+            // });
             setRightAnswers((oldArray) => [...oldArray, currentWord])
             setCurrentWord(cards[randomInteger(0, cards.length - 1)])
             setWrongAnswers((oldArray) => [...oldArray, currentWord])
@@ -103,6 +132,7 @@ function AudiocallGame() {
             }
         }, 1000)
     }
+
     const handleFinishClick = () => {
         setPlaying(false)
         setEndGame(true)
@@ -112,51 +142,72 @@ function AudiocallGame() {
         <div>
             {playing && (
                 <div>
-                    <ToggleMute />
-                    <ToggleButton />
-                    <div className="hearts">
-                        <p>lives x{counter}</p>
-                        <img alt="heart" src="https://img.icons8.com/emoji/256/red-heart.png" />
-                    </div>
-                    <audio controls src={`https://teamwork-rs.herokuapp.com/${currentWord.audio}`}>
-                        <track default kind="captions" srcLang="en" />
-                    </audio>
-                    <div ref={allButtons}>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[0] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[0]}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[1] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[1]}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[2] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[2]}
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleClick}
-                            ref={finalTranslations[3] === currentWord.wordTranslate ? correctAnswer : null}
-                        >
-                            {finalTranslations[3]}
-                        </button>
-                        <button type="button" onClick={handleClick}>
-                            не знаю
-                        </button>
-                    </div>
-                    <button type="button" onClick={handleFinishClick}>
-                        закончить досрочно
-                    </button>
+                    <Row>
+                        <Col className="d-flex">
+                            <ToggleMute muted={muted} toggleMute={toggleMute} />
+                            <ToggleButton />
+                        </Col>
+                    </Row>
+
+                    <Row className="justify-content-center">
+                        <Col md={7} className="p-5 mb-4 bg-light rounded-3 text-center">
+                            <Hearts counter={counter} />
+
+                            <Row className="p-2" ref={allButtons}>
+                                <Col>
+                                    <audio
+                                        controls
+                                        src={`https://teamwork-rs.herokuapp.com/${currentWord.audio}`}
+                                        autoPlay
+                                    >
+                                        <track default kind="captions" srcLang="en" />
+                                    </audio>
+                                </Col>
+                            </Row>
+                            <Row className="p-2" ref={allButtons}>
+                                <Col>
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[0] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[0]}
+                                    </Button>{' '}
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[1] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[1]}
+                                    </Button>{' '}
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[2] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[2]}
+                                    </Button>{' '}
+                                    <Button
+                                        variant="light"
+                                        onClick={handleClick}
+                                        ref={finalTranslations[3] === currentWord.wordTranslate ? correctAnswer : null}
+                                    >
+                                        {finalTranslations[3]}
+                                    </Button>{' '}
+                                    <Button variant="light" onClick={handleClick}>
+                                        не знаю
+                                    </Button>{' '}
+                                </Col>
+                            </Row>
+                            <Row className="p-2">
+                                <Col>
+                                    <Button variant="primary" onClick={handleFinishClick}>
+                                        закончить досрочно
+                                    </Button>{' '}
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
             )}
             {endGame && (

@@ -4,7 +4,7 @@ import AudiocallGame from '../components/AudiocallGame/AudiocallGame'
 
 function Audiocall() {
     return (
-        <section className="my-4">
+        <section className="py-4 game-section full-section">
             <Container>
                 <AudiocallGame />
             </Container>

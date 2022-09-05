@@ -1,34 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
-import Group from '../components/Book/Group';
-import Pagination from '../components/Book/Pagination';
-import WordsPage from '../components/Book/WordsPage';
-import DifficultButton from '../components/Book/DiffucultButton';
-import GetStorage from '../components/Book/LocalStorage';
-
-import {NavLink} from 'react-router-dom'
-
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/esm/Col'
+import Row from 'react-bootstrap/esm/Row'
+import { NavLink } from 'react-router-dom'
+import Button from 'react-bootstrap/esm/Button'
+import Group from '../components/Book/Group'
+import Pagination from '../components/Book/Pagination'
+import WordsPage from '../components/Book/WordsPage'
+import DifficultButton from '../components/Book/DiffucultButton'
+import GetStorage from '../components/Book/LocalStorage'
 
 function Textbook() {
-    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`;
-    const USER_URL = `https://teamwork-rs.herokuapp.com/users/`;
-    const [user, setUser] = GetStorage('userData', '');
-    const { userId, token } = user;
+    const BASE_URL = `https://teamwork-rs.herokuapp.com/words?`
+    const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
+    const [user, setUser] = GetStorage('userData', '')
+    const { userId, token } = user
 
     const [value, setValue] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).value : '0'
     )
     const [pageNumber, setPageNumber] = useState(
         sessionStorage.getItem('page') ? JSON.parse(sessionStorage.getItem('page')).pageNumber : 0
+    )
+    const [words, setWords] = useState([])
 
-    );
-    const [words, setWords] = useState([]);
-
-    const [count, setCount] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0)
+    const [loading, setLoading] = useState(false)
     window.addEventListener('beforeunload', () => {
         sessionStorage.setItem('page', JSON.stringify({ pageNumber, value }))
     })
@@ -42,7 +40,6 @@ function Textbook() {
         }
         getList()
     }, [value, pageNumber, BASE_URL])
-
 
     // useEffect(() => {
     //     const getStat = async () => {
@@ -63,7 +60,6 @@ function Textbook() {
     // }, [USER_URL]);
 
     const changePage = ({ selected }) => {
-
         setPageNumber(selected)
     }
     const settings = {
@@ -72,27 +68,27 @@ function Textbook() {
         value,
     }
 
-
     const handleCount = () => {
-        setCount(count + 1);
-    };
-
+        setCount(count + 1)
+    }
 
     return (
-        <section className="textbook-main my-4">
-            <NavLink to="/sprint" state={settings}>
-                перейти на игру Спринт
-            </NavLink>
-            <NavLink to="/audiocall" state={settings}>
-                перейти на игру Аудиовызов
-            </NavLink>
+        <section className="textbook-main py-4 full-section">
             <Container>
-                <Row className="pb-5">
-                    <Col>
+                <Row className="pb-5 justify-content-between align-items-center">
+                    <Col xs={6}>
                         <h1>Textbook</h1>
                     </Col>
+                    <Col xs={6} className="d-flex justify-content-end">
+                        <Button as={NavLink} to="/sprint" state={settings} className="m-1">
+                            Спринт
+                        </Button>
+                        <Button as={NavLink} to="/audiocall" state={settings} className="m-1">
+                            Аудиовызов
+                        </Button>
+                    </Col>
                 </Row>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-center">
                     <Col className=" group-btn">
                         <Group action={setValue} reset={setPageNumber} />
                         <DifficultButton userId={userId} />
