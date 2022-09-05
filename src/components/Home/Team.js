@@ -33,25 +33,25 @@ function Team() {
                     <Col>
                         <TeamMember
                             name="Harleycat80"
-                            text="text..."
+                            text="Волевым решением определила стек, чем способствовала развитию и совершенствованию навыков всей команды. Сделала функционал Электронный учебник, функционал Список слов и Изученные слова."
                             link="https://github.com/Harleycat80"
-                            avatar="cute_cat_kitten_face_per_avatar-02-512.webp"
+                            avatar="72-722180_these-are-some-cats-avatar-i-drew-during-my-free-time-black.png"
                         />
                     </Col>
                     <Col>
                         <TeamMember
                             name="alexsmirnova13"
-                            text="text..."
+                            text="Делилась знаниями, опытом, наработками и прокачивала команду. Сделала игру Аудиовызов, вызов игр из учебника, статистику изученных слов в учебнике. Прогрессор и критик без страха и эмпатии. Гуру рефакторинга."
                             link="https://github.com/alexsmirnova13"
-                            avatar="cute_cat_kitten_face_per_avatar-02-512.webp"
+                            avatar="123-1236782_these-are-some-cats-avatar-i-drew-during-my-free-time-portrait.png"
                         />
                     </Col>
                     <Col>
                         <TeamMember
                             name="AllaBorisova"
-                            text="text..."
+                            text="Дизайн, новые знания для команды. Сделала главная страница, Авторизация, Игра Спринт. Создала гит, потому и тимлид."
                             link="https://github.com/AllaBorisova"
-                            avatar="cute_cat_kitten_face_per_avatar-02-512.webp"
+                            avatar="123-1237090_these-are-some-cats-avatar-i-drew-during-my-free-time-animated.png"
                         />
                     </Col>
                 </Row>
