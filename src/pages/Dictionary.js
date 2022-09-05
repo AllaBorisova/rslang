@@ -12,7 +12,7 @@ function Dictionary() {
     const user = GetStorage('userData', '')[0]
     const list = GetDiffWords()[0]
     return (
-        <section className="py-4 full-section">
+        <section className="py-4">
             <Container>
                 <Row className="pb-5 justify-content-between align-items-center">
                     <Col>

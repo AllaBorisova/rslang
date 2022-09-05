@@ -20,7 +20,7 @@ const CheckStatus = (id) => {
                     }
                 })
                 .catch((e) => {
-                    console.log('fail')
+                    
                 })
         }
         CheckWord()
@@ -28,35 +28,5 @@ const CheckStatus = (id) => {
     return [status, setStatus]
 }
 
-// const CheckPage = (page, group) => {
-//     const { userId, token } = GetStorage('userData', '')[0]
-//     const [active, SetActive] = useState(false)
-//     useEffect(() => {
-//         const CheckThePage = async () => {
-//             await fetch(
-//                 `${USER_URL}${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20&filter={"$and":[{"userWord.difficulty":"hard", "userWord.difficulty":"easy"}]}`,
-//                 {
-//                     method: 'GET',
-//                     headers: { Authorization: `Bearer ${token}` },
-//                 }
-//             )
-//                 .then((data) => data.json())
-//                 .then((result) => {
-//                     const { count } = result[0].totalCount[0]
-//                     console.log(count)
-//                     if (count === 20) {
-//                         SetActive(true)
-//                     }
-
-//                 })
-//                 .catch((e) => {
-//                     console.log('fail')
-//                 })
-//         }
-//         CheckThePage()
-//     }, [token, userId])
-
-//     return [active, SetActive]
-// }
 
 export default CheckStatus
