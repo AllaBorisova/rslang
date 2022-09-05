@@ -128,7 +128,7 @@ function Statistics() {
             setUserStatisticSprint(res)
             setLoading(false)
             setError(error.message)
-        }
+        } catch (e) {}
     }
 
     const getUserAggregatedWordsOneWord = async (userId, token) => {
