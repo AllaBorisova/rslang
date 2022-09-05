@@ -140,7 +140,7 @@ function WordCard(props) {
     }
     return (
         <div
-            className="wordCard  p-4"
+            className="wordCard p-4"
             style={{
                 display: hidden ? 'flex' : 'none',
                 background: statusStyle,

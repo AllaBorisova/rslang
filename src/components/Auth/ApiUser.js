@@ -80,7 +80,7 @@ export const createUserWord = async (userId, wordId, token, optional) => {
         body: JSON.stringify({ difficulty: 'easy', optional }),
     })
     const content = await rawResponse.json()
-    console.log('create', content)
+    
 }
 
 export const getUserWord = async (userId, wordId, token) => {
@@ -94,7 +94,7 @@ export const getUserWord = async (userId, wordId, token) => {
             },
         })
         const content = await rawResponse.json()
-        console.log('get', content)
+        
         return content
     } catch (e) {
         return false
@@ -115,7 +115,6 @@ export const changeUserWord = async (userId, wordId, token, optional) => {
             body: JSON.stringify({ difficulty: 'easy', optional }),
         })
         const content = await rawResponse.json()
-        console.log('put', content)
         return content
     } catch (e) {
         return false
@@ -133,7 +132,7 @@ export const getUserAggregatedWords = async (userId, token) => {
             },
         })
         const content = await rawResponse.json()
-        console.log('get', content)
+        
         return content
     } catch (e) {
         return false

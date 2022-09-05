@@ -6,7 +6,6 @@ const USER_URL = `https://teamwork-rs.herokuapp.com/users/`
 
 function ButtonGroup(props) {
     const { status, id, dict, action, count, hard, easy } = props
-    // console.log(count)
     const { userId, token } = GetStorage('userData', '')[0]
     const [request, setRequest] = useState('POST')
     useEffect(() => {

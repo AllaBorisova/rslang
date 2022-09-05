@@ -6,7 +6,7 @@ import '../../styles/App.scss'
 import Loading from '../Loading'
 import Button from 'react-bootstrap/esm/Button'
 
-function WordsPage({ words, loading, user, dict, props, action, count, dictionary }) {
+function WordsPage({ words, loading, user, dict, props, action, count }) {
     let currentstyle = 'black'
     switch (props) {
         case '0':
