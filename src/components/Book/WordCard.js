@@ -52,7 +52,6 @@ function WordCard(props) {
         })
         if (resp.ok) {
             const data = await resp.json()
-
             setCorrect((Number(data.optional.sprint.correct) || 0) + (Number(data.optional.audiocall.correct) || 0))
             setWrong((Number(data.optional.sprint.wrong) || 0) + (Number(data.optional.audiocall.wrong) || 0))
             setAllScore(wrong + correct)
