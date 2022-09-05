@@ -51,7 +51,6 @@ function Statistics() {
             },
         })
         const content = await rawResponse.json()
-        console.log('getstat', content)
     }
 
     const getUserAggregatedWordsHard = async (userId, token) => {

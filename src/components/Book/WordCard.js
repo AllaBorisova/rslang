@@ -53,8 +53,6 @@ function WordCard(props) {
         if (resp.ok) {
             const data = await resp.json()
 
-            // console.log(data.optional, data.optional)
-            // console.log(data.optional, data.optional)
             setCorrect((Number(data.optional.sprint.correct) || 0) + (Number(data.optional.audiocall.correct) || 0))
             setWrong((Number(data.optional.sprint.wrong) || 0) + (Number(data.optional.audiocall.wrong) || 0))
             setAllScore(wrong + correct)
@@ -145,7 +143,7 @@ function WordCard(props) {
             <Col md={4}>
                 <p>
                     {' '}
-                    неверно {wrong} + верно {correct}=всего попыток {allScore}
+                    верно {correct} из {allScore}
                 </p>
                 <img src={img} alt={word} />
             </Col>
