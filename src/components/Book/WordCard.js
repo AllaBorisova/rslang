@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../styles/WordCard.scss'
 import Col from 'react-bootstrap/esm/Col'
 import ButtonGroup from './ButtonGroup'
@@ -7,6 +7,8 @@ import Player from './Player'
 
 function WordCard(props) {
     const { items, user, dict, currentstyle, action, count } = props
+    const { token } = user
+    const { userId } = user
     const {
         word,
         transcription,
@@ -30,12 +32,42 @@ function WordCard(props) {
     const [status, setStatus] = CheckStatus(id)
     const [isActive, setActive] = useState(false)
     const [isActiveHard, setActiveHard] = useState(false)
+    const [correct, setCorrect] = useState(0)
+    const [wrong, setWrong] = useState(0)
+    const [allScore, setAllScore] = useState(0)
 
     const SetHardStyle = () => {
         setActiveHard(!isActiveHard)
         setActive()
         setStatus('hard')
     }
+    // const userId = '630ce643881cc20016946bab'
+    // const wordId = '5e9f5ee35eb9e72bc21af584'
+    // const token =
+    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGNlNjQzODgxY2MyMDAxNjk0NmJhYiIsImlhdCI6MTY2MjM4NTI5MCwiZXhwIjoxNjYyMzk5NjkwfQ.pTqhG8O7K9hpMRs82Ojx6ooV6J5cF_bcXXEz6Ud8Qi4'
+
+    const getUserAggregatedWordsOneWord = async (userId, token, wordId) => {
+        const resp = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/words/${wordId}`, {
+            method: 'GET',
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+            },
+        })
+        if (resp.ok) {
+            const data = await resp.json()
+            setCorrect((Number(data.optional.sprint.correct) || 0) + (Number(data.optional.audiocall.correct) || 0))
+            setWrong((Number(data.optional.sprint.wrong) || 0) + (Number(data.optional.audiocall.wrong) || 0))
+            setAllScore(wrong + correct)
+        }
+
+        // return data
+    }
+    useEffect(() => {
+        getUserAggregatedWordsOneWord(userId, token, id)
+    }, [allScore, userId, id, token, wrong, correct])
+
     const SetEasyStyle = () => {
         setActive(!isActive)
         setActiveHard(false)
@@ -108,13 +140,17 @@ function WordCard(props) {
     }
     return (
         <div
-            className="wordCard d-flex p-4"
+            className="wordCard  p-4"
             style={{
                 display: hidden ? 'flex' : 'none',
                 background: statusStyle,
             }}
         >
             <Col md={4}>
+                <p>
+                    {' '}
+                    неверно {wrong} + верно {correct}=всего попыток {allScore}
+                </p>
                 <img src={img} alt={word} />
             </Col>
             <Col md={8} className="wordCard__right">

@@ -13,6 +13,7 @@ function Statistics() {
     const [userStatisticSprint, setUserStatisticSprint] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const [allStatistics, setAllStatistics] = useState('')
 
     const getUserAggregatedWords = async (userId, token) => {
         try {
@@ -30,7 +31,7 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('getaaaa', content)
+            // console.log('getaaaa', content)
             const res = content[0].paginatedResults
             setUserStatistic(res)
             setLoading(false)
@@ -39,6 +40,19 @@ function Statistics() {
             setLoading(false)
             setError(error.message)
         }
+    }
+
+    const getStatistic = async (userId, token) => {
+        const rawResponse = await fetch(`https://teamwork-rs.herokuapp.com/users/${userId}/settings`, {
+            method: 'GET',
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+            },
+        })
+        const content = await rawResponse.json()
+        console.log('getstat', content)
     }
 
     const getUserAggregatedWordsHard = async (userId, token) => {
@@ -57,7 +71,7 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('geta', content)
+            // console.log('geta', content)
             const res = content[0].paginatedResults
             setUserStatisticHard(res)
             setLoading(false)
@@ -84,7 +98,7 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('geta', content)
+            // console.log('geta', content)
             const res = content[0].paginatedResults
             setUserStatisticEasy(res)
             setLoading(false)
@@ -100,7 +114,7 @@ function Statistics() {
             setError('')
             setLoading(true)
             const rawResponse = await fetch(
-                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=100&filter={"userWord.optional.source":"game"}`,
+                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?filter={"userWord.optional.game":"sprint"}`,
                 {
                     method: 'GET',
                     withCredentials: true,
@@ -111,10 +125,34 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('getsp', content)
+            // console.log('getsp', content)
             const res = content[0].paginatedResults
-            setUserStatisticEasy(res)
+            setUserStatisticSprint(res)
             setLoading(false)
+        } catch (e) {
+            const error = e
+            setLoading(false)
+            setError(error.message)
+        }
+    }
+
+    const getUserAggregatedWordsOneWord = async (userId, token) => {
+        try {
+            setError('')
+            setLoading(true)
+            const rawResponse = await fetch(
+                `https://teamwork-rs.herokuapp.com/users/${userId}/words/5e9f5ee35eb9e72bc21af582`,
+                {
+                    method: 'GET',
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
+                }
+            )
+            const content = await rawResponse.json()
+            // console.log('sdfsdfsdfsdfsdf', content.optional.score)
         } catch (e) {
             const error = e
             setLoading(false)
@@ -128,6 +166,8 @@ function Statistics() {
             getUserAggregatedWordsHard(userId, token)
             getUserAggregatedWordsEasy(userId, token)
             getUserAggregatedWordsSprint(userId, token)
+            getUserAggregatedWordsOneWord(userId, token)
+            getStatistic(userId, token)
         }, [])
     }
 
@@ -163,25 +203,8 @@ function Statistics() {
             <Container>
                 {token && (
                     <>
-                        <h1>Статистика доступна</h1>
                         <h2>Сложные слова {userStatisticHard.length}</h2>
-                        <ul>
-                            {userStatisticHard.map((number) => (
-                                <li key="{number._id}">{number.word}</li>
-                            ))}
-                        </ul>
-                        <h2>Легкие слова {userStatisticEasy.length}</h2>
-                        <ul>
-                            {userStatisticEasy.map((number) => (
-                                <li key="{number._id}">{number.word}</li>
-                            ))}
-                        </ul>
-                        <h2>Слова из спринта {userStatisticSprint.length}</h2>
-                        <ul>
-                            {userStatisticSprint.map((number) => (
-                                <li key="{number._id}">{number.word}</li>
-                            ))}
-                        </ul>
+                        <h2>Изученные слова {userStatisticEasy.length}</h2>
                     </>
                 )}
                 {!token && <h1>Статистика недоступна</h1>}
