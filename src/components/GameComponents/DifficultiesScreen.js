@@ -7,7 +7,7 @@ function DifficultiesScreen(props) {
     const { action } = props
     const { game } = props
     return (
-        <Row className="p-5 justify-content-md-center text-center">
+        <Row className="p-5 justify-content-center text-center">
             <Col md={6}>
                 <h1>{game}</h1>
                 <p>Выберите уровень</p>

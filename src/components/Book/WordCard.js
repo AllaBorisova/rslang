@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import '../../styles/WordCard.scss';
-import ButtonGroup from './ButtonGroup';
-import CheckStatus from './CheckWord';
-import Player from './Player';
-import Col from 'react-bootstrap/esm/Col';
+import React, { useState } from 'react'
+import '../../styles/WordCard.scss'
+import Col from 'react-bootstrap/esm/Col'
+import ButtonGroup from './ButtonGroup'
+import CheckStatus from './CheckWord'
+import Player from './Player'
 
 function WordCard(props) {
-    const { items, user, dict, currentstyle, action, count } = props;
+    const { items, user, dict, currentstyle, action, count } = props
     const {
         word,
         transcription,
@@ -16,33 +16,33 @@ function WordCard(props) {
         textExample,
         textExampleTranslate,
         id,
-    } = items;
-    let ourId = id;
+    } = items
+    let ourId = id
     if (dict) {
         // eslint-disable-next-line no-underscore-dangle
-        ourId = items._id;
+        ourId = items._id
     }
-    const [hidden, setHiden] = useState(true);
+    const [hidden, setHiden] = useState(true)
     const HideTheCard = () => {
-        setHiden(false);
-    };
+        setHiden(false)
+    }
 
-    const [status, setStatus] = CheckStatus(id);
-    const [isActive, setActive] = useState(false);
-    const [isActiveHard, setActiveHard] = useState(false);
+    const [status, setStatus] = CheckStatus(id)
+    const [isActive, setActive] = useState(false)
+    const [isActiveHard, setActiveHard] = useState(false)
 
     const SetHardStyle = () => {
-        setActiveHard(!isActiveHard);
-        setActive();
-        setStatus('hard');
-    };
+        setActiveHard(!isActiveHard)
+        setActive()
+        setStatus('hard')
+    }
     const SetEasyStyle = () => {
-        setActive(!isActive);
-        setActiveHard(false);
-        setStatus('easy');
-    };
+        setActive(!isActive)
+        setActiveHard(false)
+        setStatus('easy')
+    }
 
-    const img = `https://teamwork-rs.herokuapp.com/${items.image}`;
+    const img = `https://teamwork-rs.herokuapp.com/${items.image}`
 
     const [sound] = useState([
         {
@@ -53,7 +53,7 @@ function WordCard(props) {
         {
             src: `https://teamwork-rs.herokuapp.com/${items.audioExample}`,
         },
-    ]);
+    ])
 
     if (!user) {
         return (
@@ -86,25 +86,25 @@ function WordCard(props) {
                     </div>
                 </Col>
             </div>
-        );
+        )
     }
 
-    let statusStyle = ``;
+    let statusStyle = ``
     switch (status) {
         case 'easy':
-            statusStyle = '#d1e7dd';
-            break;
+            statusStyle = '#d1e7dd'
+            break
         case 'hard':
-            statusStyle = '#f8d7da';
-            break;
+            statusStyle = '#f8d7da'
+            break
         case undefined:
-            statusStyle = '#ffffff';
-            break;
+            statusStyle = '#ffffff'
+            break
         default:
-            return statusStyle;
+            return statusStyle
     }
     if (dict) {
-        statusStyle = '#f8d7da';
+        statusStyle = '#f8d7da'
     }
     return (
         <div
@@ -150,7 +150,7 @@ function WordCard(props) {
                 />
             </Col>
         </div>
-    );
+    )
 }
 
-export default WordCard;
+export default WordCard

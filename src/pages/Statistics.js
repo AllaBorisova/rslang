@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import useToken from '../components/Auth/UseToken';
-import Container from 'react-bootstrap/Container';
-import Loading from '../components/Loading';
-import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
+import React, { useState, useEffect } from 'react'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/esm/Col'
+import Row from 'react-bootstrap/esm/Row'
+import Loading from '../components/Loading'
+import useToken from '../components/Auth/UseToken'
 
 function Statistics() {
-    const { token, setToken, logout, userId } = useToken();
-    const [userStatistic, setUserStatistic] = useState([]);
-    const [userStatisticHard, setUserStatisticHard] = useState([]);
-    const [ userStatisticEasy, setUserStatisticEasy ] = useState( [] );
-    const [userStatisticSprint, setUserStatisticSprint] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const { token, setToken, logout, userId } = useToken()
+    const [userStatistic, setUserStatistic] = useState([])
+    const [userStatisticHard, setUserStatisticHard] = useState([])
+    const [userStatisticEasy, setUserStatisticEasy] = useState([])
+    const [userStatisticSprint, setUserStatisticSprint] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
     const getUserAggregatedWords = async (userId, token) => {
         try {
-            setError('');
-            setLoading(true);
+            setError('')
+            setLoading(true)
             const rawResponse = await fetch(
                 `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=1000`,
                 {
@@ -28,23 +28,23 @@ function Statistics() {
                         Accept: 'application/json',
                     },
                 }
-            );
-            const content = await rawResponse.json();
-            console.log('getaaaa', content);
-            const res = content[0].paginatedResults;
-            setUserStatistic(res);
-            setLoading(false);
+            )
+            const content = await rawResponse.json()
+            console.log('getaaaa', content)
+            const res = content[0].paginatedResults
+            setUserStatistic(res)
+            setLoading(false)
         } catch (e) {
-            const error = e;
-            setLoading(false);
-            setError(error.message);
+            const error = e
+            setLoading(false)
+            setError(error.message)
         }
-    };
+    }
 
     const getUserAggregatedWordsHard = async (userId, token) => {
         try {
-            setError('');
-            setLoading(true);
+            setError('')
+            setLoading(true)
             const rawResponse = await fetch(
                 `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"hard"}`,
                 {
@@ -55,23 +55,23 @@ function Statistics() {
                         Accept: 'application/json',
                     },
                 }
-            );
-            const content = await rawResponse.json();
-            console.log('geta', content);
-            const res = content[0].paginatedResults;
-            setUserStatisticHard(res);
-            setLoading(false);
+            )
+            const content = await rawResponse.json()
+            console.log('geta', content)
+            const res = content[0].paginatedResults
+            setUserStatisticHard(res)
+            setLoading(false)
         } catch (e) {
-            const error = e;
-            setLoading(false);
-            setError(error.message);
+            const error = e
+            setLoading(false)
+            setError(error.message)
         }
-    };
+    }
 
     const getUserAggregatedWordsEasy = async (userId, token) => {
         try {
-            setError('');
-            setLoading(true);
+            setError('')
+            setLoading(true)
             const rawResponse = await fetch(
                 `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=3600&filter={"userWord.difficulty":"easy"}`,
                 {
@@ -82,23 +82,23 @@ function Statistics() {
                         Accept: 'application/json',
                     },
                 }
-            );
-            const content = await rawResponse.json();
-            console.log('geta', content);
-            const res = content[0].paginatedResults;
-            setUserStatisticEasy(res);
-            setLoading(false);
+            )
+            const content = await rawResponse.json()
+            console.log('geta', content)
+            const res = content[0].paginatedResults
+            setUserStatisticEasy(res)
+            setLoading(false)
         } catch (e) {
-            const error = e;
-            setLoading(false);
-            setError(error.message);
+            const error = e
+            setLoading(false)
+            setError(error.message)
         }
-    };
+    }
 
     const getUserAggregatedWordsSprint = async (userId, token) => {
         try {
-            setError('');
-            setLoading(true);
+            setError('')
+            setLoading(true)
             const rawResponse = await fetch(
                 `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=100&filter={"userWord.optional.source":"game"}`,
                 {
@@ -109,51 +109,54 @@ function Statistics() {
                         Accept: 'application/json',
                     },
                 }
-            );
-            const content = await rawResponse.json();
-            console.log('getsp', content);
-            const res = content[0].paginatedResults;
-            setUserStatisticEasy(res);
-            setLoading(false);
+            )
+            const content = await rawResponse.json()
+            console.log('getsp', content)
+            const res = content[0].paginatedResults
+            setUserStatisticEasy(res)
+            setLoading(false)
         } catch (e) {
-            const error = e;
-            setLoading(false);
-            setError(error.message);
+            const error = e
+            setLoading(false)
+            setError(error.message)
         }
-    };
+    }
 
     if (token) {
         useEffect(() => {
-            getUserAggregatedWords(userId, token);
-            getUserAggregatedWordsHard(userId, token);
-            getUserAggregatedWordsEasy( userId, token );
-            getUserAggregatedWordsSprint( userId, token );
-        }, []);
+            getUserAggregatedWords(userId, token)
+            getUserAggregatedWordsHard(userId, token)
+            getUserAggregatedWordsEasy(userId, token)
+            getUserAggregatedWordsSprint(userId, token)
+        }, [])
     }
-    
-    
+
     if (loading) {
         return (
-            <div>
-                <div>
-                    <Row className="justify-content-md-center">
+            <section className="py-4 game-section full-section">
+                <Container>
+                    <Row className="justify-content-center">
                         <Loading />
                     </Row>
-                </div>
-            </div>
-        );
+                </Container>
+            </section>
+        )
     }
 
     if (error) {
         return (
-            <div>
-                <div>
-                    <Row className="justify-content-md-center">
-                        <p>{error}</p>
-                    </Row>
-                </div>
-            </div>
-        );
+            <section className="py-4 full-section">
+                <Container>
+                    <div>
+                        <div>
+                            <Row className="justify-content-center">
+                                <p>{error}</p>
+                            </Row>
+                        </div>
+                    </div>
+                </Container>
+            </section>
+        )
     }
     return (
         <section className="py-4 full-section">
@@ -184,7 +187,7 @@ function Statistics() {
                 {!token && <h1>Статистика недоступна</h1>}
             </Container>
         </section>
-    );
+    )
 }
 
-export default Statistics;
+export default Statistics

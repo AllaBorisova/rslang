@@ -3,10 +3,10 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/esm/Col'
 import Row from 'react-bootstrap/esm/Row'
 import { NavLink } from 'react-router-dom'
+import Button from 'react-bootstrap/esm/Button'
 import WordsPage from '../components/Book/WordsPage'
 import GetStorage from '../components/Book/LocalStorage'
 import GetDiffWords from '../components/Book/GetDiffWords'
-import Button from 'react-bootstrap/esm/Button'
 
 function Dictionary() {
     const user = GetStorage('userData', '')[0]
@@ -19,8 +19,8 @@ function Dictionary() {
                         <h1>Difficult</h1>
                     </Col>
                     <Col className="d-flex justify-content-end">
-                    <Button as={NavLink} to="/textbook" className="m-1">
-                        Вернуться к учебнику
+                        <Button as={NavLink} to="/textbook" className="m-1">
+                            Вернуться к учебнику
                         </Button>
                     </Col>
                 </Row>

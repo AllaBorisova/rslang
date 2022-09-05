@@ -24,7 +24,7 @@ function LoginPopup({ setToken }) {
 
     return (
         <>
-            <Button variant="outline-primary" onClick={handleShow}>
+            <Button variant="outline-primary" className="ms-1" onClick={handleShow}>
                 Login
             </Button>{' '}
             <Modal show={show} onHide={handleClose}>

@@ -3,43 +3,25 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import { NavLink } from 'react-router-dom'
 import LoginPopup from './LoginPopup'
 import SignUp from './SingUp'
-import { NavLink } from 'react-router-dom'
+import Navigation from './Navigation'
 
 function Header(props) {
-    const {token, logout, setToken} = props
-    if (!token) {
-        return (
-            <header className="my-2">
-                <Container>
-                    <Row className="align-items-center">
-                        <Col xs={4}>
-                        <h1><NavLink to={'/'}>RSLANG</NavLink></h1>
-                        </Col>
-
-                        <Col xs={8} className="text-end">
-                            <LoginPopup setToken={setToken} />
-                            <SignUp setToken={setToken} />
-                        </Col>
-                    </Row>
-                </Container>
-            </header>
-        )
-    }
+    const { token, logout, setToken } = props
 
     return (
         <header className="my-2">
             <Container>
                 <Row className="align-items-center">
-                    <Col xs={4}>
-                        <h1><NavLink to={'/'}>RSLANG</NavLink></h1>
+                    <Col>
+                        <h1>
+                            <NavLink to="/">RSLANG</NavLink>
+                        </h1>
                     </Col>
-
-                    <Col xs={8} className="text-end">
-                        <Button className="ms-1" variant="primary" onClick={logout}>
-                            Выйти
-                        </Button>
+                    <Col className="d-flex align-items-center justify-content-end">
+                        <Navigation token={token} logout={logout} setToken={setToken} />
                     </Col>
                 </Row>
             </Container>

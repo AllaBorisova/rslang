@@ -26,7 +26,7 @@ function SignUp({ setToken }) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" className="ms-1 text-nowrap" onClick={handleShow}>
                 Sign-up
             </Button>{' '}
             <Modal show={show} onHide={handleClose}>
