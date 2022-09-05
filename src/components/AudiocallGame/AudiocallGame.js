@@ -147,6 +147,7 @@ function AudiocallGame() {
             if (e.target.textContent === currentWord.wordTranslate) {
                 if (token) {
                     const res = await getUserWord(userId, currentWord.id, token)
+                    // console.log(res)
                     if (res === false) {
                         const optional = {
                             audiocall: {
@@ -173,6 +174,7 @@ function AudiocallGame() {
                         await changeUserWord(userId, currentWord.id, token, optional)
                     }
                 }
+                
                 setRightAnswers((oldArray) => [...oldArray, currentWord])
             } else {
                 if (token) {
