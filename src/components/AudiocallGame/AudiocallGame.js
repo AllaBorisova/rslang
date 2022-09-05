@@ -18,7 +18,6 @@ import useAudio from '../../hooks/useAudio'
 
 function AudiocallGame() {
     const { state } = useLocation()
-    // console.log(state)
     const score = false
     function randomInteger(min, max) {
         const rand = min - 0.5 + Math.random() * (max - min + 1)
@@ -54,8 +53,13 @@ function AudiocallGame() {
         setEndGame(false)
     }
     const restartGameEvent = () => {
-        setStartGame(true)
-        setPlaying(false)
+        // setStartGame( true )
+        if (!state) {
+            setPlaying(false);
+        } else {
+            setPlaying(true);
+        }
+       
         setEndGame(false)
     }
     useEffect(() => {
@@ -118,11 +122,7 @@ function AudiocallGame() {
             // e.target.classList.add('btn-danger');
         }
         setTimeout(() => {
-            // console.log( allButtons.current.childNodes);
-            // allButtons.current.childNodes.forEach((el) => {
-            //     el.classList.remove('btn-danger');
-            //     el.classList.remove('btn-success');
-            // });
+
             setRightAnswers((oldArray) => [...oldArray, currentWord])
             setCurrentWord(cards[randomInteger(0, cards.length - 1)])
             setWrongAnswers((oldArray) => [...oldArray, currentWord])

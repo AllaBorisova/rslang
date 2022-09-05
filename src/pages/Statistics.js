@@ -30,7 +30,6 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('getaaaa', content)
             const res = content[0].paginatedResults
             setUserStatistic(res)
             setLoading(false)
@@ -57,7 +56,6 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('geta', content)
             const res = content[0].paginatedResults
             setUserStatisticHard(res)
             setLoading(false)
@@ -84,7 +82,6 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('geta', content)
             const res = content[0].paginatedResults
             setUserStatisticEasy(res)
             setLoading(false)
@@ -100,7 +97,7 @@ function Statistics() {
             setError('')
             setLoading(true)
             const rawResponse = await fetch(
-                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=100&filter={"userWord.optional.source":"game"}`,
+                `https://teamwork-rs.herokuapp.com/users/${userId}/aggregatedWords?wordsPerPage=100&filter={"userWord.optional.game":"sprint"}`,
                 {
                     method: 'GET',
                     withCredentials: true,
@@ -111,9 +108,8 @@ function Statistics() {
                 }
             )
             const content = await rawResponse.json()
-            console.log('getsp', content)
             const res = content[0].paginatedResults
-            setUserStatisticEasy(res)
+            setUserStatisticSprint(res)
             setLoading(false)
         } catch (e) {
             const error = e

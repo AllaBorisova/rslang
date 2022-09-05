@@ -6,7 +6,7 @@ function Pagination(props) {
     const numberofPages = 30;
     return (
         <div className="group-btn">
-            {/* <ReactPaginate
+            <ReactPaginate
                 forcePage={current}
                 previousLabel="<"
                 nextLabel=">"
@@ -19,8 +19,8 @@ function Pagination(props) {
                 disabledClassName="disabled-btn"
                 activeClassName="active-btn"
                 pageRangeDisplayed={5}
-            /> */}
-            <ReactPaginate
+            />
+            {/* <ReactPaginate
                 containerClassName="pagination"
                 previousLabel="<"
                 nextLabel=">"
@@ -38,7 +38,7 @@ function Pagination(props) {
                 nextLinkClassName="page-link"
                 activeClassName="active"
                 pageRangeDisplayed={3}
-            />
+            /> */}
         </div>
     );
 }

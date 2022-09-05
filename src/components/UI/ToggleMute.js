@@ -2,11 +2,6 @@ import React from 'react'
 
 function ToggleMute(props) {
     const { muted, toggleMute } = props
-    // const [muted, setMuted] = usePersistentState('muted', true)
-    // const toggleMute = () => {
-    //     setMuted(!muted)
-    // }
-    // console.log('muted', muted)
 
     return (
         <button type="button" className="icon-button" onClick={toggleMute}>

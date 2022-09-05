@@ -41,23 +41,6 @@ function Textbook() {
         getList()
     }, [value, pageNumber, BASE_URL])
 
-    // useEffect(() => {
-    //     const getStat = async () => {
-    //         await fetch(`${USER_URL}${userId}/statistics`, {
-    //             method: 'GET',
-    //             headers: { Authorization: `Bearer ${token}` },
-    //         })
-    //             .then((response) => console.log(response.status))
-    //             .then((result) => result.json())
-    //             .then((data) => {
-    //                 console.log(data);
-    //                 setCount(data.learnedWords);
-    //             })
-    //             .catch((e) => console.log(e.message));
-    //     };
-
-    //     getStat();
-    // }, [USER_URL]);
 
     const changePage = ({ selected }) => {
         setPageNumber(selected)

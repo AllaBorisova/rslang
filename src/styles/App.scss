@@ -33,41 +33,41 @@ h1 {
 }
 
 // Пагинация по страничкам
-// .pagination {
-//     display: flex;
-//     width: 80%;
-//     // height: 20px;
-//     flex-wrap: wrap;
-//     margin: 30px 0;
-//     justify-content: center;
-// }
+.pagination {
+    display: flex;
+    width: 80%;
+    // height: 20px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    justify-content: center;
+}
 
-// .pagination a {
-//     transition: 1s ease-in;
-//     text-decoration: none;
-//     padding: 2px 5px;
-//     margin: 5px 5px;
-//     cursor: pointer;
-// }
-// .pagination a:hover {
-//     transition: 0.5s ease-in;
-//     background-color: #27aedb;
-// }
-// .disabled-btn a {
-//     transition: 0.5s ease-in;
-//     text-decoration: none;
-//     cursor: auto;
-//     color: #000000;
-//     &:hover {
-//         cursor: auto;
-//         transition: 0.5s ease-in;
-//     }
-// }
-// .active-btn a:not([href]):not([class]) {
-//     transition: 0.5s ease-in;
-//     background-color: #27aedb;
-//     color: white;
-// }
+.pagination a {
+    transition: 1s ease-in;
+    text-decoration: none;
+    padding: 2px 5px;
+    margin: 5px 5px;
+    cursor: pointer;
+}
+.pagination a:hover {
+    transition: 0.5s ease-in;
+    background-color: #27aedb;
+}
+.disabled-btn a {
+    transition: 0.5s ease-in;
+    text-decoration: none;
+    cursor: auto;
+    color: #000000;
+    &:hover {
+        cursor: auto;
+        transition: 0.5s ease-in;
+    }
+}
+.active-btn a:not([href]):not([class]) {
+    transition: 0.5s ease-in;
+    background-color: #27aedb;
+    color: white;
+}
 
 //для страницы спринта
 .icon-button {

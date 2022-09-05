@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 
 function Group(props) {
-    const { action, reset } = props
+    const { action, reset } = props;
     const handleChange = (event) => {
-        action(event.target.dataset.transfer)
-        reset(0)
-    }
+        action(event.target.dataset.transfer);
+        reset(0);
+    };
     return (
         <div className="group-btn">
             <Button
@@ -25,7 +25,7 @@ function Group(props) {
             <Button as="input" type="submit" variant="dark" value="C 1" data-transfer="4" onClick={handleChange} />{' '}
             <Button as="input" type="submit" variant="danger" value="C 2" data-transfer="5" onClick={handleChange} />{' '}
         </div>
-    )
+    );
 }
 
-export default Group
+export default Group;
