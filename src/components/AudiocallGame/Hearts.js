@@ -9,8 +9,8 @@ function Hearts(props) {
         <div>
             <Row>
                 <Col>
-                    {[...Array(counter)].map(() => (
-                        <i className="bi bi-heart-fill text-danger m-1" style={{ fontSize: 30 }} />
+                    {[...Array(counter)].map((item, index) => (
+                        <i key={index} className="bi bi-heart-fill text-danger m-1" style={{ fontSize: 30 }} />
                     ))}
                 </Col>
             </Row>
