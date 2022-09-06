@@ -17,7 +17,6 @@ import Loading from '../Loading'
 import useToken from '../Auth/UseToken'
 
 
-
 const TIME_LIMIT = 60000
 
 function Game() {
