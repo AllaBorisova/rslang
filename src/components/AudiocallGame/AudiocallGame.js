@@ -42,8 +42,8 @@ function AudiocallGame() {
     const [rightAnswers, setRightAnswers] = useState([])
     const [wrongAnswers, setWrongAnswers] = useState([])
 
-    const { play: playAudioRight } = useAudio('../public/audio/right.mp3')
-    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3')
+    const { play: playAudioRight } = useAudio('./public/audio/right.mp3')
+    const { play: playAudioWrong } = useAudio('./public/audio/wrong.mp3')
 
     const [muted, setMuted] = usePersistentState('muted', true)
     const toggleMute = () => {

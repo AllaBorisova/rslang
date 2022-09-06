@@ -33,6 +33,13 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.mp3$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[path][name].[ext]',
+                },
+            },
         ],
     },
     plugins: [
@@ -45,7 +52,7 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'src/public'),
+                    from: path.resolve(__dirname, 'src/public/'),
                     to: path.resolve(__dirname, 'dist/public'),
                 },
             ],

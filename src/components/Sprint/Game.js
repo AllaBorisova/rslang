@@ -16,14 +16,16 @@ import { createUserWord, getUserWord, changeUserWord } from '../Auth/ApiUser'
 import Loading from '../Loading'
 import useToken from '../Auth/UseToken'
 
+
+
 const TIME_LIMIT = 60000
 
 function Game() {
     // audio
     const { state } = useLocation()
 
-    const { play: playAudioRight } = useAudio('../public/audio/right.mp3')
-    const { play: playAudioWrong } = useAudio('../public/audio/wrong.mp3')
+    const { play: playAudioRight } = useAudio('./public/audio/right.mp3')
+    const { play: playAudioWrong } = useAudio('./public/audio/wrong.mp3')
     const [sprintScore, setSprintScore] = useState(10)
     const [playing, setPlaying] = useState(!!state)
     const [finished, setFinished] = useState(false)
