@@ -1,0 +1,144 @@
+@import '~bootstrap/scss/bootstrap';
+
+h1 {
+    color: #27aedb;
+}
+.footer-img {
+    max-width: 100px;
+}
+// Управление разделами учебника
+.group-btn {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    input {
+        // margin-left: 10px;
+    }
+    .btn {
+        // width: 100px;
+        // height: 50px;
+        // border-radius: 0px;
+    }
+}
+
+// Поле отображения слов
+
+.word-wrapper {
+    min-height: 100vh;
+    text-align: center;
+}
+.word-wrapper ul {
+    list-style: none;
+}
+
+// Пагинация по страничкам
+.pagination {
+    display: flex;
+    width: 80%;
+    // height: 20px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    justify-content: center;
+}
+
+.pagination a {
+    transition: 1s ease-in;
+    text-decoration: none;
+    padding: 2px 5px;
+    margin: 5px 5px;
+    cursor: pointer;
+}
+.pagination a:hover {
+    transition: 0.5s ease-in;
+    background-color: #27aedb;
+}
+.disabled-btn a {
+    transition: 0.5s ease-in;
+    text-decoration: none;
+    cursor: auto;
+    color: #000000;
+    &:hover {
+        cursor: auto;
+        transition: 0.5s ease-in;
+    }
+}
+.active-btn a:not([href]):not([class]) {
+    transition: 0.5s ease-in;
+    background-color: #27aedb;
+    color: white;
+}
+
+//для страницы спринта
+.icon-button {
+    height: 48px;
+    width: 48px;
+    outline: transparent;
+    background: none;
+    border: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.mute-button {
+    position: fixed;
+    top: 10px;
+    right: 0;
+    z-index: 2;
+}
+.icon {
+    fill: black;
+    stroke-width: 20px;
+    overflow: visible;
+    height: 24px;
+    width: 24px;
+}
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    .dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: grey;
+        &.active {
+            background-color: green;
+        }
+    }
+}
+:fullscreen header,
+:fullscreen footer,
+:fullscreen nav {
+    display: none;
+}
+
+.soundOn {
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: none;
+}
+
+.game-section {
+    // min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.full-section {
+    flex: 1;
+}
+
+.soundOn {
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: none;
+}

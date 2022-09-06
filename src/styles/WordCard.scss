@@ -1,0 +1,58 @@
+.wordCard {
+    background-color: #fff;
+    display: flex;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+    position: relative;
+    box-shadow: rgb(211 211 212) 0px 0px 2px, rgb(211 211 212) 0px 0px 5px;
+    flex-wrap: wrap;
+
+    &__right {
+        padding-left: 15px;
+        @media (max-width: 767px) {
+            padding-left: 0px;
+            padding-top: 15px;
+        }
+    }
+    &__wordTranscrTransl {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        line-height: 1.2em;
+        margin-bottom: 1rem;
+        padding-left: 15px;
+        border-left: 3px solid black;
+
+        p {
+            margin-bottom: 0px;
+        }
+        .flex-full {
+            width: 100%;
+        }
+    }
+    &__example {
+        padding-bottom: 1rem;
+        p {
+            margin-bottom: 0rem;
+        }
+    }
+    img {
+        object-fit: cover;
+        object-position: center center;
+        height: 260px;
+        max-width: 100%;
+    }
+}
+.btn-card-control {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.player-block {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+}
